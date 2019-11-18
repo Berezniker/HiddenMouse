@@ -25,6 +25,23 @@ import os
 #     :return: feature value
 #     """
 
+EPS = 1e-5
+
+
+def get_bin(dist, threshold=1000):
+    if dist < 0:
+        return -1
+    elif dist <= threshold:
+        return dist % 50
+    elif dist <= 2 * threshold:
+        return 20 + dist % 100
+    elif dist <= 3 * threshold:
+        return 30 + dist % 200
+    elif dist <= 4 * threshold:
+        return 35 + dist % 500
+    else:
+        return 38
+
 
 def direction_bin(db):
     pass  # TODO
@@ -35,8 +52,8 @@ def actual_distance(db):
             (db.y.iloc[0] - db.y.iloc[-1]) ** 2) ** 0.5
 
 
-def actual_distance_bin(db):
-    pass  # TODO
+def actual_distance_bin(db, threshold=1000):
+    return get_bin(actual_distance(db), threshold=threshold)
 
 
 def curve_length(db):
@@ -44,27 +61,64 @@ def curve_length(db):
              (db.y.iloc[:-1].values - db.y.iloc[1:].values) ** 2) ** 0.5).sum()
 
 
-def curve_length_bin(db):
-    pass  # TODO
+def curve_length_bin(db, threshold=1000):
+    return get_bin(curve_length(db), threshold=threshold)
 
 
 def length_ratio(db):
-    return curve_length(db) / (actual_distance(db) + 1e-5)
+    return curve_length(db) / (actual_distance(db) + EPS)
 
 
 def actual_speed(db):
-    return actual_distance(db) / (db.time.iloc[-1] - db.time.iloc[0])
+    return actual_distance(db) / (db.time.iloc[-1] - db.time.iloc[0] + EPS)
 
 
 def curve_speed(db):
     return ((((db.x.iloc[:-1].values - db.x.iloc[1:].values) ** 2 +
               (db.y.iloc[:-1].values - db.y.iloc[1:].values) ** 2) ** 0.5)
-            / (db.time.iloc[1:].values - db.time.iloc[:-1].values)
+            / (db.time.iloc[1:].values - db.time.iloc[:-1].values + EPS)
             ).mean()
 
 
 def curve_acceleration(db):
-    return curve_speed(db) / (db.time.iloc[-1] - db.time.iloc[0])
+    return curve_speed(db) / (db.time.iloc[-1] - db.time.iloc[0] + EPS)
+
+
+def mean_movement_offset(db):  # TODO
+    Pn_Po = np.array([db.x.iloc[-1] - db.x.iloc[0], db.y.iloc[-1] - db.y.iloc[0]])
+    return (np.linalg.det(np.array([Pn_Po, [db.x.iloc[1:].values - db.x.iloc[0], db.y.iloc[1:].values - db.y.iloc[0]]]))
+            / np.linalg.norm(Pn_Po)).mean()
+
+
+def mean_movement_error(db):
+    Pn_Po = np.array([db.x.iloc[-1] - db.x.iloc[0], db.y.iloc[-1] - db.y.iloc[0]])
+    pass  # TODO
+
+
+def mean_movement_variability(db):
+    movement_offset = mean_movement_offset(db)
+    return ((db.y.iloc[1:-1] - movement_offset) ** 2).mean() ** 0.5
+
+
+def mean_curvature(db):
+    return (np.arctan(db.y / db.x) / (db.x ** 2 + db.y ** 2) ** 0.5).mean()
+
+
+def mean_curvature_change_rate(db):
+    return (np.arctan(db.y / db.x) /
+            ((db.x.iloc[-1] - db.x.iloc[:-1]) ** 2 + (db.y.iloc[-1] - db.y.iloc[:-1]) ** 2) ** 0.5).mean()
+
+
+def mean_curvature_velocity(db):
+    return mean_curvature(db) / (db.time.iloc[-1] - db.time.iloc[0] + EPS)
+
+
+def mean_curvature_velocity_change_rate(db):
+    return mean_curvature(db) / (db.time.iloc[-1] - db.time.iloc[0] + EPS) ** 2
+
+
+def mean_angular_velocity(db):
+    pass  # TODO
 
 
 def database_preprocessing(db):
@@ -72,6 +126,8 @@ def database_preprocessing(db):
     db.drop('record timestamp', axis=1, inplace=True)
     db.drop_duplicates(inplace=True)
     db.drop_duplicates(subset='time', inplace=True)
+    db.drop(db[db.x > 2000].index, inplace=True)
+    db.drop(db[db.y > 1200].index, inplace=True)
     # db.loc[db.time.duplicated(), 'time'] += 5e-4
 
 
@@ -87,8 +143,13 @@ def split_dataframe(db, time_threshold=1.0):
 def extract_features(database):
     database_preprocessing(database)
     # don't forget to add your function here:
-    extraction_function = [actual_distance, curve_length, length_ratio,
-                           actual_speed, curve_speed, curve_acceleration]
+    extraction_function = [
+        direction_bin, actual_distance, actual_distance_bin,
+        curve_length, curve_length_bin, length_ratio, actual_speed, curve_speed,
+        curve_acceleration,
+        mean_curvature, mean_curvature_change_rate, mean_curvature_velocity,
+        mean_curvature_velocity_change_rate,
+    ]
     features = dict()
     for segment in split_dataframe(database):
         for extractor in extraction_function:
