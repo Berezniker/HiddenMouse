@@ -32,19 +32,28 @@ def get_bin(dist, threshold=1000):
     if dist < 0:
         return -1
     elif dist <= threshold:
-        return dist % 50
+        return dist % (threshold // 20)
     elif dist <= 2 * threshold:
-        return 20 + dist % 100
+        return 20 + dist % (threshold // 10)
     elif dist <= 3 * threshold:
-        return 30 + dist % 200
+        return 30 + dist % (threshold // 5)
     elif dist <= 4 * threshold:
-        return 35 + dist % 500
+        return 35 + dist % (threshold // 2)
     else:
         return 38
 
 
+def get_grad(val):
+    grad = np.empty(val.size)
+    grad[0], grad[1:-1], grad[-1] = val[1], val[2:] - val[:-2], -val[-2]
+    return grad
+
+
 def direction_bin(db):
-    pass  # TODO
+    grad_x, grad_y = get_grad(db.x.values), get_grad(db.y.values)
+    direction = np.rad2deg(np.arctan2(grad_y, grad_x)) + 180
+    direction = (direction % 8).round().astype(np.uint8)
+    return np.argmax(np.bincount(direction))
 
 
 def actual_distance(db):
@@ -84,15 +93,18 @@ def curve_acceleration(db):
     return curve_speed(db) / (db.time.iloc[-1] - db.time.iloc[0] + EPS)
 
 
-def mean_movement_offset(db):  # TODO
+def mean_movement_offset(db):
     Pn_Po = np.array([db.x.iloc[-1] - db.x.iloc[0], db.y.iloc[-1] - db.y.iloc[0]])
-    return (np.linalg.det(np.array([Pn_Po, [db.x.iloc[1:].values - db.x.iloc[0], db.y.iloc[1:].values - db.y.iloc[0]]]))
-            / np.linalg.norm(Pn_Po)).mean()
+    det = np.array([np.linalg.det([Pn_Po, [x - db.x.iloc[0], y - db.y.iloc[0]]])
+                    for x, y in zip(db.x.iloc[1:].values, db.y.iloc[1:].values)])
+    return (det / (np.linalg.norm(Pn_Po) + EPS)).mean()
 
 
 def mean_movement_error(db):
     Pn_Po = np.array([db.x.iloc[-1] - db.x.iloc[0], db.y.iloc[-1] - db.y.iloc[0]])
-    pass  # TODO
+    det = np.array([np.linalg.det([Pn_Po, [x - db.x.iloc[0], y - db.y.iloc[0]]])
+                    for x, y in zip(db.x.iloc[1:].values, db.y.iloc[1:].values)])
+    return (abs(det) / (np.linalg.norm(Pn_Po) + EPS)).mean()
 
 
 def mean_movement_variability(db):
@@ -106,7 +118,8 @@ def mean_curvature(db):
 
 def mean_curvature_change_rate(db):
     return (np.arctan(db.y / db.x) /
-            ((db.x.iloc[-1] - db.x.iloc[:-1]) ** 2 + (db.y.iloc[-1] - db.y.iloc[:-1]) ** 2) ** 0.5).mean()
+            (((db.x.iloc[-1] - db.x.iloc[:-1]) ** 2 +
+              (db.y.iloc[-1] - db.y.iloc[:-1]) ** 2) ** 0.5 + EPS)).mean()
 
 
 def mean_curvature_velocity(db):
@@ -132,11 +145,13 @@ def database_preprocessing(db):
 
 
 # TODO need to speed up
-def split_dataframe(db, time_threshold=1.0):
+def split_dataframe(db, time_threshold=1):
     time, max_time = 0, db['time'].max()
     while time + time_threshold < max_time:
-        yield db.loc[(db['time'] >= time) & (db['time'] <= time + time_threshold)]
+        one_split = db.loc[(db['time'] >= time) & (db['time'] <= time + time_threshold)]
         time = db.loc[db['time'] > time + time_threshold].time.values[0]
+        if one_split.index.size > 1:
+            yield one_split
     yield db.loc[db['time'] >= time]
 
 
@@ -146,15 +161,15 @@ def extract_features(database):
     extraction_function = [
         direction_bin, actual_distance, actual_distance_bin,
         curve_length, curve_length_bin, length_ratio, actual_speed, curve_speed,
-        curve_acceleration,
+        curve_acceleration, mean_movement_offset, mean_movement_error,
         mean_curvature, mean_curvature_change_rate, mean_curvature_velocity,
-        mean_curvature_velocity_change_rate,
+        mean_curvature_velocity_change_rate, # mean_angular_velocity
     ]
     features = dict()
     for segment in split_dataframe(database):
         for extractor in extraction_function:
             features.setdefault(extractor.__name__, []).append(extractor(segment))
-        break
+        # break
     return features
 
 
