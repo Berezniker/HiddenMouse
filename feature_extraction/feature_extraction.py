@@ -11,7 +11,9 @@ import os
 #    |-- record timestamp (in sec): float  <-- deleted
 #    |-- client timestamp (in sec): float  <-- renamed: 'time'
 #    |-- button: ['NoButton', 'Left', 'Scroll', 'Right']
+#    |                                ~~~~~~~~ <-- deleted
 #    |-- state: ['Move', 'Pressed', 'Released', 'Drag', 'Down', 'Up']
+#    |                                      deleted --> ~~~~~~  ~~~~
 #    |-- x: int
 #    |-- y: int
 ######################################################################
@@ -44,9 +46,15 @@ def get_bin(dist, threshold=1000):
 
 
 def get_grad(val):
-    grad = np.empty(val.size)
-    grad[0], grad[1:-1], grad[-1] = val[1], val[2:] - val[:-2], -val[-2]
-    return grad
+    return np.array([val[1], *(val[2:] - val[:-2]), -val[-2]])
+
+
+def get_det(db):
+    Pn_Po = np.array([db.x.iloc[-1] - db.x.iloc[0], db.y.iloc[-1] - db.y.iloc[0]])
+    x0, y0 = db.x.iloc[0], db.y.iloc[0]
+    det = np.array([np.linalg.det([Pn_Po, [x - x0, y - y0]])
+                    for x, y in zip(db.x.iloc[1:].values, db.y.iloc[1:].values)])
+    return det
 
 
 def direction_bin(db):
@@ -95,31 +103,26 @@ def curve_acceleration(db):
 
 def mean_movement_offset(db):
     Pn_Po = np.array([db.x.iloc[-1] - db.x.iloc[0], db.y.iloc[-1] - db.y.iloc[0]])
-    det = np.array([np.linalg.det([Pn_Po, [x - db.x.iloc[0], y - db.y.iloc[0]]])
-                    for x, y in zip(db.x.iloc[1:].values, db.y.iloc[1:].values)])
-    return (det / (np.linalg.norm(Pn_Po) + EPS)).mean()
+    return (get_det(db) / (np.linalg.norm(Pn_Po) + EPS)).mean()
 
 
 def mean_movement_error(db):
     Pn_Po = np.array([db.x.iloc[-1] - db.x.iloc[0], db.y.iloc[-1] - db.y.iloc[0]])
-    det = np.array([np.linalg.det([Pn_Po, [x - db.x.iloc[0], y - db.y.iloc[0]]])
-                    for x, y in zip(db.x.iloc[1:].values, db.y.iloc[1:].values)])
-    return (abs(det) / (np.linalg.norm(Pn_Po) + EPS)).mean()
+    return (abs(get_det(db)) / (np.linalg.norm(Pn_Po) + EPS)).mean()
 
 
 def mean_movement_variability(db):
-    movement_offset = mean_movement_offset(db)
-    return ((db.y.iloc[1:-1] - movement_offset) ** 2).mean() ** 0.5
+    return ((db.y.iloc[1:-1] - mean_movement_offset(db)) ** 2).mean() ** 0.5
 
 
 def mean_curvature(db):
-    return (np.arctan(db.y / db.x) / (db.x ** 2 + db.y ** 2) ** 0.5).mean()
+    return (np.arctan2(db.y, db.x) / (db.x ** 2 + db.y ** 2) ** 0.5).mean()
 
 
 def mean_curvature_change_rate(db):
-    return (np.arctan(db.y / db.x) /
-            (((db.x.iloc[-1] - db.x.iloc[:-1]) ** 2 +
-              (db.y.iloc[-1] - db.y.iloc[:-1]) ** 2) ** 0.5 + EPS)).mean()
+    return (np.arctan2(db.y.iloc[:-1], db.x.iloc[:-1]) /
+            (((db.x.iloc[-1] - db.x.iloc[:-1].values) ** 2 +
+              (db.y.iloc[-1] - db.y.iloc[:-1].values) ** 2) ** 0.5 + EPS)).mean()
 
 
 def mean_curvature_velocity(db):
@@ -131,7 +134,13 @@ def mean_curvature_velocity_change_rate(db):
 
 
 def mean_angular_velocity(db):
-    pass  # TODO
+    a = np.array([db.x.iloc[:-2].values - db.x.iloc[1:-1].values,
+                  db.y.iloc[:-2].values - db.y.iloc[1:-1].values])
+    b = np.array([db.x.iloc[2:].values - db.x.iloc[1:-1].values,
+                  db.y.iloc[2:].values - db.y.iloc[1:-1].values])
+    angle = np.arccos(np.sum(a * b, axis=0) /
+                      (np.linalg.norm(a, axis=0) * np.linalg.norm(b, axis=0) + EPS))
+    return (angle / (db.time.iloc[2:].values - db.time.iloc[:-2].values + EPS)).mean()
 
 
 def database_preprocessing(db):
@@ -139,9 +148,9 @@ def database_preprocessing(db):
     db.drop('record timestamp', axis=1, inplace=True)
     db.drop_duplicates(inplace=True)
     db.drop_duplicates(subset='time', inplace=True)
+    db.drop(db[db.button == 'Scroll'].index, inplace=True)
     db.drop(db[db.x > 2000].index, inplace=True)
     db.drop(db[db.y > 1200].index, inplace=True)
-    # db.loc[db.time.duplicated(), 'time'] += 5e-4
 
 
 # TODO need to speed up
@@ -150,26 +159,24 @@ def split_dataframe(db, time_threshold=1):
     while time + time_threshold < max_time:
         one_split = db.loc[(db['time'] >= time) & (db['time'] <= time + time_threshold)]
         time = db.loc[db['time'] > time + time_threshold].time.values[0]
-        if one_split.index.size > 1:
+        if one_split.index.size > 2:
             yield one_split
     yield db.loc[db['time'] >= time]
 
 
 def extract_features(database):
     database_preprocessing(database)
-    # don't forget to add your function here:
     extraction_function = [
         direction_bin, actual_distance, actual_distance_bin,
         curve_length, curve_length_bin, length_ratio, actual_speed, curve_speed,
         curve_acceleration, mean_movement_offset, mean_movement_error,
         mean_curvature, mean_curvature_change_rate, mean_curvature_velocity,
-        mean_curvature_velocity_change_rate, # mean_angular_velocity
+        mean_curvature_velocity_change_rate, mean_angular_velocity
     ]
     features = dict()
     for segment in split_dataframe(database):
         for extractor in extraction_function:
             features.setdefault(extractor.__name__, []).append(extractor(segment))
-        # break
     return features
 
 
@@ -178,7 +185,9 @@ def run(mode):
     save_path = f'../features/{mode}_features'
 
     for user in glob.glob(os.path.join(data_path, 'user*')):
-        for session in glob.glob(os.path.join(user, 'session*')):
+        start_time = t.time()
+        n_session = len(list(os.listdir(user)))
+        for i, session in enumerate(glob.glob(os.path.join(user, 'session*'))):
             database = pd.read_csv(session)
             # vvvvvvvvvv
             features_dict = extract_features(database)
@@ -189,8 +198,9 @@ def run(mode):
                 os.makedirs(session_dir)
             features.to_csv(os.path.join(session_dir, os.path.basename(session)),
                             index=False)
-            break
-        break
+            print(f'[{i:02}/{n_session}]', os.path.basename(session), end='\r')
+        print(' ' * 40, end='\r')
+        print(os.path.basename(user), 'time:', t.time() - start_time, end='\n')
 
 
 if __name__ == '__main__':
