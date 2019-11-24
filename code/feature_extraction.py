@@ -28,6 +28,19 @@ import os
 #     """
 
 EPS = 1e-5
+LOG_FILE_NAME = 'log_feature.txt'
+LOG_FILE = None
+
+
+def printf(*args, to_file=False, to_display=True):
+    global LOG_FILE
+    if to_file:
+        LOG_FILE.write(*args)
+        LOG_FILE.write('\n')
+    if to_display:
+        print(*args)
+    if not (to_file or to_display):
+        print('* silence *', end='')
 
 
 def get_bin(dist, threshold=1000):
@@ -120,7 +133,7 @@ def mean_curvature(db):
 
 
 def mean_curvature_change_rate(db):
-    return (np.arctan2(db.y.iloc[:-1], db.x.iloc[:-1]) /
+    return (np.arctan2(db.y.iloc[:-1].values, db.x.iloc[:-1].values) /
             (((db.x.iloc[-1] - db.x.iloc[:-1].values) ** 2 +
               (db.y.iloc[-1] - db.y.iloc[:-1].values) ** 2) ** 0.5 + EPS)).mean()
 
@@ -154,17 +167,18 @@ def database_preprocessing(db):
 
 
 # TODO need to speed up
-def split_dataframe(db, time_threshold=1):
-    time, max_time = 0, db['time'].max()
+def split_dataframe(db, time_threshold=1, min_n_actions=2):
+    time, max_time = 0, db.time.max()
     while time + time_threshold < max_time:
-        one_split = db.loc[(db['time'] >= time) & (db['time'] <= time + time_threshold)]
-        time = db.loc[db['time'] > time + time_threshold].time.values[0]
-        if one_split.index.size > 2:
+        one_split = db.loc[(db.time >= time) & (db.time <= time + time_threshold)]
+        time = db.loc[db.time > time + time_threshold].time.values[0]
+        if one_split.index.size > min_n_actions:
             yield one_split
-    yield db.loc[db['time'] >= time]
+    if db.loc[db.time >= time].index.size > 2:
+        yield db.loc[db.time >= time]
 
 
-def extract_features(database):
+def extract_features(database, only_one_segment=False, only_one_feature=False):
     database_preprocessing(database)
     extraction_function = [
         direction_bin, actual_distance, actual_distance_bin,
@@ -174,39 +188,60 @@ def extract_features(database):
         mean_curvature_velocity_change_rate, mean_angular_velocity
     ]
     features = dict()
-    for segment in split_dataframe(database):
+    for i, segment in enumerate(split_dataframe(database), 1):
         for extractor in extraction_function:
             features.setdefault(extractor.__name__, []).append(extractor(segment))
+            if only_one_feature:
+                printf('>>>> [!] only_one_feature')
+                break
+        if only_one_segment or only_one_feature:
+            printf('>>> [!] only_one_segment')
+            break
     return features
 
 
-def run(mode):
+def run(mode, only_one_user=False, only_one_session=False):
     data_path = f'../dataset/{mode}_files'
     save_path = f'../features/{mode}_features'
 
     for user in glob.glob(os.path.join(data_path, 'user*')):
-        start_time = t.time()
+        printf(f'> {os.path.basename(user)}')
+        user_start_time = t.time()
         n_session = len(list(os.listdir(user)))
-        for i, session in enumerate(glob.glob(os.path.join(user, 'session*'))):
+        for i, session in enumerate(glob.glob(os.path.join(user, 'session*')), 1):
+            session_start_time = t.time()
             database = pd.read_csv(session)
-            # vvvvvvvvvv
+            # vvvvvvvvvvv
             features_dict = extract_features(database)
-            # ^^^^^^^^^^
+            # ^^^^^^^^^^^
             features = pd.DataFrame(features_dict)
             session_dir = os.path.join(save_path, os.path.basename(user))
             if not os.path.exists(session_dir):
                 os.makedirs(session_dir)
             features.to_csv(os.path.join(session_dir, os.path.basename(session)),
                             index=False)
-            print(f'[{i:02}/{n_session}]', os.path.basename(session), end='\r')
-        print(' ' * 40, end='\r')
-        print(os.path.basename(user), 'time:', t.time() - start_time, end='\n')
+            printf(f'>> [{i:03}/{n_session}] {os.path.basename(session)} time: {t.time() - session_start_time:.3f} sec')
+            if only_one_session:
+                printf('>> [!] only_one_session')
+                break
+        printf(f'> {os.path.basename(user)} time: {t.time() - user_start_time:.3f} sec')
+        if only_one_user or only_one_session:
+            printf('> [!] only_one_user')
+            break
 
 
 if __name__ == '__main__':
+    # LOG_FILE = open(LOG_FILE_NAME, mode='a')
     start_time = t.time()
+    printf('train: RUN!')
+    train_start_time = t.time()
     run('train')
-    print('train_time:', t.time() - start_time)
-    # start_time = t.time()
-    # run('test')
-    # print('train_time:', t.time() - start_time)
+    printf(f'train_time: {t.time() - train_start_time:.3f} sec')
+    printf('\n')
+    printf('test: RUN!')
+    test_start_time = t.time()
+    run('test')
+    printf(f'test_time: {t.time() - test_start_time:.3f} sec')
+    printf('\n')
+    printf(f'main_time: {t.time() - start_time:.3f} sec')
+    # LOG_FILE.close()
