@@ -10,10 +10,9 @@ import os
 #    |
 #    |-- record timestamp (in sec): float  <-- deleted
 #    |-- client timestamp (in sec): float  <-- renamed: 'time'
-#    |-- button: ['NoButton', 'Left', 'Scroll', 'Right']
-#    |                                ~~~~~~~~ <-- deleted
-#    |-- state: ['Move', 'Pressed', 'Released', 'Drag', 'Down', 'Up']
-#    |                                      deleted --> ~~~~~~  ~~~~
+#    |-- button: ['NoButton', 'Left', 'Scroll', 'Right']  <-- deleted
+#    |-- state:  ['Move', 'Pressed', 'Released', 'Drag', 'Down', 'Up']
+#    |     ^--- deleted
 #    |-- x: int
 #    |-- y: int
 ######################################################################
@@ -30,17 +29,18 @@ import os
 EPS = 1e-5
 LOG_FILE_NAME = 'log_feature.txt'
 LOG_FILE = None
+DEBUG = True
 
 
 def printf(*args, to_file=False, to_display=True):
-    global LOG_FILE
-    if to_file:
-        LOG_FILE.write(*args)
-        LOG_FILE.write('\n')
-    if to_display:
-        print(*args)
-    if not (to_file or to_display):
-        print('* silence *', end='')
+    global LOG_FILE, DEBUG
+    if DEBUG:
+        if to_file:
+            LOG_FILE.write(*args, '\n')
+        if to_display:
+            print(*args)
+        if not (to_file or to_display):
+            print('* silence *', end='')
 
 
 def get_bin(dist, threshold=1000):
@@ -158,23 +158,24 @@ def mean_angular_velocity(db):
 
 def database_preprocessing(db):
     db.rename({'client timestamp': 'time'}, axis=1, inplace=True)
-    db.drop('record timestamp', axis=1, inplace=True)
+    db.drop(['record timestamp', 'button', 'state'], axis=1, inplace=True)
     db.drop_duplicates(inplace=True)
     db.drop_duplicates(subset='time', inplace=True)
-    db.drop(db[db.button == 'Scroll'].index, inplace=True)
+    # db.drop_duplicates(subset=['x', 'y'], inplace=True)
     db.drop(db[db.x > 2000].index, inplace=True)
     db.drop(db[db.y > 1200].index, inplace=True)
 
 
 # TODO need to speed up
-def split_dataframe(db, time_threshold=1, min_n_actions=2):
+def split_dataframe(db, time_threshold=3, min_n_actions=5):
     time, max_time = 0, db.time.max()
     while time + time_threshold < max_time:
         one_split = db.loc[(db.time >= time) & (db.time <= time + time_threshold)]
         time = db.loc[db.time > time + time_threshold].time.values[0]
+        one_split.drop_duplicates(subset=['x', 'y'], inplace=True)
         if one_split.index.size > min_n_actions:
             yield one_split
-    if db.loc[db.time >= time].index.size > 2:
+    if db.loc[db.time >= time].index.size > min_n_actions:
         yield db.loc[db.time >= time]
 
 
@@ -200,48 +201,49 @@ def extract_features(database, only_one_segment=False, only_one_feature=False):
     return features
 
 
-def run(mode, only_one_user=False, only_one_session=False):
+def run(mode, only_one_user=False, only_one_session=False, save_features=True):
     data_path = f'../dataset/{mode}_files'
     save_path = f'../features/{mode}_features'
 
     for user in glob.glob(os.path.join(data_path, 'user*')):
-        printf(f'> {os.path.basename(user)}')
         user_start_time = t.time()
+        user_name = os.path.basename(user)
+        printf(f'> {user_name}')
         n_session = len(list(os.listdir(user)))
         for i, session in enumerate(glob.glob(os.path.join(user, 'session*')), 1):
             session_start_time = t.time()
-            database = pd.read_csv(session)
-            # vvvvvvvvvvv
-            features_dict = extract_features(database)
-            # ^^^^^^^^^^^
-            features = pd.DataFrame(features_dict)
-            session_dir = os.path.join(save_path, os.path.basename(user))
-            if not os.path.exists(session_dir):
-                os.makedirs(session_dir)
-            features.to_csv(os.path.join(session_dir, os.path.basename(session)),
-                            index=False)
-            printf(f'>> [{i:03}/{n_session}] {os.path.basename(session)} time: {t.time() - session_start_time:.3f} sec')
+            session_name = os.path.basename(session)
+            # vvvvvv
+            features = pd.DataFrame(extract_features(pd.read_csv(session)))
+            # ^^^^^^
+            if save_features:
+                session_dir = os.path.join(save_path, user_name)
+                if not os.path.exists(session_dir):
+                    os.makedirs(session_dir)
+                features.to_csv(os.path.join(session_dir, session_name),
+                                index=False)
+            printf(f'>> [{i:03}/{n_session}] {session_name} time: {t.time() - session_start_time:.3f} sec')
             if only_one_session:
                 printf('>> [!] only_one_session')
                 break
-        printf(f'> {os.path.basename(user)} time: {t.time() - user_start_time:.3f} sec')
+        printf(f'> {user_name} time: {t.time() - user_start_time:.3f} sec')
         if only_one_user or only_one_session:
             printf('> [!] only_one_user')
             break
 
 
 if __name__ == '__main__':
-    # LOG_FILE = open(LOG_FILE_NAME, mode='a')
+    LOG_FILE = open(LOG_FILE_NAME, mode='w')
     start_time = t.time()
     printf('train: RUN!')
     train_start_time = t.time()
-    run('train')
+    run('train', only_one_user=False)
     printf(f'train_time: {t.time() - train_start_time:.3f} sec')
     printf('\n')
     printf('test: RUN!')
     test_start_time = t.time()
-    run('test')
+    run('test', only_one_user=False)
     printf(f'test_time: {t.time() - test_start_time:.3f} sec')
     printf('\n')
     printf(f'main_time: {t.time() - start_time:.3f} sec')
-    # LOG_FILE.close()
+    LOG_FILE.close()

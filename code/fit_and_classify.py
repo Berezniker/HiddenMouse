@@ -1,16 +1,64 @@
-from sklearn.model_selection import cross_val_score, GridSearchCV
+from sklearn.model_selection import ParameterGrid
+from sklearn.metrics import roc_curve, roc_auc_score, auc
+from sklearn.ensemble import iforest, gradient_boosting
+import matplotlib.pyplot as plt
 from sklearn import svm
 import numpy as np
 import pandas as pd
+import pickle
 import glob
 import time
+import sys
 import os
 
 N_FEATURES = 16
 RANDOM_SEED = 13
-SVM_KERNEL = 'rbf'  # 'linear', 'poly', 'rbf', 'sigmoid', 'precomputed'
-SVM_DEGREE = 3      # Degree of the 'ploy'. Ignored by all other kernels.
-SVM_GAMMA = 'auto'  # Kernel coefficient for 'rbf', 'poly' and 'sigmoid'
+SVM_KERNEL = 'rbf'
+SVM_GAMMA = 'scale'
+LOG_FILE_NAME = 'log_grid_SVM.txt'
+KEEP_LOG = False  # Unix: python3 fit_and_classify.py | tee {LOG_FILE_NAME}
+
+COLOR = {
+    'magenta': '\033[95m',
+    'yellow': '\033[93m',
+    'green': '\033[92m',
+    'cyan': '\033[96m',
+    'blue': '\033[94m',
+    'red': '\033[91m',
+    'None': '\033[0m'
+}
+
+
+def get_roc(score, dx, dy):
+    score_with_labels = sorted(score, reverse=True)
+    roc_coord = [(0, 0)]
+    for scr, labl in score_with_labels:
+        x, y = roc_coord[-1]
+        roc_coord.append((x + (dx if labl == -1 else 0),
+                          y + (dy if labl == 1 else 0)))
+    roc_coord = np.array(roc_coord)
+    return roc_coord, np.trapz(roc_coord[:, 1], roc_coord[:, 0])
+
+
+def show_roc_curve(y_true, y_score, users=None, mode='show'):
+    fpr, tpr, _ = roc_curve(y_true, y_score)
+    roc_auc = auc(x=fpr, y=tpr)
+    fig = plt.figure()
+    plt.plot(fpr, tpr, color='r')
+    plt.plot([0, 1], [0, 1], linestyle='--', lw=2, color='r',
+             label='Chance', alpha=.8)
+    if users is None:
+        plt.title('ROC-curve')
+    else:
+        plt.title(f'ROC-curve ({users[0]} vs {users[1]})')
+    plt.xlabel('FPR')
+    plt.ylabel('TPR')
+    plt.text(0.7, 0.2, f'ROC-AUC={roc_auc:.3f}')
+    if mode == 'show':
+        plt.show()
+    elif mode == 'save' and users is not None:
+        plt.savefig(f'../roc/roc_{users[0]}_vs_{users[1]}.pdf', format='pdf')
+    plt.close(fig=fig)
 
 
 def get_session_path(data_path, labels=None):
@@ -26,6 +74,15 @@ def get_session_path(data_path, labels=None):
     return find_session
 
 
+def load_features(features_path):
+    features = None
+    for feature_path in features_path:
+        f = pd.read_csv(feature_path, sep=',', header=0).values
+        features = np.vstack((features, f)) if features is not None else f
+    # print(f'>>> features.shape={features.shape}')
+    return features
+
+
 def split_into_legal(test_session, labels):
     legal_session, illegal_session = {}, {}
     for user, user_sessions in test_session.items():
@@ -38,39 +95,158 @@ def split_into_legal(test_session, labels):
     return legal_session, illegal_session
 
 
-def get_users_svm(session_dict, only_one_user=True):
-    users_svm = {}
+def get_pairwise_auc(model, user_name, test_sessions):
+    auc = list()
+    legal_features = load_features(test_sessions[user_name])
+    for other_user in test_sessions:
+        if other_user == user_name:
+            continue
+        illegal_features = load_features(test_sessions[other_user])
+        pairwise_features = np.vstack((legal_features, illegal_features))
+        label = np.ones(pairwise_features.shape[0])
+        label[legal_features.shape[0]:] = -1
+        score = model.decision_function(pairwise_features)
+        auc.append(roc_auc_score(y_true=label, y_score=score))
+    return np.mean(auc)
+
+
+def fit_svm(user_name, user_features_path, test_sessions):
+    """ # https://scikit-learn.org/0.15/modules/generated/sklearn.svm.OneClassSVM.html """
+    features = load_features(user_features_path)
+    param_grid = ParameterGrid(param_grid={
+        'kernel': [SVM_KERNEL],
+        'nu': np.linspace(0.5, 0.05, 10),
+        'gamma': [1e-5, 1e-4, 1e-3, 'scale', 'auto'],
+    })
+    best_param = (None, 0, 0, 'rbf', None, None)  # (model, train_score, test_auc, kernel, nu, gamma)
+    for param in param_grid:
+        model = svm.OneClassSVM(**param)
+        model.fit(X=features)
+        train_score = np.mean(model.predict(features) == 1)
+        auc = get_pairwise_auc(model, user_name, test_sessions)
+        if auc > best_param[2]:
+            best_param = (model, train_score, auc, param['kernel'], param['nu'], param['gamma'])
+            print(COLOR['yellow'], end='')
+        print(f">>> train.score: {train_score:.4f}, "
+              f"auc = {auc:.4f}, "
+              f"nu: {param['nu']:.2f}, "
+              f"gamma: {param['gamma']}",
+              COLOR['None'])
+
+    print(COLOR['red'],
+          f'>>> train.score: {best_param[1]:.4f}, '
+          f"auc = {best_param[2]:.4f}, "
+          f"nu: {best_param[4]:.2f}, "
+          f"gamma: {best_param[5]}",
+          COLOR['None'], sep='')
+
+    return best_param[0]  # best_model
+
+
+def get_users_svm(session_dict, test_sessions,
+                  only_one_user=False, load_models=False, save_models=False):
+    users_svm = dict()
+    models_dir = r'../svm_models'
+    if not os.path.exists(models_dir):
+        os.makedirs(models_dir)
+    if load_models:
+        print('> SVM Loading...')
+        for path in glob.glob(f'{models_dir}/*_svm'):
+            user = os.path.basename(path)[:6]
+            with open(file=path, mode='rb') as f:
+                users_svm[user] = pickle.load(file=f)
+        return users_svm
+
     print('> SVM.fit')
     svm_start_time = time.time()
     for user, user_session in session_dict.items():
+        if user in ['user07', 'user09', 'user12', 'user15']: continue
         print(f'>> {user}')
         user_start_time = time.time()
-        users_svm[user] = fit_svm(user_session)
+        # vvvvvvvvvvvvv
+        users_svm[user] = fit_svm(user, user_session, test_sessions)
+        # ^^^^^^^^^^^^^
         print(f'>> {user} time: {time.time() - user_start_time:.3f} sec')
+        if save_models:
+            print('>> SVM Saving...')
+            with open(os.path.join(models_dir, user + '_svm'), mode='wb') as f:
+                pickle.dump(obj=users_svm[user], file=f)
         if only_one_user:
             print('>> [!] only_one_user')
             break
+
     print(f'> SVM.fit time: {time.time() - svm_start_time:.3f} sec')
     return users_svm
 
 
-def fit_svm(features_path):
-    features = None
-    for feature_path in features_path:
-        f = pd.read_csv(feature_path, sep=',', header=0).values
-        features = np.vstack((features, f)) if features is not None else f
-    print(f'>>> features.shape={features.shape}')
+def classify(users_svm, test_legal_sessions,
+             only_one_user=False):
+    print('> SVM.classify')
+    svm_start_time = time.time()
+    for user, svm_model in users_svm.items():
+        print(f'>> {user}')
+        user_start_time = time.time()
+        legal_features = load_features(test_legal_sessions[user])
+        for other_user in test_legal_sessions:
+            if other_user == user:
+                continue
+            other_user_features = load_features(test_legal_sessions[other_user])
+            pairwise_features = np.vstack((legal_features, other_user_features))
+            label = np.ones(pairwise_features.shape[0])
+            label[-other_user_features.shape[0]:] = -1
+            score = svm_model.decision_function(pairwise_features)
+            show_roc_curve(label, score, users=[user[-2:], other_user[-2:]], mode='show')
 
-    # https://scikit-learn.org/0.15/modules/generated/sklearn.svm.OneClassSVM.html
-    model = svm.OneClassSVM(kernel=SVM_KERNEL,
-                            degree=SVM_DEGREE,
-                            gamma=SVM_GAMMA)
-    model.fit(features)
-    return model
+        print(f'>> {user} time: {time.time() - user_start_time:.3f} sec')
+        if only_one_user:
+            print('>> [!] only_one_user')
+            break
+    print(f'> SVM.predict time: {time.time() - svm_start_time:.3f} sec')
 
 
-def classify(users_svm, train_session, test_legal_session, test_illegal_session):
-    pass
+def get_all_mean_roc_curve(users_svm, test_legal_sessions):
+    from scipy import interp
+
+    print('> SVM.mean_roc_curve')
+    for user, svm_model in users_svm.items():
+        print(f'>> {user}')
+        legal_features = load_features(test_legal_sessions[user])
+        tprs, aucs = list(), list()
+        mean_fpr = np.linspace(0, 1, 100)
+        fig, ax = plt.subplots(figsize=(8, 8))
+        for other_user in test_legal_sessions:
+            if other_user == user:
+                continue
+            other_user_features = load_features(test_legal_sessions[other_user])
+            pairwise_features = np.vstack((legal_features, other_user_features))
+            y_true = np.ones(pairwise_features.shape[0])
+            y_true[-other_user_features.shape[0]:] = -1
+            y_score = svm_model.decision_function(pairwise_features)
+            fpr, tpr, _ = roc_curve(y_true, y_score)
+            ax.plot(fpr, tpr, label=f"ROC fold {other_user}", alpha=0.3, lw=1)
+            interp_tpr = interp(x=mean_fpr, xp=fpr, fp=tpr)
+            interp_tpr[0] = 0.
+            tprs.append(interp_tpr)
+            aucs.append(auc(x=fpr, y=tpr))
+
+        ax.plot([0, 1], [0, 1], linestyle='--', lw=2, color='r',
+                label='Chance', alpha=0.8)
+        mean_tpr = np.mean(tprs, axis=0)
+        mean_tpr[-1] = 1.
+        ax.plot(mean_fpr, mean_tpr, color='b', lw=2, alpha=1,
+                label=f"Mean ROC (AUC = {auc(mean_fpr, mean_tpr):0.2f} \u00B1 {np.std(aucs):0.2f})")
+
+        std_tpr = np.std(tprs, axis=0)
+        tprs_upper = np.minimum(mean_tpr + std_tpr, 1)
+        tprs_lower = np.maximum(mean_tpr - std_tpr, 0)
+        ax.fill_between(mean_fpr, tprs_lower, tprs_upper, color='grey', alpha=.2,
+                        label='\u00B1 1 std. dev.')
+        ax.set(xlim=[-0.05, 1.05], ylim=[-0.05, 1.05],
+               title=f"ROC-curve {user}")
+        ax.legend(loc="lower right")
+        plt.show()
+        # plt.savefig(f'../roc/roc_{user}.png', format='png', bbox_inches='tight')
+        plt.close(fig)
 
 
 if __name__ == '__main__':
@@ -78,15 +254,20 @@ if __name__ == '__main__':
     test_features_path = r'../features/test_features'
     labels_path = r'../dataset/labels.csv'
 
+    if KEEP_LOG:
+        sys.stdout = open(file=LOG_FILE_NAME, mode='w')
+
     print('RUN')
     start_time = time.time()
 
     labels = pd.read_csv(labels_path)
     train_sessions = get_session_path(train_features_path)
-    users_svm = get_users_svm(train_sessions, only_one_user=True)
-
     test_sessions = get_session_path(test_features_path, labels)
-    test_legal_sessions, test_illegal_sessions = split_into_legal(test_sessions, labels)
-    # classify(users_svm, train_sessions, test_legal_sessions, test_illegal_sessions)
+    test_legal_sessions, _ = split_into_legal(test_sessions, labels)
+
+    users_svm = get_users_svm(train_sessions, test_legal_sessions,
+                              load_models=True, save_models=False)
+    get_all_mean_roc_curve(users_svm, test_legal_sessions)
+    # classify(users_svm, test_legal_sessions, only_one_user=False)
 
     print(f'run time: {time.time() - start_time:.3f}')
