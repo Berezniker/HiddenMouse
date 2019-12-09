@@ -32,11 +32,12 @@ LOG_FILE = None
 DEBUG = True
 
 
-def printf(*args, to_file=False, to_display=True):
+def printf(*args, to_file=True, to_display=True):
     global LOG_FILE, DEBUG
     if DEBUG:
         if to_file:
-            LOG_FILE.write(*args, '\n')
+            LOG_FILE.write(*args)
+            LOG_FILE.write('\n')
         if to_display:
             print(*args)
         if not (to_file or to_display):
@@ -157,13 +158,19 @@ def mean_angular_velocity(db):
 
 
 def database_preprocessing(db):
-    db.rename({'client timestamp': 'time'}, axis=1, inplace=True)
-    db.drop(['record timestamp', 'button', 'state'], axis=1, inplace=True)
+    # db.rename({'client timestamp': 'time'}, axis=1, inplace=True)
+    # db.drop(['record timestamp', 'button', 'state'], axis=1, inplace=True)
+    # print(f"db.size = {db.index.size}", end=" ")
     db.drop_duplicates(inplace=True)
+    # print(f"--drop_duplicates--> {db.index.size}", end=" ")
     db.drop_duplicates(subset='time', inplace=True)
-    # db.drop_duplicates(subset=['x', 'y'], inplace=True)
+    # print(f"--drop_time_duplicates--> {db.index.size}", end=" ")
+    diff = (db[['x', 'y']] - db[['x', 'y']].shift(1))
+    db.drop(db[np.all(diff == 0, axis=1)].index, inplace=True)
+    # print(f"--drop_xy_duplicates--> {db.index.size}", end=" ")
     db.drop(db[db.x > 2000].index, inplace=True)
     db.drop(db[db.y > 1200].index, inplace=True)
+    # print(f"--drop_outliers--> {db.index.size}")
 
 
 # TODO need to speed up
@@ -172,7 +179,6 @@ def split_dataframe(db, time_threshold=3, min_n_actions=5):
     while time + time_threshold < max_time:
         one_split = db.loc[(db.time >= time) & (db.time <= time + time_threshold)]
         time = db.loc[db.time > time + time_threshold].time.values[0]
-        one_split.drop_duplicates(subset=['x', 'y'], inplace=True)
         if one_split.index.size > min_n_actions:
             yield one_split
     if db.loc[db.time >= time].index.size > min_n_actions:
@@ -201,9 +207,9 @@ def extract_features(database, only_one_segment=False, only_one_feature=False):
     return features
 
 
-def run(mode, only_one_user=False, only_one_session=False, save_features=True):
-    data_path = f'../dataset/{mode}_files'
-    save_path = f'../features/{mode}_features'
+def run(mode, data_path, save_path=None,
+        only_one_user=False, only_one_session=False, save_features=False):
+    save_path = f'../features/{mode}_features' if save_path is None else save_path
 
     for user in glob.glob(os.path.join(data_path, 'user*')):
         user_start_time = t.time()
@@ -237,12 +243,14 @@ if __name__ == '__main__':
     start_time = t.time()
     printf('train: RUN!')
     train_start_time = t.time()
-    run('train', only_one_user=False)
+    # run(mode='train', data_path='../dataset/train_files', save_features=True)
+    run(mode='train', data_path='../dataset2/train_files',
+        save_path='../features2/train_features', save_features=True)
     printf(f'train_time: {t.time() - train_start_time:.3f} sec')
     printf('\n')
     printf('test: RUN!')
     test_start_time = t.time()
-    run('test', only_one_user=False)
+    # run(mode='test', data_path='../dataset/test_files', save_features=True)
     printf(f'test_time: {t.time() - test_start_time:.3f} sec')
     printf('\n')
     printf(f'main_time: {t.time() - start_time:.3f} sec')
