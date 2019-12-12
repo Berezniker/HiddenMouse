@@ -48,13 +48,13 @@ def get_bin(dist, threshold=1000):
     if dist < 0:
         return -1
     elif dist <= threshold:
-        return dist % (threshold // 20)
+        return dist % 20
     elif dist <= 2 * threshold:
-        return 20 + dist % (threshold // 10)
+        return 20 + dist % 10
     elif dist <= 3 * threshold:
-        return 30 + dist % (threshold // 5)
+        return 30 + dist % 5
     elif dist <= 4 * threshold:
-        return 35 + dist % (threshold // 2)
+        return 35 + dist % 2
     else:
         return 38
 
@@ -71,10 +71,10 @@ def get_det(db):
     return det
 
 
-def direction_bin(db):
+def direction_bin(db, n_bin=8):
     grad_x, grad_y = get_grad(db.x.values), get_grad(db.y.values)
     direction = np.rad2deg(np.arctan2(grad_y, grad_x)) + 180
-    direction = (direction % 8).round().astype(np.uint8)
+    direction = (direction % n_bin).astype(np.uint8)
     return np.argmax(np.bincount(direction))
 
 
@@ -84,7 +84,7 @@ def actual_distance(db):
 
 
 def actual_distance_bin(db, threshold=1000):
-    return get_bin(actual_distance(db), threshold=threshold)
+    return get_bin(actual_distance(db), threshold=threshold).astype(np.uint8)
 
 
 def curve_length(db):
@@ -130,13 +130,13 @@ def mean_movement_variability(db):
 
 
 def mean_curvature(db):
-    return (np.arctan2(db.y, db.x) / (db.x ** 2 + db.y ** 2) ** 0.5).mean()
+    return (np.arctan2(db.y, db.x) / (db.x ** 2 + db.y ** 2) ** 0.5).mean() * 1000
 
 
 def mean_curvature_change_rate(db):
     return (np.arctan2(db.y.iloc[:-1].values, db.x.iloc[:-1].values) /
             (((db.x.iloc[-1] - db.x.iloc[:-1].values) ** 2 +
-              (db.y.iloc[-1] - db.y.iloc[:-1].values) ** 2) ** 0.5 + EPS)).mean()
+                  (db.y.iloc[-1] - db.y.iloc[:-1].values) ** 2) ** 0.5 + EPS)).mean() * 100
 
 
 def mean_curvature_velocity(db):
@@ -158,8 +158,8 @@ def mean_angular_velocity(db):
 
 
 def database_preprocessing(db):
-    # db.rename({'client timestamp': 'time'}, axis=1, inplace=True)
-    # db.drop(['record timestamp', 'button', 'state'], axis=1, inplace=True)
+    db.rename({'client timestamp': 'time'}, axis=1, inplace=True)
+    db.drop(['record timestamp', 'button', 'state'], axis=1, inplace=True)
     # print(f"db.size = {db.index.size}", end=" ")
     db.drop_duplicates(inplace=True)
     # print(f"--drop_duplicates--> {db.index.size}", end=" ")
@@ -171,6 +171,12 @@ def database_preprocessing(db):
     db.drop(db[db.x > 2000].index, inplace=True)
     db.drop(db[db.y > 1200].index, inplace=True)
     # print(f"--drop_outliers--> {db.index.size}")
+
+
+def OneHotEncoder(x, n_classes=8, prefix='bin'):
+    data = np.eye(n_classes)[x]
+    columns = [f"{prefix}_{i}" for i in range(n_classes)]
+    return pd.DataFrame(data=data, columns=columns, dtype=np.uint8)
 
 
 # TODO need to speed up
@@ -209,7 +215,8 @@ def extract_features(database, only_one_segment=False, only_one_feature=False):
 
 def run(mode, data_path, save_path=None,
         only_one_user=False, only_one_session=False, save_features=False):
-    save_path = f'../features/{mode}_features' if save_path is None else save_path
+    if save_path is None:
+        save_path = f'../features/{mode}_features'
 
     for user in glob.glob(os.path.join(data_path, 'user*')):
         user_start_time = t.time()
@@ -221,18 +228,20 @@ def run(mode, data_path, save_path=None,
             session_name = os.path.basename(session)
             # vvvvvv
             features = pd.DataFrame(extract_features(pd.read_csv(session)))
+            features = features.join(OneHotEncoder(features.pop('direction_bin').values))
+            features = features.join(OneHotEncoder(features.pop('actual_distance_bin').values,
+                                                   n_classes=38, prefix='ad_bin'))
             # ^^^^^^
             if save_features:
                 session_dir = os.path.join(save_path, user_name)
                 if not os.path.exists(session_dir):
                     os.makedirs(session_dir)
-                features.to_csv(os.path.join(session_dir, session_name),
-                                index=False)
-            printf(f'>> [{i:03}/{n_session}] {session_name} time: {t.time() - session_start_time:.3f} sec')
+                features.to_csv(os.path.join(session_dir, session_name), index=False)
+            printf(f'>> [{i:03}/{n_session}] {session_name} time: {t.time() - session_start_time:6.3f} sec')
             if only_one_session:
                 printf('>> [!] only_one_session')
                 break
-        printf(f'> {user_name} time: {t.time() - user_start_time:.3f} sec')
+        printf(f'> {user_name} time: {t.time() - user_start_time:.3f} sec\n')
         if only_one_user or only_one_session:
             printf('> [!] only_one_user')
             break
@@ -243,15 +252,14 @@ if __name__ == '__main__':
     start_time = t.time()
     printf('train: RUN!')
     train_start_time = t.time()
-    # run(mode='train', data_path='../dataset/train_files', save_features=True)
-    run(mode='train', data_path='../dataset2/train_files',
-        save_path='../features2/train_features', save_features=True)
-    printf(f'train_time: {t.time() - train_start_time:.3f} sec')
-    printf('\n')
+    run(mode='train', data_path='../dataset/train_files', save_features=True)
+    # for dataset2:
+    # run(mode='train', data_path='../dataset2/train_files',
+    #     save_path='../features2/train_features', save_features=True)
+    printf(f'train_time: {t.time() - train_start_time:.3f} sec\n\n')
     printf('test: RUN!')
     test_start_time = t.time()
-    # run(mode='test', data_path='../dataset/test_files', save_features=True)
-    printf(f'test_time: {t.time() - test_start_time:.3f} sec')
-    printf('\n')
+    run(mode='test', data_path='../dataset/test_files', save_features=True)
+    printf(f'test_time: {t.time() - test_start_time:.3f} sec\n')
     printf(f'main_time: {t.time() - start_time:.3f} sec')
     LOG_FILE.close()
