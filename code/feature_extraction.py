@@ -1,9 +1,9 @@
+from itertools import chain
 import pandas as pd
 import numpy as np
 import time as t
 import glob
 import os
-
 
 ######################################################################
 # Balabit dataset
@@ -136,7 +136,7 @@ def mean_curvature(db):
 def mean_curvature_change_rate(db):
     return (np.arctan2(db.y.iloc[:-1].values, db.x.iloc[:-1].values) /
             (((db.x.iloc[-1] - db.x.iloc[:-1].values) ** 2 +
-                  (db.y.iloc[-1] - db.y.iloc[:-1].values) ** 2) ** 0.5 + EPS)).mean() * 100
+              (db.y.iloc[-1] - db.y.iloc[:-1].values) ** 2) ** 0.5 + EPS)).mean() * 100
 
 
 def mean_curvature_velocity(db):
@@ -157,20 +157,128 @@ def mean_angular_velocity(db):
     return (angle / (db.time.iloc[2:].values - db.time.iloc[:-2].values + EPS)).mean()
 
 
-def database_preprocessing(db):
+""" -------------------- start ArsFeatures -------------------- """
+
+
+def start_x(db):
+    return db.x.iloc[0]
+
+
+def start_y(db):
+    return db.y.iloc[0]
+
+
+def stop_x(db):
+    return db.x.iloc[-1]
+
+
+def stop_y(db):
+    return db.y.iloc[-1]
+
+
+def velocity_x(db):
+    return (db.x.iloc[:-1].values - db.x.iloc[1:].values) / (db.time.iloc[1:].values - db.time.iloc[:-1].values + EPS)
+
+
+def velocity_y(db):
+    return (db.y.iloc[:-1].values - db.y.iloc[1:].values) / (db.time.iloc[1:].values - db.time.iloc[:-1].values + EPS)
+
+
+def velocity(db):
+    return (velocity_x(db) ** 2 + velocity_y(db) ** 2) ** 0.5
+
+
+def acceleration(db):
+    dt = db.time.iloc[1:].values - db.time.iloc[:-1].values + EPS
+    return velocity(db) / dt
+
+
+def max_acceleration(db):
+    return acceleration(db).max()
+
+
+def min_acceleration(db):
+    return acceleration(db).max()
+
+
+def std_acceleration(db):
+    return acceleration(db).std()
+
+
+def elapsed_time(db):
+    return db.time.iloc[-1] - db.time.iloc[0]
+
+
+def mean_vx(db):
+    return velocity_x(db).mean()
+
+
+def mean_vy(db):
+    return velocity_y(db).mean()
+
+
+def std_vx(db):
+    return velocity_x(db).std()
+
+
+def std_vy(db):
+    return velocity_y(db).std()
+
+
+def max_vx(db):
+    return velocity_x(db).max()
+
+
+def max_vy(db):
+    return velocity_y(db).max()
+
+
+def min_vx(db):
+    return velocity_x(db).min()
+
+
+def min_vy(db):
+    return velocity_y(db).min()
+
+
+def max_v(db):
+    return velocity(db).max()
+
+
+def min_v(db):
+    return velocity(db).min()
+
+
+def std_v(db):
+    return velocity(db).std()
+
+
+def point_count(db):
+    return db.index.size
+
+
+""" -------------------- end ArsFeatures -------------------- """
+
+
+def database_preprocessing(db, check_size=False):
     db.rename({'client timestamp': 'time'}, axis=1, inplace=True)
     db.drop(['record timestamp', 'button', 'state'], axis=1, inplace=True)
-    # print(f"db.size = {db.index.size}", end=" ")
+    if check_size:
+        print(f"db.size = {db.index.size}", end=" ")
     db.drop_duplicates(inplace=True)
-    # print(f"--drop_duplicates--> {db.index.size}", end=" ")
+    if check_size:
+        print(f"--(drop_duplicates)--> {db.index.size}", end=" ")
     db.drop_duplicates(subset='time', inplace=True)
-    # print(f"--drop_time_duplicates--> {db.index.size}", end=" ")
+    if check_size:
+        print(f"--(drop_time_duplicates)--> {db.index.size}", end=" ")
     diff = (db[['x', 'y']] - db[['x', 'y']].shift(1))
     db.drop(db[np.all(diff == 0, axis=1)].index, inplace=True)
-    # print(f"--drop_xy_duplicates--> {db.index.size}", end=" ")
+    if check_size:
+        print(f"--(drop_xy_duplicates)--> {db.index.size}", end=" ")
     db.drop(db[db.x > 2000].index, inplace=True)
     db.drop(db[db.y > 1200].index, inplace=True)
-    # print(f"--drop_outliers--> {db.index.size}")
+    if check_size:
+        print(f"--(drop_outliers)--> {db.index.size}")
 
 
 def OneHotEncoder(x, n_classes=8, prefix='bin'):
@@ -193,16 +301,21 @@ def split_dataframe(db, time_threshold=3, min_n_actions=5):
 
 def extract_features(database, only_one_segment=False, only_one_feature=False):
     database_preprocessing(database)
-    extraction_function = [
+    extraction_function = list([
         direction_bin, actual_distance, actual_distance_bin,
         curve_length, curve_length_bin, length_ratio, actual_speed, curve_speed,
         curve_acceleration, mean_movement_offset, mean_movement_error,
         mean_curvature, mean_curvature_change_rate, mean_curvature_velocity,
         mean_curvature_velocity_change_rate, mean_angular_velocity
-    ]
+    ])
+    ars_extracrion_function = list([
+        start_x, start_y, stop_x, stop_y, max_acceleration, min_acceleration,
+        std_acceleration, elapsed_time, mean_vx, std_vx, min_vx, max_vx,
+        mean_vy, std_vy, min_vy, max_vy, min_v, max_v, std_v, point_count
+    ])
     features = dict()
     for i, segment in enumerate(split_dataframe(database), 1):
-        for extractor in extraction_function:
+        for extractor in chain(extraction_function, ars_extracrion_function):
             features.setdefault(extractor.__name__, []).append(extractor(segment))
             if only_one_feature:
                 printf('>>>> [!] only_one_feature')
