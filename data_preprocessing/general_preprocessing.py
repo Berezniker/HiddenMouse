@@ -12,26 +12,25 @@ def clear_directory(path: str) -> None:
         if key.upper() == 'Y':
             shutil.rmtree(path)
         else:
-            exit(-1)
+            exit(0)
 
 
 def preprocessing(database: pd.DataFrame,
-                  inplace: bool = True,
                   check_size: bool = False) -> pd.DataFrame:
     if check_size:
         print(f"database.size = {database.index.size}", end=" ")
-    database.drop_duplicates(inplace=inplace)
+    database.drop_duplicates(inplace=True)
     if check_size:
         print(f"--(drop_duplicates)--> {database.index.size}", end=" ")
-    database.drop_duplicates(subset='time', inplace=inplace)
+    database.drop_duplicates(subset='time', inplace=True)
     if check_size:
         print(f"--(drop_time_duplicates)--> {database.index.size}", end=" ")
     diff = (database[['x', 'y']] - database[['x', 'y']].shift(1))
-    database.drop(database[np.all(diff == 0, axis=1)].index, inplace=inplace)
+    database.drop(database[np.all(diff == 0, axis=1)].index, inplace=True)
     if check_size:
         print(f"--(drop_xy_duplicates)--> {database.index.size}", end=" ")
-    database.drop(database[database.x > 2000].index, inplace=inplace)
-    database.drop(database[database.y > 1200].index, inplace=inplace)
+    database.drop(database[database.x > 2000].index, inplace=True)
+    database.drop(database[database.y > 1200].index, inplace=True)
     if check_size:
         print(f"--(drop_outliers)--> {database.index.size}")
     return database

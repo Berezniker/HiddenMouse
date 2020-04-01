@@ -143,15 +143,15 @@ if __name__ == '__main__':
     start_time = time.time()
     printf("train: RUN!")
     train_start_time = time.time()
-    # run(data_path="../../dataset/BALABIT/train_files", save_features=True)
-    run(data_path="../../dataset/DATAIIT/train_files", save_features=True)
+    run(data_path="../../dataset/BALABIT/train_files", save_features=True)
+    # run(data_path="../../dataset/DATAIIT/train_files", save_features=True)
     # run(data_path="../../dataset/TWOS/train_files", save_features=True)
     printf(f"train_time: {(time.time() - train_start_time) / 60.0:.1f} min\n\n")
 
     printf("test: RUN!")
     test_start_time = time.time()
     # run(data_path="../../dataset/BALABIT/test_files", save_features=True)
-    run(data_path="../../dataset/DATAIIT/test_files", save_features=True)
+    # run(data_path="../../dataset/DATAIIT/test_files", save_features=True)
     # run(data_path="../../dataset/TWOS/test_files", save_features=True)
     printf(f"test_time: {(time.time() - test_start_time) / 60.0:.1f} min\n")
 

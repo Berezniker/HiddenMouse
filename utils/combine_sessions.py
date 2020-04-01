@@ -16,8 +16,8 @@ def combine_sessions(root_directory: str = '../../dataset',
             for user_path in glob.glob(os.path.join(feature_path, 'user*')):
                 if verbose >= 3: print(os.path.basename(user_path), end=' ')
                 features = None
-                for session_path in glob.glob(os.path.join(user_path, 'session*')):
-                    f = pd.read_csv(session_path, sep=',', header=0).values
+                for session_path in glob.glob(os.path.join(user_path, 'session_[0-9]*')):
+                    f = pd.read_csv(session_path, sep=',').values
                     features = np.vstack((features, f)) if features is not None else f
                 save_path = os.path.join(user_path, final_name)
                 pd.DataFrame(features).to_csv(save_path, index=False, header=False)

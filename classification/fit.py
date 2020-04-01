@@ -1,6 +1,6 @@
 from sklearn.model_selection import ParameterGrid
 from sklearn.metrics import roc_curve, roc_auc_score, auc
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, PowerTransformer, QuantileTransformer
 from sklearn.ensemble import IsolationForest, GradientBoostingClassifier
 from sklearn.neighbors import LocalOutlierFactor
 from sklearn.covariance import EllipticEnvelope
@@ -30,9 +30,10 @@ https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSe
 https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.ParameterGrid.html
 """
 
+N_FEATURES = 79
 ALL_TEST_FEATURES = None
 USERS_FEATURES_SLICE = dict()
-SCALER = None
+preprocessingFunction = None
 
 
 def get_session_path(data_path: str,
@@ -46,7 +47,7 @@ def get_session_path(data_path: str,
 
 
 def load_features(feature_path: str) -> np.array:
-    return pd.read_csv(feature_path, sep=',', header=0).values[:, :16]
+    return pd.read_csv(feature_path, sep=',', header=0).values[:, :N_FEATURES]
 
 
 def load_all_test_features(test_sessions: dict) -> np.array:
@@ -55,40 +56,36 @@ def load_all_test_features(test_sessions: dict) -> np.array:
         user_features = load_features(test_sessions[user])
         if ALL_TEST_FEATURES is None:
             USERS_FEATURES_SLICE[user] = slice(0, user_features.shape[0])
+            ALL_TEST_FEATURES = user_features
         else:
             offset = ALL_TEST_FEATURES.shape[0]
             USERS_FEATURES_SLICE[user] = slice(offset, offset + user_features.shape[0])
-        ALL_TEST_FEATURES = np.vstack((ALL_TEST_FEATURES, user_features)) \
-            if ALL_TEST_FEATURES is not None else user_features
+            ALL_TEST_FEATURES = np.vstack((ALL_TEST_FEATURES, user_features))
     return ALL_TEST_FEATURES
 
 
-def get_legal_test_features_for_user(user: str):
-    global ALL_TEST_FEATURES, USERS_FEATURES_SLICE
+def get_legal_test_features_for_user(user: str) -> np.array:
     return ALL_TEST_FEATURES[USERS_FEATURES_SLICE[user]]
 
 
-def get_all_illegal_test_features_for_user(user: str):
-    global ALL_TEST_FEATURES, USERS_FEATURES_SLICE
+def get_all_illegal_test_features_for_user(user: str) -> np.array:
     return np.delete(ALL_TEST_FEATURES, USERS_FEATURES_SLICE[user], axis=0)
 
 
 def get_pairwise_score(model,
                        user_name: str,
-                       test_sessions: dict,
                        print_score: bool = False):
-    global SCALER
+    global preprocessingFunction
     auc, accuracy, frr, far = list(), list(), list(), list()
     legal_features = get_legal_test_features_for_user(user_name)
-    # legal_features = legal_features[-int(legal_features.shape[0] * 0.3):]
     all_illegal_features = get_all_illegal_test_features_for_user(user_name)
     all_illegal_features = shuffle(all_illegal_features)
 
     n_fold = all_illegal_features.shape[0] // legal_features.shape[0]
     for illegal_features in np.array_split(all_illegal_features, n_fold):
         pairwise_features = np.vstack((legal_features, illegal_features))
-        if SCALER is not None:
-            pairwise_features = SCALER.transform(pairwise_features)
+        if preprocessingFunction is not None:
+            pairwise_features = preprocessingFunction.transform(pairwise_features)
         y_true = np.ones(pairwise_features.shape[0])
         y_true[legal_features.shape[0]:] = -1
         y_score = model.decision_function(pairwise_features)
@@ -106,12 +103,19 @@ def get_pairwise_score(model,
         return np.mean(auc), np.mean(accuracy), np.mean(frr), np.mean(far)
 
 
+def drop_outliers(features: np.array,
+                  verbose: bool) -> np.array:
+    inliners = LocalOutlierFactor().fit_predict(X=features)
+    if verbose:
+        print(f">>> LocalOutlierFactor: {np.sum(inliners == -1)} outlayers found")
+    return features[np.argwhere(inliners == 1).squeeze()]
+
+
 def classic_model(user_name: str,
                   user_features_path: str,
                   test_sessions: dict,
-                  mode: str) -> object:
+                  mode: str):
     features = load_features(user_features_path)
-    # features = features[:int(features.shape[0] * 0.7)]
     if mode == 'if':
         param_grid = ParameterGrid(param_grid={
             'n_estimators': [1],
@@ -161,11 +165,11 @@ def classic_model(user_name: str,
         # features2_5sec:
         # features2_10sec:
         # features2_15sec: FRR = 24.0 ± 6.1 %, FAR = 20.5 ± 5.8 %
-    else:  # mode == 'svm'
+    elif mode == 'svm':
         param_grid = ParameterGrid(param_grid={
             'kernel': ['rbf'],
             'gamma': ['scale'],  # 'scale' ~ gamma=1/(n_features * X.var())
-            'nu': np.linspace(0.20, 0.05, 16),  # [0.20, 0.15, 0.10, 0.208],
+            'nu': np.linspace(0.20, 0.05, 4),  # [0.20, 0.15, 0.10, 0.208],
             'shrinking': [True]
             # 'degree', 'coef0', 'tol': ignored
         })
@@ -179,13 +183,13 @@ def classic_model(user_name: str,
 
     # (model, train_score, auc, accuracy, FRR, FAR, **param_grid)
     best_param = (None, 0, 0, 0, 1, 1, ...)
-    inliners = LocalOutlierFactor().fit_predict(X=features)
-    features = features[np.argwhere(inliners == 1).squeeze()]
-    print(f">>> {np.sum(inliners == 0)} outlayers found")
+    features = drop_outliers(features, verbose=True)
 
-    # global SCALER
-    # SCALER = StandardScaler().fit(features)
-    # features = SCALER.transform(features)
+    global preprocessingFunction
+    # preprocessingFunction = StandardScaler()
+    # preprocessingFunction = PowerTransformer()
+    preprocessingFunction = QuantileTransformer()
+    features = preprocessingFunction.fit_transform(features)
 
     for param in param_grid:
         model = OneClassSVM(**param) if mode == 'svm' else \
@@ -194,8 +198,8 @@ def classic_model(user_name: str,
               (LocalOutlierFactor(**param))))
         model.fit(X=features)
         train_score = np.mean(model.predict(features) == 1)
-        auc, acc, frr, far = get_pairwise_score(model, user_name, test_sessions)
-        if (0.5 * frr + far) / 2 < (0.5 * best_param[4] + best_param[5]) / 2:
+        auc, acc, frr, far = get_pairwise_score(model, user_name)
+        if (frr + far) < (best_param[4] + best_param[5]):
             if mode == 'svm':
                 best_param = (model, train_score, auc, acc, frr, far, param['kernel'], param['nu'], param['gamma'])
             elif mode == 'if':
@@ -245,7 +249,7 @@ def classic_model(user_name: str,
                       f"contamination: {param['contamination']}, "
                       f"novelty: {param['novelty']}",
                       COLOR['none'], sep='')
-            else:  # mode == 'svm'
+            elif mode == 'svm':
                 print(f">>> train.score: {train_score:.4f}, "
                       f"auc = {auc:.3f}, "
                       f"acc = {acc:.3f}, "
@@ -293,7 +297,7 @@ def classic_model(user_name: str,
               f"contamination: {best_param[9]}, "
               f"novelty: {best_param[10]}",
               COLOR['none'], sep='')
-    else:  # mode == 'svm'
+    elif mode == 'svm':
         print(COLOR['red'],
               f'>>> train.score: {best_param[1]:.4f}, '
               f"auc = {best_param[2]:.4f}, "
@@ -308,7 +312,9 @@ def classic_model(user_name: str,
     return best_param[0]  # ~ best_model
 
 
-def boost(user_name, user_features_path, test_sessions, mode=None):
+def boost(user_name: str,
+          user_features_path: str,
+          test_sessions: dict):
     legal_features = load_features(user_features_path)
     illegal_features = get_all_illegal_test_features_for_user(user_name)
     illegal_features = shuffle(illegal_features)
@@ -327,7 +333,7 @@ def boost(user_name, user_features_path, test_sessions, mode=None):
         X = np.vstack((legal_features, X))
         _X, _y = shuffle(X, y)
         GBM.fit(_X, _y)
-        _, _, frr, far = get_pairwise_score(GBM, user_name, test_sessions)
+        _, _, frr, far = get_pairwise_score(GBM, user_name)
         if far < best_param[2]:
             best_param = (GBM, frr, far, GBM.feature_importances_, param)
             print(COLOR['yellow'], end='')
@@ -350,7 +356,7 @@ def get_users_model(session_dict: dict,
                     prefix: str = 'svm',
                     only_one_user: bool = False,
                     load_models: bool = False,
-                    save_models: bool = False):
+                    save_models: bool = False) -> dict:
     fit_model = classic_model
     if prefix == 'svm':
         print('> mode: OneClassSVM')
@@ -400,7 +406,9 @@ def get_users_model(session_dict: dict,
     return users_model
 
 
-def get_all_mean_roc_curve(users_model, test_legal_sessions, mode='show'):
+def get_all_mean_roc_curve(users_model: dict,
+                           test_legal_sessions: dict,
+                           mode: str = 'show') -> None:
     print('> Model.mean_roc_curve')
     mean_mean_tpr = list()
     mean_auc, std_auc = list(), list()
@@ -478,7 +486,8 @@ def get_all_mean_roc_curve(users_model, test_legal_sessions, mode='show'):
     plt.close(fig)
 
 
-def print_score(users_model, test_legal_sessions):
+def print_score(users_model: dict,
+                test_legal_sessions: dict) -> None:
     FRR, FAR = list(), list()
     for user, user_model in users_model.items():
         print(f'>> {user}')
@@ -488,8 +497,8 @@ def print_score(users_model, test_legal_sessions):
                 continue
             other_user_features = get_legal_test_features_for_user(other_user)
             pairwise_features = np.vstack((legal_features, other_user_features))
-            if SCALER is not None:
-                pairwise_features = SCALER.transform(pairwise_features)
+            if preprocessingFunction is not None:
+                pairwise_features = preprocessingFunction.transform(pairwise_features)
             y_true = np.ones(pairwise_features.shape[0])
             y_true[-other_user_features.shape[0]:] = -1
             y_score = user_model.predict(pairwise_features)
@@ -500,8 +509,8 @@ def print_score(users_model, test_legal_sessions):
 
 
 if __name__ == '__main__':
-    # root_path = '../../dataset/BALABIT' # 0.53
-    root_path = '../../dataset/DATAIIT'
+    root_path = '../../dataset/BALABIT'
+    # root_path = '../../dataset/DATAIIT'
     # root_path = '../../dataset/TWOS'
     dataset_name = os.path.basename(root_path)
     train_features_path = os.path.join(root_path, 'train_features')
@@ -510,14 +519,14 @@ if __name__ == '__main__':
     print(f"{COLOR['italics']}{dataset_name}{COLOR['none']} Run!")
     start_time = time.time()
 
-    train_sessions = get_session_path(train_features_path)
-    test_sessions = get_session_path(test_features_path)
+    train_sessions = get_session_path(train_features_path, session_name='session_all')
+    test_sessions = get_session_path(test_features_path, session_name='session_all')
     load_all_test_features(test_sessions)
 
     users_model = get_users_model(train_sessions, test_sessions, prefix='svm',
                                   load_models=False, save_models=False)
 
-    get_all_mean_roc_curve(users_model, test_sessions)
+    # get_all_mean_roc_curve(users_model, test_sessions)
     print_score(users_model, test_sessions)
 
     print(f'End, time: {time.time() - start_time:.3f}')

@@ -26,7 +26,6 @@ def balabit_preprocessing(data_dir: str = "../../original_dataset/BALABIT_origin
     drop_fields = ['record timestamp', 'button', 'state']
 
     labels = pd.read_csv(labels_path)
-
     clear_directory(save_dir)
 
     for path in glob.glob(os.path.join(data_dir, '*files')):

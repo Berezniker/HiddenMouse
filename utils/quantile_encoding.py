@@ -7,11 +7,13 @@ import os
 
 
 def quantile_encoding(root_directory: str = '../../dataset',
+                      dataset: str = None,
                       final_name: str = 'session_all_quantile',
                       n_quantiles: int = 4,
                       verbose: int = 0) -> None:
     final_name = f"{final_name}_{n_quantiles}"
-    for dataset_path in glob.glob(os.path.join(root_directory, '*')):
+    dataset = dataset if dataset is not None else '*'
+    for dataset_path in glob.glob(os.path.join(root_directory, dataset)):
         if verbose >= 1: print(f"> {os.path.basename(dataset_path)}")
         for feature_path in glob.glob(os.path.join(dataset_path, 'train_features')):
             if verbose >= 3: print(">>>", end=' ')
@@ -39,5 +41,5 @@ def quantile_encoding(root_directory: str = '../../dataset',
 if __name__ == '__main__':
     start_time = time.time()
     print('Run!')
-    quantile_encoding(verbose=3)
+    quantile_encoding(verbose=3, n_quantiles=10)
     print(f'End, time: {time.time() - start_time:.3f} sec')
