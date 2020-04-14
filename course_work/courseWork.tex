@@ -163,13 +163,13 @@
 
     \par Согласно [TODO] и [TODO], Решение об аутентификации должно основываться на результате процесса сопоставления вновь представленных биометрических данных с предварительно сохраненными эталонными шаблонами. \\
 
-    \noindent\textsc{Коэффициент ложных отклонений} \\
+    \par \textsc{Коэффициент ложных отклонений} \\
     \noindent Коэффициент ложных отклонений (FRR: False Rejection Rate) - это доля случаев, когда биометрическая система не предоставляет доступ легитимному пользователю. В статистическом смысле, FRR - это ошибка I рода. FRR также известен как частота ложных несовпадений (FNMR: False Non Match Rate). \\
 
-    \noindent\textsc{Коэффициент ложного принятия} \\
+    \par \textsc{Коэффициент ложного принятия} \\
     \noindent Биометрическая безопасность использует коэффициент ложного принятия (FAR: False Acceptance Rate) для доли случаев, когда система предоставляет доступ неуполномоченному лицу. С точки зрения статистики, FAR - это ошибка II рода. Этот коэффициент также известен как частота ложных совпадений (FMR: False Match Rate). \\
 
-    \noindent\textsc{Равный коэффициент ошибок} \\
+    \par \textsc{Равный коэффициент ошибок} \\
     \noindent Одним из способов обобщить рабочие характеристики биометрической системы безопасности является рассмотрение коэффициента переходных ошибок (CER: Crossover Error Rate), также известного как равный коэффициент ошибок (EER: Equal Error Rate). Это состояние, при котором ошибки FAR и FRR равны. EER дает возможность сравнивать системы. Чем меньше EER, тем лучше. Меньшее значение EER означает, что можно настроить систему так, чтобы частота ошибок как для I рода, так и для II рода была меньше. \\
 
     \par В приложениях безопасности FAR (неавторизованный доступ) хуже, чем FRR (блокировка авторизованного пользователя). Первое может стать катастрофой, а второе - неудобством. Конечно, может быть контекст, в котором последствия FAR и FRR равны или что FRR хуже, но обычно это не так. \\
@@ -182,7 +182,7 @@
     \end{figure}
     \vspace{10mm}
 
-    \noindent\textsc{Рабочая характеристика системы} \\
+    \par \textsc{Рабочая характеристика системы} \\
     \noindent Рабочая характеристика системы (ROC: Receiver operating characteristic) или ROC-кривая - это график компромисса между характеристиками FAR и FRR. В общем случае алгоритм принимает решение на основе порогового значения, которое определяет, насколько близко к эталону должен быть вход, чтобы его можно было считать совпадающим. Если порог уменьшится, будет меньше ложных отклонений, но больше ложных принятий. И наоборот, более высокий порог уменьшит FAR, но увеличит FRR. Качество оценивают как площадь под ROC кривой (ROC AUC: area under ROC curve).
 
     \begin{figure}[hb]
@@ -192,12 +192,12 @@
         \label{sec:Overview:Metrics:fig:EER_ROC}
     \end{figure}
 
-    \par Кроме того авторы [TODO] верно заметили, что для системы на самом деле важно знать не только об обнаружении нарушителя, но и когда было совершено внедрение, т.е. сколько действий нарушитель был в состоянии совершить до обнаружения. Поэтому они предложили использовать следующие характеристики для оценки эффективности работы системы: \\
+    \par Кроме того авторы \cite{Mondal} верно заметили, что для системы на самом деле важно знать не только об обнаружении нарушителя, но и когда было совершено внедрение, т.е. сколько действий нарушитель был в состоянии совершить до обнаружения. Поэтому они предложили использовать следующие характеристики для оценки эффективности работы системы: \\
 
-    \noindent\textsc{Среднее количество действий самозванца} \\
+    \par \textsc{Среднее количество действий самозванца} \\
     Среднее количество действия самозванца (ANIA: Average Number of Imposter Actions) показывает сколько действий успеет совершить нарушитель до того момента, как он будет заблокирован системой. \\
 
-    \noindent\textsc{Среднее количество подлинных действий} \\
+    \par \textsc{Среднее количество подлинных действий} \\
     Среднее количество подлинных действий (ANGA: Average Number of Genuine Actions) характеризует количество действий авторизованного пользователя до его ошибочной блокировки системой. \\
 
     \par В данных терминах система будет обладать лучшими качествами при минимизации ANIA и максимизации ANGA.
@@ -216,7 +216,7 @@
         \item Кривизна кривой перемещения.
     \end{enumerate}
 
-    \par Авторы [TODO] предлагают использовать признаки, указанные в Таблице~\ref{sec:Overview:Features:table:FeaturesFormulas}
+    \par Авторы \cite{Mondal} предлагают использовать признаки, указанные в Таблице~\ref{sec:Overview:Features:table:FeaturesFormulas}
     
     \begin{table}[h]
         \centering
@@ -308,7 +308,7 @@
     \subsubsection{Структура данных}
     \label{sec:Research:Data:Struct}
     
-    \par Набор данных был разбит на тренировочную и тестовую части в соотношении 4 к 1. Каждая часть содержит в себе записи об авторизированных сеансах всех пользователей из множества $\mathfrak{U}=\{U_1, \ldots, U_j, \ldots, U_q\}$. Работа пользователя разбита на сессии разной продолжительности $U_j = \{S_1, \ldots, S_i, \ldots, S_m\}$ с записями вида $S_i = \text{(time, xpos, ypos)}$. Далее каждую сессию мы разбиваем на сегменты с ограничением по временному порогу сверху и по минимальному количеству действий в этот промежуток времени снизу. По полученному сегменту строится один вектор признаков. \\
+    \par Набор данных был разбит на тренировочную и тестовую части в соотношении 4 к 1. Каждая часть содержит в себе записи об авторизированных сеансах всех пользователей из множества $\mathfrak{U}=\{U_1, \ldots, U_j, \ldots, U_q\}$. Работа пользователя разбита на сессии разной продолжительности $U_j = \{S_1, \ldots, S_i, \ldots, S_m\}$, где каждая сессия $S_i \in U_j$ содержит записи вида $(time, xpos, ypos)$. Далее каждую сессию мы разбиваем на сегменты с ограничением по временному порогу сверху (назовём эту операцию T-Time Split) и по минимальному количеству действий в этот промежуток времени снизу. По полученному сегменту строится один вектор признаков. \\
     \par Графическая визуализация структуры данных представлена на Рис.~\ref{sec:Research:Data:Description:fig:DataStructure}
 
     \begin{figure}[h]
@@ -322,7 +322,7 @@
     \subsubsection{Выявленные особенности данных}
     \label{sec:Research:Data:Features}
 
-    Во время анализа данных были обнаружены следующие особенности:
+    \noindent Во время анализа данных были обнаружены следующие особенности:
     \begin{enumerate}
         \item Полностью дублирующиеся записи в таблице;
         \item Дубликаты временных меток;
@@ -344,16 +344,44 @@
     \subsubsection{One-Hot Encoding}
     \label{sec:Research:FeatureSpace:OneHotEncoding}
 
-    \par One-Hot Encoding - это кодировка, с помощью которой категориальные признаки преобразуются в дискретную форму, для лучшего качества прогнозирования методами машинного обучения. Множество $ \mathfrak{V} = \{V_1, \ldots, V_i, \ldots, V_s\} $ уникальных значений категориального признака преобразуется в $s$ новых признаков, где для значения $V_i$ в $i$-й позиции будет стоит 1, а в остальных $s-1$ позициях - 0. \\
+    \par One-Hot Encoding - это кодировка, с помощью которой категориальные признаки преобразуются в дискретную форму, для лучшего качества прогнозирования методами машинного обучения. Под категориальным признаком подразумевается признак, значения которого обозначают принадлежность объекта к какой-то категории. Например, город со значением из множества \{Москва, Анапа, Сургут, \ldots\}. \\
 
-    \par Даннный подход устраняет проблему иерархии (порядка), возникающую при вещественной кодировке категориальных признаков, когда $V_i \longleftarrow i$. Однако данный метод также имеет недостаток, заключающийся в добавлении большего количества признаков в набор данных. Это может привести к значительному увеличению прризнакового пространства, если в категориальный признак будет иметь много уникальных значений.
+    \par Пусть $ \mathfrak{V} = \{V_1, \ldots, V_i, \ldots, V_s\} $ - множество уникальных значений категориального признака $V$. Тогда каждое $V_i \in \mathfrak{V}$ преобразуется в $s$ новых признаков, где $i$-й признак будет принимать значение 1, а все остальные - 0. \\
+
+    \par Даннный подход устраняет проблему иерархии (порядка), возникающую при вещественной кодировке категориальных признаков, когда $V_i \mapsto i \in \mathbb{R}$. Однако данный метод также имеет недостаток, заключающийся в добавлении большего количества признаков в набор данных. Это может привести к значительному увеличению прризнакового пространства, если в категориальный признак будет иметь много уникальных значений.
+
     
-
-    \subsubsection{Квантильная дискретизация}
-    \label{sec:Research:FeatureSpace:Quantile}
-
     \subsubsection{Градиентный бустинг}
     \label{sec:Research:FeatureSpace:GradientBoostingClassifier}
+
+    \par Преимущество использования ансамблей деревьев решений, таких как градиентный бустинг, заключается в том, что они могут предоставлять оценку важности призаков из обученной модели. \\
+
+    \par Как правило, важность обеспечивает оценку, которая указывает, насколько полезным был каждый признак при построении деревьев решений в модели. Чем больше атрибут используется для принятия ключевых решений с деревьями решений, тем выше его относительная важность. \\
+
+    \par Важность рассчитывается для отдельного дерева решений, затем значения характеристик усредняются по всем деревьям решений в модели.
+
+    \newpage
+    
+
+    \subsubsection{Квантование}
+    \label{sec:Research:FeatureSpace:Quantile}
+
+    \par Квантование \cite{BINNING} - процесс предобработки данных при котором непрерывные данные преобразуются в дискретные путём замены значений интервалами, каждый из которых представляет некоторый диапозон. Различают два основных метода квантования:
+    \begin{enumerate}
+        \item \textsc{Интервальный}: диапазон изменения значений признака разделяется на равные интервалы. Данный метод используется, если значения равномерно распределены на всей области значений, т.е. в результате квантования не будет интервалов, в которых значения почти отсутствуют или, наоборот, плотных интервалов.
+        \item \textsc{Квантильный}: ширину интервалов выбирают таким образом, чтобы в каждый из них попало примерно одинаковое количество значений.
+    \end{enumerate}
+
+    \par Согласно \cite{Kazachuk}, одним из наиболее популярных методов предобработки признаков, используемых для мультимодальных распределений, является именно квантильная дискретизация. Этот подход ранее не применялся к анализу данных работы с компьютерной мышью. \\
+
+    \par На Рис.~\ref{sec:Research:FeatureSpace:Quantile:fig:Quantile} продемонстрировано разбиение непрерывных данных на 4 квантиля (т.н. квартили).
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.6\linewidth]{quantile.png}
+        \caption{Квантильная дискретизация данных}
+        \label{sec:Research:FeatureSpace:Quantile:fig:Quantile}
+    \end{figure}
 
     \newpage
 
@@ -694,6 +722,54 @@
     \section{Планы на будущее}
     \label{sec:Future}
 
+    \par Нейронные сети активно применяются в сфере безопасности. Они работают быстрее и показывают результат лучше классических методов машинного обучения. Поэтому дальнейшие исследования будут направлены на поиск решения поставленной задачи с применением нейронных сетей. \\
+
+    \par Решение о легитимности пользователя предложено принимать на основе сравнения с пороговым значением результат работы функции оценки предсказания модели по заданному беометрическому набору данных с векторами признаков из тренировочного набора данных. \\
+
+    \par Исследования в этом направление уже ведутся.
+
+
+    \subsection{Автокодировшик}
+    \label{sec:Future:Autoencoder}
+    
+    \par Автокодировщик (autoencoder) \cite{autoencoder} - это нейронная сеть, которая восстанавливают входной сигнал на выходе. Автокодировщик состоит из двух частей: кодировщика, который кодирует данные в свое внутреннее представление, и декодировщика, который восстанавливает исходнуювектор. Обычно автокодировщики ограничивают в размерности скрытых слоёв (они меньше, чем размерность сигнала на входе) или используют l1-, l2-регуляризаторы для штрафов за активации в скрытых слоях.
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.9\linewidth]{autoencoder.png}
+        \caption{Архитектура сети автокодировщика}
+        \label{sec:Future:autoencoder:fig:autoencoder}
+    \end{figure}
+
+
+    \subsection{Рекуррентные нейронные сети}
+    \label{sec:Future:LSTM}
+
+    \par Одним из преимуществ рекуррентных нейронных сетей (RNN: Recurrent Neural Networks) является тот факт, что они потенциально умеют связывать информацию с предыдущих входных значений с текущим вектором признаков. Рекуррентные нейронные сети содержат обратные связи. \\
+
+    \par Долгая краткосрочная память (LSTM: Long Short-Term Memory) \cite{LSTM} – особый вид архитектуры рекуррентных нейронных сетей, способная к обучению долговременных связей.
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.9\linewidth]{LSTM.png}
+        \caption{Структура LSTM}
+        \label{sec:Future:LSTM:fig:LSTM}
+    \end{figure}
+
+
+    \subsection{Полносверточные нейронные сети}
+    \label{sec:Future:FCNN}
+
+    \par Основной особенностью полносверточных нейронных сетей (FCNN: Fully Convolutional Neural Network) является относительно небольшое число параметров за счёт использования сверточных слоев, что позволяет конструировать и обучать более сложные архитектуры для повышения качества решения поставленной задачи.
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.9\linewidth]{FCNN.png}
+        \caption{Архитектура полносверточного автокодировщика}
+        \label{sec:Future:FCNN:fig:FCNN}
+    \end{figure}
+
+
     \newpage
 
 
@@ -708,11 +784,11 @@
 
 
     \begin{thebibliography}{20}
-        \bibitem{1}
+        \bibitem{BiometricRecognition}
         Jain A. K., Ross A., Prabhakar S. An introduction to biometric recognition //IEEE Transactions on circuits and systems for video technology. – 2004. – Т. 14. – №. 1. – С. 4-20.
 
-        \bibitem{2}
-        https://www.johndcook.com/blog/2018/10/31/biometric-security-error/
+        \bibitem{BoiometricSecurity}
+        John D. Cook Biometric security and hypothesis testing (https://www.johndcook.com/blog/2018/10/31/biometric-security-error/)
 
         \bibitem{BALABIT}
         Fülöp, Á., Kovács, L., Kurics, T., Windhager-Pokol, E. (2016). Balabit Mouse Dynamics Challenge data set. Available at: https://github.com/balabit/Mouse-Dynamics-Challenge
@@ -721,7 +797,7 @@
         Harilal A. et al. Twos: A dataset of malicious insider threat behavior based on a gamified competition //Proceedings of the 2017 International Workshop on Managing Insider Security Threats. – 2017. – С. 45-56.
 
         \bibitem{Dyakonov}
-        https://dyakonov.org/2017/04/19/поиск-аномалий-anomaly-detection/
+        Дьяконов А.Г. Поиск аномалий (Anomaly Detection) (https://dyakonov.org/2017/04/19/поиск-аномалий-anomaly-detection/)
 
         \bibitem{NoveltyDetection}
         Pimentel M. A. F. et al. A review of novelty detection //Signal Processing. – 2014. – Т. 99. – С. 215-249.
@@ -730,25 +806,34 @@
         Liu F. T., Ting K. M., Zhou Z. H. Isolation forest //2008 Eighth IEEE International Conference on Data Mining. – IEEE, 2008. – С. 413-422.
 
         \bibitem{IsolationForest_2}
-        https://towardsdatascience.com/outlier-detection-with-isolation-forest-3d190448d45e
+        Eryk Lewinson Outlier Detection with Isolation Forest [HTML] (https://towardsdatascience.com/outlier-detection-with-isolation-forest-3d190448d45e)
 
         \bibitem{IsolationForeset_3}
-        https://towardsdatascience.com/anomaly-detection-with-isolation-forest-visualization-23cd75c281e2
+        Adithya Krishnan Anomaly Detection with Isolation Forest & Visualization (https://towardsdatascience.com/anomaly-detection-with-isolation-forest-visualization-23cd75c281e2)
 
         \bibitem{EE}
         Hoyle B. et al. Anomaly detection for machine learning redshifts applied to SDSS galaxies //Monthly Notices of the Royal Astronomical Society. – 2015. – Т. 452. – №. 4. – С. 4183-4194.
 
         \bibitem{LOF}
-        https://medium.com/learningdatascience/anomaly-detection-techniques-in-python-50f650c75aaf
+        Christopher Jose Anomaly Detection Techniques in Python (https://medium.com/learningdatascience/anomaly-detection-techniques-in-python-50f650c75aaf)
 
         \bibitem{Kazachuk}
         Kazachuk M. et al. One-class models for continuous authentication based on keystroke dynamics //International Conference on Intelligent Data Engineering and Automated Learning. – Springer, Cham, 2016. – С. 416-425.
 
-        \bibitem{3}
+        \bibitem{BINNING}
+        Binning [HTML] (https://wiki.loginom.ru/articles/binning.html)
+
+        \bibitem{Mondal}
         Mondal S., Bours P. A study on continuous authentication using a combination of keystroke and mouse biometrics //Neurocomputing. – 2017. – Т. 230. – С. 1-22.
 
-        \bibitem{4}
+        \bibitem{ArsFeature}
         Feher C. et al. User identity verification via mouse dynamics //Information Sciences. – 2012. – Т. 201. – С. 19-36.
+
+        \bibitem{autoencoder}
+        Ng A. et al. Sparse autoencoder //CS294A Lecture notes. – 2011. – Т. 72. – №. 2011. – С. 1-19.
+
+        \bibitem{LSTM}
+        Christopher Olah Understanding LSTM Networks (http://colah.github.io/posts/2015-08-Understanding-LSTMs/)
         
     \end{thebibliography}
 
