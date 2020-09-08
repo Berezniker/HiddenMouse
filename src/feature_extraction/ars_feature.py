@@ -44,9 +44,8 @@ def max_min_y(db: pd.DataFrame) -> float:
     return max_y(db) - min_y(db)
 
 
-def velocity_x(db: pd.DataFrame) -> np.array:
-    dt = db.time.iloc[1:].values - db.time.iloc[:-1].values + EPS
-    return (db.x.iloc[:-1].values - db.x.iloc[1:].values) / dt
+def velocity_x(db: pd.DataFrame) -> np.ndarray:
+    return db.x.diff().values[1:] / (db.time.diff().values[1:] + EPS)
 
 def min_vx(db: pd.DataFrame) -> float:
     return velocity_x(db).min()
@@ -64,9 +63,8 @@ def max_min_vx(db: pd.DataFrame) -> float:
     return max_vx(db) - min_vx(db)
 
 
-def velocity_y(db: pd.DataFrame) -> np.array:
-    dt = db.time.iloc[1:].values - db.time.iloc[:-1].values + EPS
-    return (db.y.iloc[:-1].values - db.y.iloc[1:].values) / dt
+def velocity_y(db: pd.DataFrame) -> np.ndarray:
+    return db.y.diff().values[1:] / (db.time.diff().values[1:] + EPS)
 
 def min_vy(db: pd.DataFrame) -> float:
     return velocity_y(db).min()
@@ -84,9 +82,9 @@ def max_min_vy(db: pd.DataFrame) -> float:
     return max_vy(db) - min_vy(db)
 
 
-def velocity(db: pd.DataFrame) -> np.array:
-    # return np.hypot(velocity_x(db), velocity_y(db))
-    return (velocity_x(db) ** 2 + velocity_y(db) ** 2) ** 0.5
+def velocity(db: pd.DataFrame) -> np.ndarray:
+    return np.hypot(velocity_x(db), velocity_y(db))
+    # return (velocity_x(db) ** 2 + velocity_y(db) ** 2) ** 0.5
 
 def min_v(db: pd.DataFrame) -> float:
     return velocity(db).min()
@@ -104,17 +102,14 @@ def max_min_v(db: pd.DataFrame) -> float:
     return max_v(db) - min_v(db)
 
 
-def acceleration(db: pd.DataFrame) -> np.array:
-    dt = db.time.iloc[1:].values - db.time.iloc[:-1].values + EPS
-    return velocity(db) / dt
+def acceleration(db: pd.DataFrame) -> np.ndarray:
+    return velocity(db) / (db.time.diff().values[1:] + EPS)
 
-def acceleration_x(db: pd.DataFrame) -> np.array:
-    dt = db.time.iloc[1:].values - db.time.iloc[:-1].values + EPS
-    return velocity_x(db) / dt
+def acceleration_x(db: pd.DataFrame) -> np.ndarray:
+    return velocity_x(db) / (db.time.diff().values[1:] + EPS)
 
-def acceleration_y(db: pd.DataFrame) -> np.array:
-    dt = db.time.iloc[1:].values - db.time.iloc[:-1].values + EPS
-    return velocity_y(db) / dt
+def acceleration_y(db: pd.DataFrame) -> np.ndarray:
+    return velocity_y(db) / (db.time.diff().values[1:] + EPS)
 
 def min_a(db: pd.DataFrame) -> float:
     return acceleration(db).min()
@@ -132,9 +127,8 @@ def max_min_a(db: pd.DataFrame) -> float:
     return max_a(db) - min_a(db)
 
 
-def jerk(db: pd.DataFrame) -> np.array:
-    dt = db.time.iloc[1:].values - db.time.iloc[:-1].values + EPS
-    return acceleration(db) / dt
+def jerk(db: pd.DataFrame) -> np.ndarray:
+    return acceleration(db) / (db.time.diff().values[1:] + EPS)
 
 def min_j(db: pd.DataFrame) -> float:
     return jerk(db).min()
@@ -152,7 +146,7 @@ def max_min_j(db: pd.DataFrame) -> float:
     return max_j(db) - min_j(db)
 
 
-def angle_of_movement(db: pd.DataFrame) -> np.array:
+def angle_of_movement(db: pd.DataFrame) -> np.ndarray:
     return np.arctan2(db.y, db.x)
 
 def min_am(db: pd.DataFrame) -> float:
@@ -171,8 +165,8 @@ def max_min_am(db: pd.DataFrame) -> float:
     return max_c(db) - min_c(db)
 
 
-def curvature(db: pd.DataFrame) -> np.array:
-    return angle_of_movement(db) / ((db.x ** 2 + db.y ** 2) ** 0.5)
+def curvature(db: pd.DataFrame) -> np.ndarray:
+    return angle_of_movement(db) / np.hypot(db.x, db.y)
 
 def min_c(db: pd.DataFrame) -> float:
     return curvature(db).min()
@@ -190,8 +184,8 @@ def max_min_c(db: pd.DataFrame) -> float:
     return max_c(db) - min_c(db)
 
 
-def curvature_change_rate(db: pd.DataFrame) -> np.array:
-    return curvature(db) / ((db.x ** 2 + db.y ** 2) ** 0.5)
+def curvature_change_rate(db: pd.DataFrame) -> np.ndarray:
+    return curvature(db) / np.hypot(db.x, db.y)
 
 def min_ccr(db: pd.DataFrame) -> float:
     return curvature_change_rate(db).min()
@@ -209,8 +203,8 @@ def max_min_ccr(db: pd.DataFrame) -> float:
     return max_ccr(db) - min_ccr(db)
 
 
-def angular_velocity(db: pd.DataFrame) -> np.array:
-    dt = db.time.iloc[1:].values - db.time.iloc[:-1].values + EPS
+def angular_velocity(db: pd.DataFrame) -> np.ndarray:
+    dt = db.time.diff().values[1:] + EPS
     return np.arctan2(db.y.iloc[1:], db.x.iloc[1:]) / dt
 
 def min_av(db: pd.DataFrame) -> float:
@@ -234,8 +228,7 @@ def duration_of_movement(db: pd.DataFrame) -> float:
 
 
 def traveled_distance(db: pd.DataFrame) -> float:
-    return (((db.x.iloc[:-1].values - db.x.iloc[1:].values) ** 2 +
-             (db.y.iloc[:-1].values - db.y.iloc[1:].values) ** 2) ** 0.5).sum()
+    return np.hypot(db.x.diff().values, db.y.diff().values)[1:].sum()
 
 
 def straightness(db: pd.DataFrame) -> float:

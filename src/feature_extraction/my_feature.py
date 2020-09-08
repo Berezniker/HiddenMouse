@@ -1,11 +1,16 @@
 import pandas as pd
 import numpy as np
 
-EPS = 1e-5
+EPS = 1e-4
+
+"""
+Mondal S., Bours P. A study on continuous authentication using a combination of
+keystroke and mouse biometrics //Neurocomputing. – 2017. – Ò. 230. – Ñ. 1-22.
+"""
 
 # feature extraction function template:
 #
-# def feature_name(db):
+# def feature_name(db: pd.Dataframe) -> feature (float):
 #     """
 #     extract features <features_name> from the database <db>
 #     :param db: current session database
@@ -25,11 +30,11 @@ def get_bin(dist: int, threshold: float = 1000) -> int:
         return 19
 
 
-def get_grad(val: np.array) -> np.array:
+def get_grad(val: np.ndarray) -> np.ndarray:
     return np.array([val[1], *(val[2:] - val[:-2]), -val[-2]])
 
 
-def get_det(db: pd.DataFrame) -> np.array:
+def get_det(db: pd.DataFrame) -> np.ndarray:
     Pn_Po = np.array([db.x.iloc[-1] - db.x.iloc[0], db.y.iloc[-1] - db.y.iloc[0]])
     x0, y0 = db.x.iloc[0], db.y.iloc[0]
     det = np.array([np.linalg.det([Pn_Po, [x - x0, y - y0]])
@@ -37,7 +42,7 @@ def get_det(db: pd.DataFrame) -> np.array:
     return det
 
 
-def direction_bin(db: pd.DataFrame, n_bin: int = 8) -> np.array:
+def direction_bin(db: pd.DataFrame, n_bin: int = 8) -> np.ndarray:
     grad_x, grad_y = get_grad(db.x.values), get_grad(db.y.values)
     direction = np.rad2deg(np.arctan2(grad_y, grad_x)) + 180
     direction = (direction % n_bin).astype(np.uint8)
@@ -54,8 +59,8 @@ def actual_distance_bin(db: pd.DataFrame, threshold: float = 1000) -> int:
 
 
 def curve_length(db: pd.DataFrame) -> float:
-    return (((db.x.iloc[:-1].values - db.x.iloc[1:].values) ** 2 +
-             (db.y.iloc[:-1].values - db.y.iloc[1:].values) ** 2) ** 0.5).sum()
+    # return np.hypot(db.dx.values[1:], db.dy.values[1:]).sum()
+    return np.nansum(np.hypot(db.x.diff().values, db.y.diff().values))
 
 
 def curve_length_bin(db: pd.DataFrame, threshold: float = 1000) -> int:
@@ -71,10 +76,9 @@ def actual_speed(db: pd.DataFrame) -> float:
 
 
 def curve_speed(db: pd.DataFrame) -> float:
-    return ((((db.x.iloc[:-1].values - db.x.iloc[1:].values) ** 2 +
-              (db.y.iloc[:-1].values - db.y.iloc[1:].values) ** 2) ** 0.5)
-            / (db.time.iloc[1:].values - db.time.iloc[:-1].values + EPS)
-            ).mean()
+    # return (np.hypot(db.dx[1:].values, db.dy[1:].values) / db.dt[1:].values).mean()
+    return np.nanmean(np.hypot(db.x.diff().values, db.y.diff().values) /
+                      (db.time.diff().values + EPS))
 
 
 def curve_acceleration(db: pd.DataFrame) -> float:
@@ -88,7 +92,7 @@ def mean_movement_offset(db: pd.DataFrame) -> float:
 
 def mean_movement_error(db: pd.DataFrame) -> float:
     Pn_Po = np.array([db.x.iloc[-1] - db.x.iloc[0], db.y.iloc[-1] - db.y.iloc[0]])
-    return (abs(get_det(db)) / (np.linalg.norm(Pn_Po) + EPS)).mean()
+    return (np.abs(get_det(db) / (np.linalg.norm(Pn_Po) + EPS))).mean()
 
 
 def mean_movement_variability(db: pd.DataFrame) -> float:
@@ -96,13 +100,13 @@ def mean_movement_variability(db: pd.DataFrame) -> float:
 
 
 def mean_curvature(db: pd.DataFrame) -> float:
-    return (np.arctan2(db.y, db.x) / (db.x ** 2 + db.y ** 2) ** 0.5).mean() * 1000
+    return (np.arctan2(db.y, db.x) / np.hypot(db.x.values, db.y.values)).mean()
 
 
 def mean_curvature_change_rate(db: pd.DataFrame) -> float:
     return (np.arctan2(db.y.iloc[:-1].values, db.x.iloc[:-1].values) /
             (((db.x.iloc[-1] - db.x.iloc[:-1].values) ** 2 +
-              (db.y.iloc[-1] - db.y.iloc[:-1].values) ** 2) ** 0.5 + EPS)).mean() * 100
+              (db.y.iloc[-1] - db.y.iloc[:-1].values) ** 2) ** 0.5 + EPS)).mean()
 
 
 def mean_curvature_velocity(db: pd.DataFrame) -> float:

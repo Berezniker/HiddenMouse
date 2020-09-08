@@ -509,9 +509,9 @@ def print_score(users_model: dict,
 
 
 if __name__ == '__main__':
-    root_path = '../../dataset/BALABIT'
+    # root_path = '../../dataset/BALABIT'
     # root_path = '../../dataset/DATAIIT'
-    # root_path = '../../dataset/TWOS'
+    root_path = '../../dataset/TWOS'
     dataset_name = os.path.basename(root_path)
     train_features_path = os.path.join(root_path, 'train_features')
     test_features_path = os.path.join(root_path, 'test_features')
@@ -519,8 +519,8 @@ if __name__ == '__main__':
     print(f"{COLOR['italics']}{dataset_name}{COLOR['none']} Run!")
     start_time = time.time()
 
-    train_sessions = get_session_path(train_features_path, session_name='session_all')
-    test_sessions = get_session_path(test_features_path, session_name='session_all')
+    train_sessions = get_session_path(train_features_path, session_name='session_all.csv')
+    test_sessions = get_session_path(test_features_path, session_name='session_all.csv')
     load_all_test_features(test_sessions)
 
     users_model = get_users_model(train_sessions, test_sessions, prefix='svm',

@@ -1,5 +1,5 @@
 from utils.combine_sessions import combine_sessions
-from utils.quntile_encoding import quantile_encoding
+from utils.quantile_encoding import quantile_encoding
 from feature_extraction.my_feature import *
 from feature_extraction.ars_feature import *
 from datetime import datetime
@@ -10,7 +10,7 @@ import glob
 import os
 
 TIME_THRESHOLD = 5.0
-LOG_FILE_NAME = f"../log_file/log_feature {datetime.today().__str__()[:-7].replace(':', '-')}.txt"
+ACTION_THRESHOLD = 5
 LOG_FILE = None
 
 
@@ -30,18 +30,20 @@ def OneHotEncoder(x: np.array,
     return pd.DataFrame(data=data, columns=columns, dtype='uint8')
 
 
-# TODO need to speed up
+# TODO need to speed up !!!
 def split_dataframe(db: pd.DataFrame,
                     time_threshold: float = TIME_THRESHOLD,
-                    min_n_actions: int = 5) -> pd.DataFrame:
-    time, max_time = 0, db.time.max()
-    while time + time_threshold < max_time:
-        one_split = db.loc[(db.time >= time) & (db.time <= time + time_threshold)]
-        time = db.loc[db.time > time + time_threshold].time.values[0]
+                    min_n_actions: int = ACTION_THRESHOLD) -> pd.DataFrame:
+    ctime, max_time = 0, db.time.max()
+    db.reset_index(drop=True)
+    while ctime + time_threshold < max_time:
+        one_split = db.loc[(db.time >= ctime) & (db.time < ctime + time_threshold), :]
         if one_split.index.size > min_n_actions:
             yield one_split
-    if db.loc[db.time >= time].index.size > min_n_actions:
-        yield db.loc[db.time >= time]
+        idx = one_split.index[-1] + 1
+        ctime = db.loc[idx, 'time'] if idx < db.index.size else max_time
+    if db.loc[(db.time >= ctime), :].index.size > min_n_actions:
+        yield db.loc[(db.time >= ctime), :]
 
 
 def extract_features(database: pd.DataFrame,
@@ -69,10 +71,14 @@ def extract_features(database: pd.DataFrame,
         duration_of_movement, straightness,
         TCM, SC, M3, M4, TCrv, VCrv
     ])  # len(...) = 63
+    ars_extracrion_function = list()  # TODO
     features = dict()
+
     for segment in split_dataframe(database):
         for extractor in chain(extraction_function, ars_extracrion_function):
+            # ------------------------------------------------------------------ #
             features.setdefault(extractor.__name__, []).append(extractor(segment))
+            # ------------------------------------------------------------------ #
             if only_one_feature:
                 printf('>>>> [!] only_one_feature')
                 break
@@ -80,15 +86,14 @@ def extract_features(database: pd.DataFrame,
             printf('>>> [!] only_one_segment')
             break
 
-    return pd.DataFrame(features)
+    return pd.DataFrame(features).round(decimals=5)
 
 
 def run(data_path: str,
         save_path: str = None,
         save_features: bool = False,
         only_one_user: bool = False,
-        only_one_session: bool = False,
-        start_from: int = 0) -> None:
+        only_one_session: bool = False) -> None:
     if save_features:
         if save_path is None:
             save_path = data_path.replace('files', 'features')
@@ -100,14 +105,14 @@ def run(data_path: str,
         user_start_time = time.time()
         user_name = os.path.basename(user)
         printf(f'> {user_name}')
-        if int(user_name[4:]) < start_from:
-            continue
         n_session = len(list(os.listdir(user)))
         for i, session in enumerate(glob.glob(os.path.join(user, 'session*')), 1):
             session_start_time = time.time()
             session_name = os.path.basename(session)
-            # vvvvvv
-            features = extract_features(pd.read_csv(session))
+            # --------------------------- #
+            db = pd.read_csv(session)
+            features = extract_features(db)
+            # --------------------------- #
             """
             # One-Hot Encoding:
             features = features.join(OneHotEncoder(features.pop('direction_bin').values,
@@ -117,48 +122,41 @@ def run(data_path: str,
             features = features.join(OneHotEncoder(features.pop('curve_length_bin').values,
                                                    n_classes=20, prefix='cl_bin'))
             """
-            # ^^^^^^
             if save_features:
                 session_dir = os.path.join(save_path, user_name)
-                if not os.path.exists(session_dir):
-                    os.makedirs(session_dir)
+                os.makedirs(session_dir, exist_ok=True)
                 features.to_csv(os.path.join(session_dir, session_name), index=False)
-            printf(f'>> [{i:03}/{n_session}] {session_name} time: {time.time() - session_start_time:6.3f} sec')
+            printf(f'>> [{i:03}/{n_session}] {session_name} '
+                   f' data.size = {db.index.size:7} '
+                   f' features.size = {features.index.size:4} '
+                   f' time: {time.time() - session_start_time:5.1f} sec')
             if only_one_session:
                 printf('>> [!] only_one_session')
                 break
-        printf(f'> {user_name} time: {time.time() - user_start_time:.3f} sec\n')
+        printf(f'> {user_name} time: {(time.time() - user_start_time) / 60.0:.1f} min\n')
         if only_one_user:
             printf('> [!] only_one_user')
             break
 
 
 if __name__ == '__main__':
-    if input("Keep a log? Y/N: ").upper() == 'Y':
-        print("log [ON]")
-        LOG_FILE = open(LOG_FILE_NAME, mode='w')
-    else:
-        print("log [OFF]")
-
     start_time = time.time()
-    printf("train: RUN!")
-    train_start_time = time.time()
-    run(data_path="../../dataset/BALABIT/train_files", save_features=True)
-    # run(data_path="../../dataset/DATAIIT/train_files", save_features=True)
-    # run(data_path="../../dataset/TWOS/train_files", save_features=True)
-    printf(f"train_time: {(time.time() - train_start_time) / 60.0:.1f} min\n\n")
-
-    printf("test: RUN!")
-    test_start_time = time.time()
-    # run(data_path="../../dataset/BALABIT/test_files", save_features=True)
-    # run(data_path="../../dataset/DATAIIT/test_files", save_features=True)
-    # run(data_path="../../dataset/TWOS/test_files", save_features=True)
-    printf(f"test_time: {(time.time() - test_start_time) / 60.0:.1f} min\n")
-
-    # combine_sessions(verbose=3)
-    # quantile_encoding(verbose=3)
-
-    printf(f"main_time: {(time.time() - start_time) / 60.0:.1f} min\n")
-
-    if LOG_FILE is not None:
+    for dataset in ["BALABIT", "DATAIIT", "TWOS"]:  # TODO
+        log_file_path = f"../../dataset/{dataset}/log_{dataset}_feature_extraction.txt"
+        LOG_FILE = open(log_file_path, mode='w')
+        LOG_FILE.write(f"{datetime.now().isoformat(sep=' ')[:-7]}\n\n")
+        dataset_start_time = time.time()
+        printf(f"{dataset}")
+        for type_file in ['test']:
+            type_start_time = time.time()
+            printf(f"{type_file}")
+            # --------------------------------------------------------------------------- #
+            run(data_path=f"../../dataset/{dataset}/{type_file}_files", save_features=True)
+            # --------------------------------------------------------------------------- #
+            printf(f"{type_file}_time: {(time.time() - type_start_time) / 60.0:.1f} min\n\n")
+        printf(f"{dataset}_time: {(time.time() - dataset_start_time) / 60.0:.1f} min\n\n")
         LOG_FILE.close()
+    print(f"main_time: {(time.time() - start_time) / 60.0:.1f} min\n")
+
+    combine_sessions(verbose=3)
+    # quantile_encoding(verbose=3)

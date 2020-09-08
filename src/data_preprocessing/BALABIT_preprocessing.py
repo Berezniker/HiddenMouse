@@ -29,7 +29,8 @@ def balabit_preprocessing(data_dir: str = "../../original_dataset/BALABIT_origin
     clear_directory(save_dir)
 
     for path in glob.glob(os.path.join(data_dir, '*files')):
-        if verbose >= 1: print(f"> {os.path.basename(path)}")
+        file_type = os.path.basename(path)
+        if verbose >= 1: print(f"\n> {file_type}")
         for user_path in glob.glob(os.path.join(path, 'user*')):
             user_name = os.path.basename(user_path)
             if verbose >= 2: print(f">> {user_name}")
@@ -38,24 +39,26 @@ def balabit_preprocessing(data_dir: str = "../../original_dataset/BALABIT_origin
                 check_illegal = labels[labels.filename == session_name]
                 if check_illegal.size and check_illegal.is_illegal.values:
                     if verbose >= 3:
-                        print(f"{COLOR['yellow']}Illegal session skipped: {session_name}{COLOR['none']}")
+                        print(f">>> {COLOR['yellow']}Illegal session skipped: {session_name}{COLOR['none']}")
                     continue
-                if os.path.exists(session_path):
-                    db = pd.read_csv(session_path)
-                    db.rename(rename_fields, axis=1, inplace=True)
-                    db.drop(db[db.button == 'Scroll'].index, axis=0, inplace=True)
-                    db.drop(drop_fields, axis=1, inplace=True)
-                    preprocessing(db)
-                    save_path = user_path.replace('original_dataset', 'dataset')
-                    save_path = save_path.replace('BALABIT_original', 'BALABIT')
-                    if not os.path.exists(save_path):
-                        os.makedirs(save_path)
-                    save_path = os.path.join(save_path, os.path.basename(session_path))
-                    db.to_csv(save_path, index=False)
+                # PREPROCESSING
+                db = pd.read_csv(session_path)
+                db.rename(rename_fields, axis=1, inplace=True)
+                db.drop(db[db.button == 'Scroll'].index, axis=0, inplace=True)
+                db.drop(drop_fields, axis=1, inplace=True)
+                db = preprocessing(db, check_size=(verbose >= 3))
+                if check_min_size(db): continue
+
+                # PRESERVATION
+                save_path = os.path.join(save_dir, file_type)
+                save_path = os.path.join(save_path, user_name)
+                os.makedirs(save_path, exist_ok=True)
+                save_path = os.path.join(save_path, session_name + ".csv")
+                db.to_csv(save_path, index=False)
 
 
 if __name__ == '__main__':
     start_time = time.time()
     print(f"{COLOR['italics']}BALABIT{COLOR['none']} Run!")
-    balabit_preprocessing(verbose=2)
+    balabit_preprocessing(verbose=3)
     print(f"run time: {time.time() - start_time:.3f}")
