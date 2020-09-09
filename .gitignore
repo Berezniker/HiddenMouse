@@ -1,3 +1,8 @@
-/dataset
-/original_dataset
-/**/__pycache__
+/dataset/*/*/
+/original_dataset/
+/**/__pycache__/
+/src/classification/*.ipynb
+/.idea
+
+!/dataset/*
+!/dataset/*/log*

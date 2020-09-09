@@ -37,7 +37,6 @@ def dfl_preprocessing(data_dir: str = "../../original_dataset/DFL_original",
             # PREPROCESSING
             db = pd.read_csv(session_path)
             db.rename(rename_fields, axis=1, inplace=True)
-            db.drop(db[db.button == 'Scroll'].index, axis=0, inplace=True)
             db.drop(drop_fields, axis=1, inplace=True)
             db.time = (db.time - db.time.iloc[0]) / 1000.0
             db = preprocessing(db, check_size=(verbose >= 3))
