@@ -1,14 +1,20 @@
+from utils.cashe import cached
 import pandas as pd
 import numpy as np
 
-EPS = 1e-7
+EPS = 1e-5
+
+"""
+Feher C. et al. User identity verification via mouse dynamics
+//Information Sciences. – 2012. – Ò. 201. – Ñ. 19-36.
+"""
 
 # feature extraction function template:
 #
-# def feature_name(db):
+# def feature_name(db: pd.DataFrame) -> float:
 #     """
 #     extract features <features_name> from the database <db>
-#     :param db: current session database
+#     :param db: database segment
 #     :return: feature value
 #     """
 
@@ -44,180 +50,190 @@ def max_min_y(db: pd.DataFrame) -> float:
     return max_y(db) - min_y(db)
 
 
-def velocity_x(db: pd.DataFrame) -> np.ndarray:
+@cached
+def velocity_x(db: pd.DataFrame, cache=None) -> np.ndarray:
     return db.x.diff().values[1:] / (db.time.diff().values[1:] + EPS)
 
 def min_vx(db: pd.DataFrame) -> float:
-    return velocity_x(db).min()
+    return velocity_x(db, cache=True).min()
 
 def max_vx(db: pd.DataFrame) -> float:
-    return velocity_x(db).max()
+    return velocity_x(db, cache=True).max()
 
 def mean_vx(db: pd.DataFrame) -> float:
-    return velocity_x(db).mean()
+    return velocity_x(db, cache=True).mean()
 
 def std_vx(db: pd.DataFrame) -> float:
-    return velocity_x(db).std()
+    return velocity_x(db, cache=True).std()
 
 def max_min_vx(db: pd.DataFrame) -> float:
     return max_vx(db) - min_vx(db)
 
 
-def velocity_y(db: pd.DataFrame) -> np.ndarray:
+@cached
+def velocity_y(db: pd.DataFrame, cache=None) -> np.ndarray:
     return db.y.diff().values[1:] / (db.time.diff().values[1:] + EPS)
 
 def min_vy(db: pd.DataFrame) -> float:
-    return velocity_y(db).min()
+    return velocity_y(db, cache=True).min()
 
 def max_vy(db: pd.DataFrame) -> float:
-    return velocity_y(db).max()
+    return velocity_y(db, cache=True).max()
 
 def mean_vy(db: pd.DataFrame) -> float:
-    return velocity_y(db).mean()
+    return velocity_y(db, cache=True).mean()
 
 def std_vy(db: pd.DataFrame) -> float:
-    return velocity_y(db).std()
+    return velocity_y(db, cache=True).std()
 
 def max_min_vy(db: pd.DataFrame) -> float:
     return max_vy(db) - min_vy(db)
 
 
-def velocity(db: pd.DataFrame) -> np.ndarray:
-    return np.hypot(velocity_x(db), velocity_y(db))
-    # return (velocity_x(db) ** 2 + velocity_y(db) ** 2) ** 0.5
+@cached
+def velocity(db: pd.DataFrame, cache=None) -> np.ndarray:
+    return np.hypot(velocity_x(db, cache=True), velocity_y(db, cache=True))
 
 def min_v(db: pd.DataFrame) -> float:
-    return velocity(db).min()
+    return velocity(db, cache=True).min()
 
 def max_v(db: pd.DataFrame) -> float:
-    return velocity(db).max()
+    return velocity(db, cache=True).max()
 
 def mean_v(db: pd.DataFrame) -> float:
-    return velocity(db).mean()
+    return velocity(db, cache=True).mean()
 
 def std_v(db: pd.DataFrame) -> float:
-    return velocity(db).std()
+    return velocity(db, cache=True).std()
 
 def max_min_v(db: pd.DataFrame) -> float:
     return max_v(db) - min_v(db)
 
 
-def acceleration(db: pd.DataFrame) -> np.ndarray:
-    return velocity(db) / (db.time.diff().values[1:] + EPS)
+@cached
+def acceleration(db: pd.DataFrame, cache=None) -> np.ndarray:
+    return velocity(db, cache=True) / (db.time.diff().values[1:] + EPS)
 
-def acceleration_x(db: pd.DataFrame) -> np.ndarray:
-    return velocity_x(db) / (db.time.diff().values[1:] + EPS)
+@cached
+def acceleration_x(db: pd.DataFrame, cache=None) -> np.ndarray:
+    return velocity_x(db, cache=True) / (db.time.diff().values[1:] + EPS)
 
-def acceleration_y(db: pd.DataFrame) -> np.ndarray:
-    return velocity_y(db) / (db.time.diff().values[1:] + EPS)
+@cached
+def acceleration_y(db: pd.DataFrame, cache=None) -> np.ndarray:
+    return velocity_y(db, cache=True) / (db.time.diff().values[1:] + EPS)
 
 def min_a(db: pd.DataFrame) -> float:
-    return acceleration(db).min()
+    return acceleration(db, cache=True).min()
 
 def max_a(db: pd.DataFrame) -> float:
-    return acceleration(db).max()
+    return acceleration(db, cache=True).max()
 
 def mean_a(db: pd.DataFrame) -> float:
-    return acceleration(db).mean()
+    return acceleration(db, cache=True).mean()
 
 def std_a(db: pd.DataFrame) -> float:
-    return acceleration(db).std()
+    return acceleration(db, cache=True).std()
 
 def max_min_a(db: pd.DataFrame) -> float:
     return max_a(db) - min_a(db)
 
 
-def jerk(db: pd.DataFrame) -> np.ndarray:
-    return acceleration(db) / (db.time.diff().values[1:] + EPS)
+@cached
+def jerk(db: pd.DataFrame, cache=None) -> np.ndarray:
+    return acceleration(db, cache=True) / (db.time.diff().values[1:] + EPS)
 
 def min_j(db: pd.DataFrame) -> float:
-    return jerk(db).min()
+    return jerk(db, cache=True).min()
 
 def max_j(db: pd.DataFrame) -> float:
-    return jerk(db).max()
+    return jerk(db, cache=True).max()
 
 def mean_j(db: pd.DataFrame) -> float:
-    return jerk(db).mean()
+    return jerk(db, cache=True).mean()
 
 def std_j(db: pd.DataFrame) -> float:
-    return jerk(db).std()
+    return jerk(db, cache=True).std()
 
 def max_min_j(db: pd.DataFrame) -> float:
     return max_j(db) - min_j(db)
 
 
-def angle_of_movement(db: pd.DataFrame) -> np.ndarray:
+@cached
+def angle_of_movement(db: pd.DataFrame, cache=None) -> np.ndarray:
     return np.arctan2(db.y, db.x)
 
 def min_am(db: pd.DataFrame) -> float:
-    return angle_of_movement(db).min()
+    return angle_of_movement(db, cache=True).min()
 
 def max_am(db: pd.DataFrame) -> float:
-    return angle_of_movement(db).max()
+    return angle_of_movement(db, cache=True).max()
 
 def mean_am(db: pd.DataFrame) -> float:
-    return angle_of_movement(db).mean()
+    return angle_of_movement(db, cache=True).mean()
 
 def std_am(db: pd.DataFrame) -> float:
-    return angle_of_movement(db).std()
+    return angle_of_movement(db, cache=True).std()
 
 def max_min_am(db: pd.DataFrame) -> float:
     return max_c(db) - min_c(db)
 
 
-def curvature(db: pd.DataFrame) -> np.ndarray:
-    return angle_of_movement(db) / np.hypot(db.x, db.y)
+@cached
+def curvature(db: pd.DataFrame, cache=None) -> np.ndarray:
+    return angle_of_movement(db, cache=True) / np.hypot(db.x, db.y)
 
 def min_c(db: pd.DataFrame) -> float:
-    return curvature(db).min()
+    return curvature(db, cache=True).min()
 
 def max_c(db: pd.DataFrame) -> float:
-    return curvature(db).max()
+    return curvature(db, cache=True).max()
 
 def mean_c(db: pd.DataFrame) -> float:
-    return curvature(db).mean()
+    return curvature(db, cache=True).mean()
 
 def std_c(db: pd.DataFrame) -> float:
-    return curvature(db).std()
+    return curvature(db, cache=True).std()
 
 def max_min_c(db: pd.DataFrame) -> float:
     return max_c(db) - min_c(db)
 
 
-def curvature_change_rate(db: pd.DataFrame) -> np.ndarray:
+@cached
+def curvature_change_rate(db: pd.DataFrame, cache=None) -> np.ndarray:
     return curvature(db) / np.hypot(db.x, db.y)
 
 def min_ccr(db: pd.DataFrame) -> float:
-    return curvature_change_rate(db).min()
+    return curvature_change_rate(db, cache=True).min()
 
 def max_ccr(db: pd.DataFrame) -> float:
-    return curvature_change_rate(db).max()
+    return curvature_change_rate(db, cache=True).max()
 
 def mean_ccr(db: pd.DataFrame) -> float:
-    return curvature_change_rate(db).mean()
+    return curvature_change_rate(db, cache=True).mean()
 
 def std_ccr(db: pd.DataFrame) -> float:
-    return curvature_change_rate(db).std()
+    return curvature_change_rate(db, cache=True).std()
 
 def max_min_ccr(db: pd.DataFrame) -> float:
     return max_ccr(db) - min_ccr(db)
 
 
-def angular_velocity(db: pd.DataFrame) -> np.ndarray:
+@cached
+def angular_velocity(db: pd.DataFrame, cache=None) -> np.ndarray:
     dt = db.time.diff().values[1:] + EPS
     return np.arctan2(db.y.iloc[1:], db.x.iloc[1:]) / dt
 
 def min_av(db: pd.DataFrame) -> float:
-    return angular_velocity(db).min()
+    return angular_velocity(db, cache=True).min()
 
 def max_av(db: pd.DataFrame) -> float:
-    return angular_velocity(db).max()
+    return angular_velocity(db, cache=True).max()
 
 def mean_av(db: pd.DataFrame) -> float:
-    return angular_velocity(db).mean()
+    return angular_velocity(db, cache=True).mean()
 
 def std_av(db: pd.DataFrame) -> float:
-    return angular_velocity(db).std()
+    return angular_velocity(db, cache=True).std()
 
 def max_min_av(db: pd.DataFrame) -> float:
     return max_av(db) - min_av(db)
@@ -227,43 +243,44 @@ def duration_of_movement(db: pd.DataFrame) -> float:
     return db.time.iloc[-1] - db.time.iloc[0]
 
 
-def traveled_distance(db: pd.DataFrame) -> float:
+@cached
+def traveled_distance(db: pd.DataFrame, cache=None) -> float:
     return np.hypot(db.x.diff().values, db.y.diff().values)[1:].sum()
 
 
 def straightness(db: pd.DataFrame) -> float:
     return ((db.x.iloc[0] - db.x.iloc[-1]) ** 2 +
-            (db.y.iloc[0] - db.y.iloc[-1]) ** 2) ** 0.5 / traveled_distance(db)
+            (db.y.iloc[0] - db.y.iloc[-1]) ** 2) ** 0.5 / traveled_distance(db, cache=True)
 
 
-def TCM(db: pd.DataFrame) -> float:  # Trajectory Center of Mass
+@cached
+def TCM(db: pd.DataFrame, cache=None) -> float:  # Trajectory Center of Mass
     return ((((db.x.iloc[:-1].values - db.x.iloc[1:].values) ** 2 +
               (db.y.iloc[:-1].values - db.y.iloc[1:].values) ** 2) ** 0.5) *
-            db.time.iloc[1:]).sum() / traveled_distance(db)
+            db.time.values[1:]).sum() / traveled_distance(db, cache=True)
 
 
 def SC(db: pd.DataFrame) -> float:  # Scattering Coefficient
-    return ((((db.x.iloc[:-1].values - db.x.iloc[1:].values) ** 2 +
-              (db.y.iloc[:-1].values - db.y.iloc[1:].values) ** 2) ** 0.5) *
-            db.time.iloc[1:] ** 2).sum() / traveled_distance(db) - TCM(db) ** 2
+    return (np.hypot(db.x.diff().values, db.y.diff().values)[1:] *
+            db.time.values[1:] ** 2).sum() / traveled_distance(db, cache=True) \
+           - TCM(db, cache=True) ** 2
 
 
 def M3(db: pd.DataFrame) -> float:  # Third Moment
-    return ((((db.x.iloc[:-1].values - db.x.iloc[1:].values) ** 2 +
-              (db.y.iloc[:-1].values - db.y.iloc[1:].values) ** 2) ** 0.5) *
-            db.time.iloc[1:] ** 3).sum() / traveled_distance(db)
+    return (np.hypot(db.x.diff().values, db.y.diff().values)[1:] *
+            db.time.values[1:] ** 3).sum() / traveled_distance(db, cache=True)
 
 
 def M4(db: pd.DataFrame) -> float:  # Fourth Moment
-    return ((((db.x.iloc[:-1].values - db.x.iloc[1:].values) ** 2 +
-              (db.y.iloc[:-1].values - db.y.iloc[1:].values) ** 2) ** 0.5) *
-            db.time.iloc[1:] ** 4).sum() / traveled_distance(db)
+    return (np.hypot(db.x.diff().values, db.y.diff().values)[1:] *
+            db.time.values[1:] ** 4).sum() / traveled_distance(db, cache=True)
 
 
 def TCrv(db: pd.DataFrame) -> float:  # Trajectory Curvature
-    return ((velocity_x(db) * acceleration_y(db) -
-             velocity_y(db) * acceleration_x(db)) / (velocity(db) ** 3)).mean()
+    return ((velocity_x(db, cache=True) * acceleration_y(db, cache=True) -
+             velocity_y(db, cache=True) * acceleration_x(db, cache=True)) /
+            (velocity(db, cache=True) ** 3)).mean()
 
 
 def VCrv(db: pd.DataFrame) -> float:  # Velocity Curvature
-    return (jerk(db) / (1 + acceleration(db) ** 2) ** (3/2)).mean()
+    return (jerk(db, cache=True) / (1 + acceleration(db, cache=True) ** 2) ** (3/2)).mean()

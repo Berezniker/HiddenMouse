@@ -30,7 +30,6 @@ def OneHotEncoder(x: np.array,
     return pd.DataFrame(data=data, columns=columns, dtype='uint8')
 
 
-# TODO need to speed up !!!
 def split_dataframe(db: pd.DataFrame,
                     time_threshold: float = TIME_THRESHOLD,
                     min_n_actions: int = ACTION_THRESHOLD) -> pd.DataFrame:
@@ -53,9 +52,9 @@ def extract_features(database: pd.DataFrame,
         direction_bin, actual_distance, actual_distance_bin,
         curve_length, curve_length_bin, length_ratio, actual_speed, curve_speed,
         curve_acceleration, mean_movement_offset, mean_movement_error,
-        mean_curvature, mean_curvature_change_rate, mean_curvature_velocity,
-        mean_curvature_velocity_change_rate, mean_angular_velocity
-    ])  # len(...) = 16 --(one-hot-encoder)--> 61
+        mean_movement_variability, mean_curvature, mean_curvature_change_rate,
+        mean_curvature_velocity, mean_curvature_velocity_change_rate, mean_angular_velocity
+    ])  # len(...) = 17 --(one-hot-encoder)--> 62
     ars_extracrion_function = list([
         min_x, max_x, mean_x, std_x, max_min_x,
         min_y, max_y, mean_y, std_y, max_min_y,
@@ -86,7 +85,7 @@ def extract_features(database: pd.DataFrame,
             printf('>>> [!] only_one_segment')
             break
 
-    return pd.DataFrame(features).round(decimals=5)
+    return pd.DataFrame(features).round(decimals=6)
 
 
 def run(data_path: str,
@@ -141,13 +140,13 @@ def run(data_path: str,
 
 if __name__ == '__main__':
     start_time = time.time()
-    for dataset in ["BALABIT", "DATAIIT", "TWOS"]:  # TODO
+    for dataset in ["BALABIT", "DATAIIT", "CHAOSHEN", "TWOS"]:  # TODO add "DFL"
         log_file_path = f"../../dataset/{dataset}/log_{dataset}_feature_extraction.txt"
         LOG_FILE = open(log_file_path, mode='w')
         LOG_FILE.write(f"{datetime.now().isoformat(sep=' ')[:-7]}\n\n")
         dataset_start_time = time.time()
         printf(f"{dataset}")
-        for type_file in ['test']:
+        for type_file in ['train', 'test']:
             type_start_time = time.time()
             printf(f"{type_file}")
             # --------------------------------------------------------------------------- #

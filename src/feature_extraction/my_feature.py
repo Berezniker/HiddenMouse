@@ -1,19 +1,21 @@
+from utils.cashe import cached
 import pandas as pd
 import numpy as np
 
-EPS = 1e-4
+EPS = 1e-5
 
 """
 Mondal S., Bours P. A study on continuous authentication using a combination of
 keystroke and mouse biometrics //Neurocomputing. – 2017. – Ò. 230. – Ñ. 1-22.
 """
 
+
 # feature extraction function template:
 #
-# def feature_name(db: pd.Dataframe) -> feature (float):
+# def feature_name(db: pd.DataFrame) -> float:
 #     """
 #     extract features <features_name> from the database <db>
-#     :param db: current session database
+#     :param db: database segment
 #     :return: feature value
 #     """
 
@@ -42,6 +44,8 @@ def get_det(db: pd.DataFrame) -> np.ndarray:
     return det
 
 
+# FEATURE EXTRACTION FUNCTION:
+
 def direction_bin(db: pd.DataFrame, n_bin: int = 8) -> np.ndarray:
     grad_x, grad_y = get_grad(db.x.values), get_grad(db.y.values)
     direction = np.rad2deg(np.arctan2(grad_y, grad_x)) + 180
@@ -49,43 +53,47 @@ def direction_bin(db: pd.DataFrame, n_bin: int = 8) -> np.ndarray:
     return np.argmax(np.bincount(direction))
 
 
-def actual_distance(db: pd.DataFrame) -> float:
+@cached
+def actual_distance(db: pd.DataFrame, get_cache=None) -> float:
     return ((db.x.iloc[0] - db.x.iloc[-1]) ** 2 +
             (db.y.iloc[0] - db.y.iloc[-1]) ** 2) ** 0.5
 
 
 def actual_distance_bin(db: pd.DataFrame, threshold: float = 1000) -> int:
-    return get_bin(int(actual_distance(db)), threshold=threshold)
+    return get_bin(int(actual_distance(db, cache=True)), threshold=threshold)
 
 
-def curve_length(db: pd.DataFrame) -> float:
+@cached
+def curve_length(db: pd.DataFrame, get_cache=None) -> float:
     # return np.hypot(db.dx.values[1:], db.dy.values[1:]).sum()
     return np.nansum(np.hypot(db.x.diff().values, db.y.diff().values))
 
 
 def curve_length_bin(db: pd.DataFrame, threshold: float = 1000) -> int:
-    return get_bin(int(curve_length(db)), threshold=threshold)
+    return get_bin(int(curve_length(db, cache=True)), threshold=threshold)
 
 
 def length_ratio(db: pd.DataFrame) -> float:
-    return curve_length(db) / (actual_distance(db) + EPS)
+    return curve_length(db, cache=True) / (actual_distance(db, cache=True) + EPS)
 
 
 def actual_speed(db: pd.DataFrame) -> float:
-    return actual_distance(db) / (db.time.iloc[-1] - db.time.iloc[0] + EPS)
+    return actual_distance(db, cache=True) / (db.time.iloc[-1] - db.time.iloc[0] + EPS)
 
 
-def curve_speed(db: pd.DataFrame) -> float:
+@cached
+def curve_speed(db: pd.DataFrame, get_cache=None) -> float:
     # return (np.hypot(db.dx[1:].values, db.dy[1:].values) / db.dt[1:].values).mean()
-    return np.nanmean(np.hypot(db.x.diff().values, db.y.diff().values) /
-                      (db.time.diff().values + EPS))
+    return (np.hypot(db.x.diff().values[1:], db.y.diff().values[1:]) /
+            (db.time.diff().values[1:] + EPS)).mean()
 
 
 def curve_acceleration(db: pd.DataFrame) -> float:
-    return curve_speed(db) / (db.time.iloc[-1] - db.time.iloc[0] + EPS)
+    return curve_speed(db, cache=True) / (db.time.iloc[-1] - db.time.iloc[0] + EPS)
 
 
-def mean_movement_offset(db: pd.DataFrame) -> float:
+@cached
+def mean_movement_offset(db: pd.DataFrame, get_cache=None) -> float:
     Pn_Po = np.array([db.x.iloc[-1] - db.x.iloc[0], db.y.iloc[-1] - db.y.iloc[0]])
     return (get_det(db) / (np.linalg.norm(Pn_Po) + EPS)).mean()
 
@@ -96,10 +104,11 @@ def mean_movement_error(db: pd.DataFrame) -> float:
 
 
 def mean_movement_variability(db: pd.DataFrame) -> float:
-    return ((db.y.iloc[1:-1] - mean_movement_offset(db)) ** 2).mean() ** 0.5
+    return ((db.y.iloc[1:-1] - mean_movement_offset(db, cache=True)) ** 2).mean() ** 0.5
 
 
-def mean_curvature(db: pd.DataFrame) -> float:
+@cached
+def mean_curvature(db: pd.DataFrame, get_cache=None) -> float:
     return (np.arctan2(db.y, db.x) / np.hypot(db.x.values, db.y.values)).mean()
 
 
@@ -110,11 +119,11 @@ def mean_curvature_change_rate(db: pd.DataFrame) -> float:
 
 
 def mean_curvature_velocity(db: pd.DataFrame) -> float:
-    return mean_curvature(db) / (db.time.iloc[-1] - db.time.iloc[0] + EPS)
+    return mean_curvature(db, cache=True) / (db.time.iloc[-1] - db.time.iloc[0] + EPS)
 
 
 def mean_curvature_velocity_change_rate(db: pd.DataFrame) -> float:
-    return mean_curvature(db) / (db.time.iloc[-1] - db.time.iloc[0] + EPS) ** 2
+    return mean_curvature(db, cache=True) / (db.time.iloc[-1] - db.time.iloc[0] + EPS) ** 2
 
 
 def mean_angular_velocity(db: pd.DataFrame) -> float:
