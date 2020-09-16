@@ -26,8 +26,8 @@ class Color:
         }
 
     def __getitem__(self, item):
-        # return self.color[item]
-        return ""
+        return self.color[item]
+        # return ""
 
 
 COLOR = Color()

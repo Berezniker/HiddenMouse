@@ -6,6 +6,9 @@ import time
 import glob
 import os
 
+
+# [link](https://figshare.com/articles/Mouse_Behavior_Data_for_Static_Authentication/5619313)
+
 ######################################################################
 # CHAOSHEN dataset
 #    |
@@ -56,4 +59,4 @@ if __name__ == '__main__':
     start_time = time.time()
     print(f"{COLOR['italics']}CHAOSHEN{COLOR['none']} Run!")
     chaoshen_preprocessing(verbose=3)
-    print(f"run time: {time.time() - start_time:.3f}")
+    print(f"run time: {(time.time() - start_time) / 60.0:.1f} min")

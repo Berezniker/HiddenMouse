@@ -2,12 +2,11 @@ from utils.cashe import cached
 import pandas as pd
 import numpy as np
 
-EPS = 1e-5
 
-"""
-Mondal S., Bours P. A study on continuous authentication using a combination of
-keystroke and mouse biometrics //Neurocomputing. – 2017. – Ò. 230. – Ñ. 1-22.
-"""
+# ARTICLE:
+#
+# Mondal S., Bours P. A study on continuous authentication using a combination of
+# keystroke and mouse biometrics //Neurocomputing. – 2017. – Ò. 230. – Ñ. 1-22.
 
 
 # feature extraction function template:
@@ -20,14 +19,12 @@ keystroke and mouse biometrics //Neurocomputing. – 2017. – Ò. 230. – Ñ. 
 #     """
 
 def get_bin(dist: int, threshold: float = 1000) -> int:
-    if dist < 0:
-        return -1
-    elif dist <= threshold:
-        return dist % 5
+    if dist <= threshold:
+        return dist % int(threshold // 5)
     elif dist <= 2 * threshold:
-        return 5 + dist % 10
+        return 5 + dist % int(threshold // 10)
     elif dist <= 3 * threshold:
-        return 15 + dist % 4
+        return 15 + dist % int(threshold // 4)
     else:
         return 19
 
@@ -54,7 +51,7 @@ def direction_bin(db: pd.DataFrame, n_bin: int = 8) -> np.ndarray:
 
 
 @cached
-def actual_distance(db: pd.DataFrame, get_cache=None) -> float:
+def actual_distance(db: pd.DataFrame) -> float:
     return ((db.x.iloc[0] - db.x.iloc[-1]) ** 2 +
             (db.y.iloc[0] - db.y.iloc[-1]) ** 2) ** 0.5
 
@@ -64,8 +61,7 @@ def actual_distance_bin(db: pd.DataFrame, threshold: float = 1000) -> int:
 
 
 @cached
-def curve_length(db: pd.DataFrame, get_cache=None) -> float:
-    # return np.hypot(db.dx.values[1:], db.dy.values[1:]).sum()
+def curve_length(db: pd.DataFrame) -> float:
     return np.nansum(np.hypot(db.x.diff().values, db.y.diff().values))
 
 
@@ -74,33 +70,38 @@ def curve_length_bin(db: pd.DataFrame, threshold: float = 1000) -> int:
 
 
 def length_ratio(db: pd.DataFrame) -> float:
-    return curve_length(db, cache=True) / (actual_distance(db, cache=True) + EPS)
+    ad = actual_distance(db, cache=True)
+    return 0 if ad == 0 else curve_length(db, cache=True) / ad
 
 
 def actual_speed(db: pd.DataFrame) -> float:
-    return actual_distance(db, cache=True) / (db.time.iloc[-1] - db.time.iloc[0] + EPS)
+    dt = db.time.iloc[-1] - db.time.iloc[0]
+    return 0 if dt == 0 else actual_distance(db, cache=True) / dt
 
 
 @cached
-def curve_speed(db: pd.DataFrame, get_cache=None) -> float:
-    # return (np.hypot(db.dx[1:].values, db.dy[1:].values) / db.dt[1:].values).mean()
-    return (np.hypot(db.x.diff().values[1:], db.y.diff().values[1:]) /
-            (db.time.diff().values[1:] + EPS)).mean()
+def curve_speed(db: pd.DataFrame) -> float:
+    dt = db.time.diff().values[1:]
+    dt[dt == 0] = 1e-3
+    return (np.hypot(db.x.diff().values[1:], db.y.diff().values[1:]) / dt).mean()
 
 
 def curve_acceleration(db: pd.DataFrame) -> float:
-    return curve_speed(db, cache=True) / (db.time.iloc[-1] - db.time.iloc[0] + EPS)
+    dt = db.time.iloc[-1] - db.time.iloc[0]
+    return 0 if dt == 0 else curve_speed(db, cache=True) / dt
 
 
 @cached
-def mean_movement_offset(db: pd.DataFrame, get_cache=None) -> float:
+def mean_movement_offset(db: pd.DataFrame) -> float:
     Pn_Po = np.array([db.x.iloc[-1] - db.x.iloc[0], db.y.iloc[-1] - db.y.iloc[0]])
-    return (get_det(db) / (np.linalg.norm(Pn_Po) + EPS)).mean()
+    norm = np.linalg.norm(Pn_Po)
+    return 0 if norm == 0 else (get_det(db) / norm).mean()
 
 
 def mean_movement_error(db: pd.DataFrame) -> float:
     Pn_Po = np.array([db.x.iloc[-1] - db.x.iloc[0], db.y.iloc[-1] - db.y.iloc[0]])
-    return (np.abs(get_det(db) / (np.linalg.norm(Pn_Po) + EPS))).mean()
+    norm = np.linalg.norm(Pn_Po)
+    return 0 if norm == 0 else (np.abs(get_det(db) / norm)).mean()
 
 
 def mean_movement_variability(db: pd.DataFrame) -> float:
@@ -108,22 +109,29 @@ def mean_movement_variability(db: pd.DataFrame) -> float:
 
 
 @cached
-def mean_curvature(db: pd.DataFrame, get_cache=None) -> float:
-    return (np.arctan2(db.y, db.x) / np.hypot(db.x.values, db.y.values)).mean()
+def mean_curvature(db: pd.DataFrame) -> float:
+    xy = np.hypot(db.x.values, db.y.values)
+    mask = (xy != 0)
+    return 0 if np.all(~mask) else\
+        (np.arctan2(db.y, db.x)[mask] / xy[mask]).mean()
 
 
 def mean_curvature_change_rate(db: pd.DataFrame) -> float:
-    return (np.arctan2(db.y.iloc[:-1].values, db.x.iloc[:-1].values) /
-            (((db.x.iloc[-1] - db.x.iloc[:-1].values) ** 2 +
-              (db.y.iloc[-1] - db.y.iloc[:-1].values) ** 2) ** 0.5 + EPS)).mean()
+    xy = ((db.x.iloc[-1] - db.x.iloc[:-1].values) ** 2 +
+          (db.y.iloc[-1] - db.y.iloc[:-1].values) ** 2) ** 0.5
+    mask = (xy != 0)
+    return 0 if np.all(~mask) else\
+        (np.arctan2(db.y.iloc[:-1].values, db.x.iloc[:-1].values)[mask] / xy[mask]).mean()
 
 
 def mean_curvature_velocity(db: pd.DataFrame) -> float:
-    return mean_curvature(db, cache=True) / (db.time.iloc[-1] - db.time.iloc[0] + EPS)
+    dt = db.time.iloc[-1] - db.time.iloc[0]
+    return 0 if dt == 0 else mean_curvature(db, cache=True)
 
 
 def mean_curvature_velocity_change_rate(db: pd.DataFrame) -> float:
-    return mean_curvature(db, cache=True) / (db.time.iloc[-1] - db.time.iloc[0] + EPS) ** 2
+    dt = db.time.iloc[-1] - db.time.iloc[0]
+    return 0 if dt == 0 else mean_curvature(db, cache=True) / (dt ** 2)
 
 
 def mean_angular_velocity(db: pd.DataFrame) -> float:
@@ -131,6 +139,12 @@ def mean_angular_velocity(db: pd.DataFrame) -> float:
                   db.y.iloc[:-2].values - db.y.iloc[1:-1].values])
     b = np.array([db.x.iloc[2:].values - db.x.iloc[1:-1].values,
                   db.y.iloc[2:].values - db.y.iloc[1:-1].values])
-    angle = np.arccos(np.sum(a * b, axis=0) /
-                      (np.linalg.norm(a, axis=0) * np.linalg.norm(b, axis=0) + EPS))
-    return (angle / (db.time.iloc[2:].values - db.time.iloc[:-2].values + EPS)).mean()
+    norm = np.linalg.norm(a, axis=0) * np.linalg.norm(b, axis=0)
+    if np.all(norm == 0):
+        return 0
+    mask = (norm != 0)
+    x = np.minimum(1, np.maximum(-1, np.sum(a * b, axis=0)[mask] / norm[mask]))
+    angle = np.arccos(x)
+    dt = (db.time.iloc[2:].values - db.time.iloc[:-2].values)[mask]
+    dt[dt == 0] = 1e-3
+    return (angle / dt).mean()

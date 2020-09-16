@@ -5,6 +5,9 @@ import time
 import glob
 import os
 
+
+# [link](https://github.com/balabit/Mouse-Dynamics-Challenge)
+
 ######################################################################
 # Balabit dataset
 #    |
@@ -39,7 +42,7 @@ def balabit_preprocessing(data_dir: str = "../../original_dataset/BALABIT_origin
                 check_illegal = labels[labels.filename == session_name]
                 if check_illegal.size and check_illegal.is_illegal.values:
                     if verbose >= 3:
-                        print(f">>> {COLOR['yellow']}Illegal session skipped: {session_name}{COLOR['none']}")
+                        print(f"    {COLOR['yellow']}Illegal session skipped: {session_name}{COLOR['none']}")
                     continue
                 # PREPROCESSING
                 db = pd.read_csv(session_path)
@@ -47,7 +50,10 @@ def balabit_preprocessing(data_dir: str = "../../original_dataset/BALABIT_origin
                 db.drop(db[db.button == 'Scroll'].index, axis=0, inplace=True)
                 db.drop(drop_fields, axis=1, inplace=True)
                 db = preprocessing(db, check_size=(verbose >= 3))
-                if check_min_size(db): continue
+                if check_min_size(db, min_size=200):
+                    if verbose >= 3:
+                        print(f"    {COLOR['yellow']}Short   session skipped: {session_name}{COLOR['none']}")
+                    continue
 
                 # PRESERVATION
                 save_path = os.path.join(save_dir, file_type)
@@ -61,4 +67,4 @@ if __name__ == '__main__':
     start_time = time.time()
     print(f"{COLOR['italics']}BALABIT{COLOR['none']} Run!")
     balabit_preprocessing(verbose=3)
-    print(f"run time: {time.time() - start_time:.3f}")
+    print(f"run time: {(time.time() - start_time) / 60.0:.1f} min")

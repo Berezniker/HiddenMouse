@@ -1,5 +1,4 @@
 from utils.combine_sessions import combine_sessions
-from utils.quantile_encoding import quantile_encoding
 from feature_extraction.my_feature import *
 from feature_extraction.ars_feature import *
 from datetime import datetime
@@ -9,8 +8,8 @@ import time
 import glob
 import os
 
-TIME_THRESHOLD = 5.0
-ACTION_THRESHOLD = 5
+TIME_THRESHOLD = 5.0  # sec
+ACTION_THRESHOLD = 10
 LOG_FILE = None
 
 
@@ -45,9 +44,7 @@ def split_dataframe(db: pd.DataFrame,
         yield db.loc[(db.time >= ctime), :]
 
 
-def extract_features(database: pd.DataFrame,
-                     only_one_segment: bool = False,
-                     only_one_feature: bool = False) -> pd.DataFrame:
+def extract_features(database: pd.DataFrame) -> pd.DataFrame:
     extraction_function = list([
         direction_bin, actual_distance, actual_distance_bin,
         curve_length, curve_length_bin, length_ratio, actual_speed, curve_speed,
@@ -78,21 +75,13 @@ def extract_features(database: pd.DataFrame,
             # ------------------------------------------------------------------ #
             features.setdefault(extractor.__name__, []).append(extractor(segment))
             # ------------------------------------------------------------------ #
-            if only_one_feature:
-                printf('>>>> [!] only_one_feature')
-                break
-        if only_one_segment:
-            printf('>>> [!] only_one_segment')
-            break
 
     return pd.DataFrame(features).round(decimals=6)
 
 
 def run(data_path: str,
         save_path: str = None,
-        save_features: bool = False,
-        only_one_user: bool = False,
-        only_one_session: bool = False) -> None:
+        save_features: bool = True) -> None:
     if save_features:
         if save_path is None:
             save_path = data_path.replace('files', 'features')
@@ -129,18 +118,14 @@ def run(data_path: str,
                    f' data.size = {db.index.size:7} '
                    f' features.size = {features.index.size:4} '
                    f' time: {time.time() - session_start_time:5.1f} sec')
-            if only_one_session:
-                printf('>> [!] only_one_session')
-                break
+
         printf(f'> {user_name} time: {(time.time() - user_start_time) / 60.0:.1f} min\n')
-        if only_one_user:
-            printf('> [!] only_one_user')
-            break
 
 
 if __name__ == '__main__':
     start_time = time.time()
-    for dataset in ["BALABIT", "DATAIIT", "CHAOSHEN", "TWOS"]:  # TODO add "DFL"
+    all_dataset = ["BALABIT", "DATAIIT", "CHAOSHEN", "TWOS", "DFL"]
+    for dataset in all_dataset:
         log_file_path = f"../../dataset/{dataset}/log_{dataset}_feature_extraction.txt"
         LOG_FILE = open(log_file_path, mode='w')
         LOG_FILE.write(f"{datetime.now().isoformat(sep=' ')[:-7]}\n\n")
@@ -149,13 +134,12 @@ if __name__ == '__main__':
         for type_file in ['train', 'test']:
             type_start_time = time.time()
             printf(f"{type_file}")
-            # --------------------------------------------------------------------------- #
-            run(data_path=f"../../dataset/{dataset}/{type_file}_files", save_features=True)
-            # --------------------------------------------------------------------------- #
+            # ------------------------------------------------------- #
+            run(data_path=f"../../dataset/{dataset}/{type_file}_files")
+            # ------------------------------------------------------- #
             printf(f"{type_file}_time: {(time.time() - type_start_time) / 60.0:.1f} min\n\n")
         printf(f"{dataset}_time: {(time.time() - dataset_start_time) / 60.0:.1f} min\n\n")
         LOG_FILE.close()
     print(f"main_time: {(time.time() - start_time) / 60.0:.1f} min\n")
 
-    combine_sessions(verbose=3)
-    # quantile_encoding(verbose=3)
+    combine_sessions(datasets=all_dataset, verbose=3)

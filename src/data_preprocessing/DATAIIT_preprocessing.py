@@ -2,10 +2,10 @@ from data_preprocessing.general_preprocessing import *
 from utils.color import COLOR
 from itertools import count
 import pandas as pd
-import numpy as np
 import time
 import glob
 import os
+
 
 ######################################################################
 # DATAIIT dataset
@@ -64,4 +64,4 @@ if __name__ == '__main__':
     start_time = time.time()
     print(f"{COLOR['italics']}DATAIIT{COLOR['none']} Run!")
     dataiit_preprocessing(verbose=3)
-    print(f"run time: {time.time() - start_time:.3f}")
+    print(f"run time: {(time.time() - start_time) / 60.0:.1f} min")

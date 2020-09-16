@@ -42,12 +42,12 @@ def fix_duplicate_time(db: pd.DataFrame) -> pd.DataFrame:
     while (db.time.diff() == 0).any():
         idx = db[db.time.diff() == 0].index
         if n_dup == idx.size:
-            print(" ``` looping ``` ", end='')
+            db.drop_duplicates(subset='time', inplace=True)
             break
         n_dup = idx.size
         db.loc[idx, 'time'] = (db.reindex(idx - 1).time.values +
                                db.reindex(idx + 1).time.values) / 2.0
-    db.dropna(inplace=True)  # sometimes the last line contains nan
+    db.dropna(inplace=True)  # sometimes the last lines contains nan
     return db
 
 

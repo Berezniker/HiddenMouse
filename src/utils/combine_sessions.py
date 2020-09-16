@@ -6,9 +6,15 @@ import os
 
 
 def combine_sessions(root_directory: str = '../../dataset',
+                     datasets: list = None,
                      final_name: str = 'session_all.csv',
                      verbose: int = 0) -> None:
-    for dataset_path in glob.glob(os.path.join(root_directory, '*')):
+    if datasets is None:
+        datasets = glob.glob(os.path.join(root_directory, '*'))
+    else:
+        datasets = [os.path.join(root_directory, data) for data in datasets]
+
+    for dataset_path in datasets:
         if verbose >= 1: print(f"> {os.path.basename(dataset_path)}")
         for feature_path in glob.glob(os.path.join(dataset_path, '*features')):
             if verbose >= 2: print(f">> {os.path.basename(feature_path)}")
