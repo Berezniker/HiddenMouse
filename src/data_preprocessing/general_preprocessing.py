@@ -56,7 +56,7 @@ def add_differential_fields(db: pd.DataFrame) -> pd.DataFrame:
     db['dy'] = db.y.diff()
     db['dt'] = db.time.diff()
 
-    db.loc[db.dt < 1e-4, 'dt'] = 1e-4
+    db.loc[db.dt < 1e-3, 'dt'] = 1e-3
 
     return db
 
@@ -88,23 +88,8 @@ def preprocessing(database: pd.DataFrame,
 
     database = fix_duplicate_time(database)
     info("fix_time_duplicates", database.index.size)
-    # --- instead of ---
-    # database.drop_duplicates(subset='time', inplace=True)
-    # info("drop_time_duplicates", database.index.size)
 
-    # mask = database[np.all(database[['x', 'y']].diff() == 0, axis=1)]
-    # database.drop(mask.index, inplace=True)
-    # info("drop_xy_duplicates", database.index.size)
-
-    # TODO check (x < 0) | (y < 0) for DFL. WHAT IS IT?
     database = quartile(quartile(database, 'x'), 'y')
     info("quartile", database.index.size)
-    # --- instead of ---
-    # database.drop(database[(database.x < 0) | (database.x > 2000)].index, inplace=True)
-    # database.drop(database[(database.y < 0) | (database.y > 1200)].index, inplace=True)
-    # info("drop_outliers", database.index.size)
-
-    # TODO add this?
-    # database = add_differential_fields(database)
 
     return database

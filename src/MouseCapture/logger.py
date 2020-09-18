@@ -71,4 +71,6 @@ def run(username: str = 'Unknown') -> None:
 
 
 if __name__ == "__main__":
+    print("Run!")
     run("Alexey")
+    print("End of run.")

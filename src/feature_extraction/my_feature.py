@@ -18,13 +18,13 @@ import numpy as np
 #     :return: feature value
 #     """
 
-def get_bin(dist: int, threshold: float = 1000) -> int:
+def get_bin(dist: int, threshold: int = 1000) -> int:
     if dist <= threshold:
-        return dist % int(threshold // 5)
+        return dist // (threshold // 5)
     elif dist <= 2 * threshold:
-        return 5 + dist % int(threshold // 10)
+        return 5 + (dist - threshold) // (threshold // 10)
     elif dist <= 3 * threshold:
-        return 15 + dist % int(threshold // 4)
+        return 15 + (dist - 2 * threshold) // (threshold // 4)
     else:
         return 19
 
@@ -56,7 +56,7 @@ def actual_distance(db: pd.DataFrame) -> float:
             (db.y.iloc[0] - db.y.iloc[-1]) ** 2) ** 0.5
 
 
-def actual_distance_bin(db: pd.DataFrame, threshold: float = 1000) -> int:
+def actual_distance_bin(db: pd.DataFrame, threshold: int = 1000) -> int:
     return get_bin(int(actual_distance(db, cache=True)), threshold=threshold)
 
 
@@ -65,7 +65,7 @@ def curve_length(db: pd.DataFrame) -> float:
     return np.nansum(np.hypot(db.x.diff().values, db.y.diff().values))
 
 
-def curve_length_bin(db: pd.DataFrame, threshold: float = 1000) -> int:
+def curve_length_bin(db: pd.DataFrame, threshold: int = 1000) -> int:
     return get_bin(int(curve_length(db, cache=True)), threshold=threshold)
 
 

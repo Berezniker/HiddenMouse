@@ -4,6 +4,7 @@ from feature_extraction.ars_feature import *
 from datetime import datetime
 from itertools import chain
 import pandas as pd
+import shutil
 import time
 import glob
 import os
@@ -44,6 +45,24 @@ def split_dataframe(db: pd.DataFrame,
         yield db.loc[(db.time >= ctime), :]
 
 
+# ОЧЕНЬ ДОЛГО
+def sliding_window(db: pd.DataFrame,
+                   time_threshold: float = 5.0,
+                   min_window_size: int = 5,
+                   max_window_size: int = 100,
+                   window_step: int = 10):
+    ctime, max_time = 0, db.time.iloc[-1]
+    db.reset_index(drop=True)
+    while ctime + time_threshold < max_time:
+        one_split = db.loc[(db.time < ctime + time_threshold), :]
+        one_split = one_split.iloc[:max_window_size, :]
+        if one_split.index.size > min_window_size:
+            yield one_split
+        idx = one_split.index[0] + window_step
+        db = db.loc[idx:, :]
+        ctime = db.time.iloc[0]
+
+
 def extract_features(database: pd.DataFrame) -> pd.DataFrame:
     extraction_function = list([
         direction_bin, actual_distance, actual_distance_bin,
@@ -68,13 +87,16 @@ def extract_features(database: pd.DataFrame) -> pd.DataFrame:
         TCM, SC, M3, M4, TCrv, VCrv
     ])  # len(...) = 63
     ars_extracrion_function = list()  # TODO
-    features = dict()
+
+    features = {extractor.__name__: list() for extractor in
+                chain(extraction_function, ars_extracrion_function)}
 
     for segment in split_dataframe(database):
         for extractor in chain(extraction_function, ars_extracrion_function):
-            # ------------------------------------------------------------------ #
-            features.setdefault(extractor.__name__, []).append(extractor(segment))
-            # ------------------------------------------------------------------ #
+            # ----------------------------------------------------#
+            features[extractor.__name__].append(extractor(segment))
+            # --------------------------------------------------- #
+    # построчная запись в .csv файл не ускоряет процесс
 
     return pd.DataFrame(features).round(decimals=6)
 
@@ -85,6 +107,8 @@ def run(data_path: str,
     if save_features:
         if save_path is None:
             save_path = data_path.replace('files', 'features')
+        if os.path.exists(save_path):
+            shutil.rmtree(save_path)
     else:
         printf("[Warning] Data will not be saved (save_features=False)")
     printf(f'\n{data_path} --> {save_path}\n')
@@ -140,6 +164,7 @@ if __name__ == '__main__':
             printf(f"{type_file}_time: {(time.time() - type_start_time) / 60.0:.1f} min\n\n")
         printf(f"{dataset}_time: {(time.time() - dataset_start_time) / 60.0:.1f} min\n\n")
         LOG_FILE.close()
+
     print(f"main_time: {(time.time() - start_time) / 60.0:.1f} min\n")
 
     combine_sessions(datasets=all_dataset, verbose=3)
