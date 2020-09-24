@@ -56,7 +56,7 @@ def actual_distance(db: pd.DataFrame) -> float:
             (db.y.iloc[0] - db.y.iloc[-1]) ** 2) ** 0.5
 
 
-def actual_distance_bin(db: pd.DataFrame, threshold: int = 1000) -> int:
+def actual_distance_bin(db: pd.DataFrame, threshold: int = 250) -> int:
     return get_bin(int(actual_distance(db, cache=True)), threshold=threshold)
 
 

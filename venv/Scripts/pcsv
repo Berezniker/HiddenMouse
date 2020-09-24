@@ -1,7 +1,0 @@
-#!C:\Users\Alexey\Desktop\study\Diplom\HiddenMouse\venv\Scripts\python.exe
-import pcsv
-from jtutils import fix_broken_pipe
-
-if __name__ == "__main__":
-    fix_broken_pipe()
-    pcsv.pcsv()
