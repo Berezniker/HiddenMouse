@@ -1,6 +1,7 @@
 from data_preprocessing.general_preprocessing import *
 from utils.color import COLOR
 from itertools import count
+import utils.constants as const
 import pandas as pd
 import time
 import glob
@@ -19,9 +20,16 @@ import os
 ######################################################################
 
 
-def balabit_preprocessing(data_dir: str = "../../original_dataset/MY_original",
-                          save_dir: str = "../../dataset/MY",
-                          verbose: int = 0) -> None:
+def my_preprocessing(verbose: int = 0) -> None:
+    """
+    MY data preprocessing
+
+    :param verbose: verbose output to stdout,
+                    0 -- silence, [1, 2, 3] -- more verbose
+    :return: None
+    """
+    data_dir = os.path.join(const.ORIGINAL_DATASET_PATH, "MY_original")
+    save_dir = os.path.join(const.DATASET_PATH, "MY")
     rename_fields = {'timestamp': 'time'}
     drop_fields = ['button', 'state']
     uniq_name = count()
@@ -57,5 +65,5 @@ def balabit_preprocessing(data_dir: str = "../../original_dataset/MY_original",
 if __name__ == '__main__':
     start_time = time.time()
     print(f"{COLOR['italics']}MY{COLOR['none']} Run!")
-    balabit_preprocessing(verbose=3)
+    my_preprocessing(verbose=3)
     print(f"run time: {(time.time() - start_time) / 60.0:.1f} min")

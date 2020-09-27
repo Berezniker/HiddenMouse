@@ -1,6 +1,7 @@
 from data_preprocessing.general_preprocessing import *
 from utils.color import COLOR
 from itertools import count
+import utils.constants as const
 import pandas as pd
 import time
 import glob
@@ -22,9 +23,9 @@ import os
 ######################################################################
 
 
-def twos_preprocessing(data_dir: str = '../../original_dataset/TWOS_original/mouse_ano',
-                       save_dir: str = '../../dataset/TWOS',
-                       verbose: int = 0) -> None:
+def twos_preprocessing(verbose: int = 0) -> None:
+    data_dir = os.path.join(const.ORIGINAL_DATASET_PATH, "TWOS_original")
+    save_dir = os.path.join(const.DATASET_PATH, "TWOS")
     uniq_name = count()
     clear_directory(save_dir)
     save_dir = os.path.join(save_dir, 'train_files')

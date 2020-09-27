@@ -1,5 +1,6 @@
 /dataset/*/*/
 /original_dataset/
+/src/evaluation/score
 /**/__pycache__/
 /.idea
 

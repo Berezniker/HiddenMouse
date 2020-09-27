@@ -1,5 +1,6 @@
 from data_preprocessing.general_preprocessing import *
 from utils.color import COLOR
+import utils.constants as const
 import pandas as pd
 import time
 import glob
@@ -21,9 +22,16 @@ import os
 ######################################################################
 
 
-def balabit_preprocessing(data_dir: str = "../../original_dataset/BALABIT_original",
-                          save_dir: str = "../../dataset/BALABIT",
-                          verbose: int = 0) -> None:
+def balabit_preprocessing(verbose: int = 0) -> None:
+    """
+    BALABIT data preprocessing
+
+    :param verbose: verbose output to stdout,
+                    0 -- silence, [1, 2, 3] -- more verbose
+    :return: None
+    """
+    data_dir = os.path.join(const.ORIGINAL_DATASET_PATH, "BALABIT_original")
+    save_dir = os.path.join(const.DATASET_PATH, "BALABIT")
     labels_path = os.path.join(data_dir, 'labels.csv')
     rename_fields = {'client timestamp': 'time'}
     drop_fields = ['record timestamp', 'button', 'state']

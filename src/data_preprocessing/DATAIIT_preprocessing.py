@@ -1,6 +1,7 @@
 from data_preprocessing.general_preprocessing import *
 from utils.color import COLOR
 from itertools import count
+import utils.constants as const
 import pandas as pd
 import time
 import glob
@@ -21,9 +22,16 @@ import os
 ######################################################################
 
 
-def dataiit_preprocessing(data_dir: str = '../../original_dataset/DATAIIT_original',
-                          save_dir: str = '../../dataset/DATAIIT',
-                          verbose: int = 0) -> None:
+def dataiit_preprocessing(verbose: int = 0) -> None:
+    """
+    DATAIIT data preprocessing
+
+    :param verbose: verbose output to stdout,
+                    0 -- silence, [1, 2, 3] -- more verbose
+    :return: None
+    """
+    data_dir = os.path.join(const.ORIGINAL_DATASET_PATH, "DATAIIT_original")
+    save_dir = os.path.join(const.DATASET_PATH, "DATAIIT")
     rename_fields = {'x_pos': 'x', 'y_pos': 'y'}
     drop_fields = ['username', 'processname', 'message_id', 'record_info', 'hwnd']
     uniq_name = count()

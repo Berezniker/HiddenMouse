@@ -1,6 +1,5 @@
 from utils.color import COLOR
 import pandas as pd
-import numpy as np
 import shutil
 import sys
 import os

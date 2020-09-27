@@ -3,7 +3,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.svm import OneClassSVM
 from scipy.interpolate import interp1d
 from scipy.optimize import brentq
-from src.utils import describe_data
+from utils import describe_data
+import utils.constants as const
 import plotly.graph_objs as go
 import numpy as np
 import pandas as pd
@@ -60,20 +61,19 @@ def one_vs_all(classifier, parameters: dict) -> dict:
     :param parameters: classifier constructor parameters
     :return: dictionary like: {LEGAL_DATASET: {USER_NAME: {ILLEGAL_DATASET: AUC_list, ...} } }
     """
-    all_dataset = [os.path.basename(path)
-                   for path in glob.iglob("../../dataset/*") if os.path.isdir(path)]
     res = dict()
-    for legal_dataset in all_dataset:
+    for legal_dataset in const.ALL_DATASET_NAME:
         print(f"{legal_dataset}")
         res[legal_dataset] = dict()
-        legal_path = f"../../dataset/{legal_dataset}/train_features/user*"
+        legal_path = os.path.join(const.DATASET_PATH,
+                                  f"{legal_dataset}/train_features/user*")
 
         for path in glob.glob(legal_path):
             legal_user_name = os.path.basename(path)
             res[legal_dataset][legal_user_name] = dict()
             print(legal_user_name, end=' $ ')
             scaler = StandardScaler()
-            data_train_path = os.path.join(path, "session_all.csv")
+            data_train_path = os.path.join(path, const.COMBINE_SESSION_NAME)
             X_train = scaler.fit_transform(get_data(data_train_path))
             # ---------------------------------------- #
             clf = classifier(**parameters).fit(X_train)
@@ -81,16 +81,17 @@ def one_vs_all(classifier, parameters: dict) -> dict:
             data_valid_path = data_train_path.replace("train", "test")
             X_valid = scaler.transform(get_data(data_valid_path))
 
-            for illegal_dataset in all_dataset:
+            for illegal_dataset in const.ALL_DATASET_NAME:
                 print(f"... vs {illegal_dataset}", end=" ")
-                illegal_path = f"../../dataset/{illegal_dataset}/test_features/user*"
+                illegal_path = os.path.join(const.DATASET_PATH,
+                                            f"{legal_dataset}/test_features/user*")
                 res[legal_dataset][legal_user_name][illegal_dataset] = list()
                 score_list = list()
                 for i_path in glob.glob(illegal_path):
                     if legal_dataset == illegal_dataset:
                         if legal_user_name == os.path.basename(i_path):
                             continue
-                    X_test = get_data(os.path.join(i_path, "session_all.csv"), scaler)
+                    X_test = get_data(os.path.join(i_path, const.COMBINE_SESSION_NAME), scaler)
                     y = np.array([1] * len(X_valid) + [-1] * len(X_test))
                     y_score = np.hstack((clf.decision_function(X_valid),
                                          clf.decision_function(X_test)))
@@ -164,7 +165,13 @@ def save_log(data: dict, classifier_name: str, parameters: dict) -> dict:
                     "mean AUC": mean_AUC.round(3)
                 }
             })
-        describer[dataset]['mean_AUC'] = np.mean(dataset_mean_AUC).round(3)
+        describer[dataset].setdefault('mean_AUC', list())
+        describer[dataset]['mean_AUC'].append({
+            classifier_name: {
+                "parameters": parameters,
+                "mean AUC": np.mean(dataset_mean_AUC).round(3)
+            }
+        })
 
     describe_data.dump_log(describer)
 
@@ -179,5 +186,5 @@ if __name__ == "__main__":
     start_time = time.time()
     pairwise_data = one_vs_all(classifier, parameters)
     save_log(pairwise_data, classifier.__name__, parameters)
-    # boxplot(pairwise_data, f"/score/{classifier.__name__}_nu={parameters['nu']}")
+    boxplot(pairwise_data, f"/score/{classifier.__name__}_nu={parameters['nu']}")
     print(f"End of run. Time: {(time.time() - start_time) / 60.0:.1f} min")

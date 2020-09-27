@@ -26,8 +26,8 @@ class Color:
         }
 
     def __getitem__(self, item):
-        return self.color[item]
-        # return ""
+        # return self.color[item]  # color is only displayed in the console
+        return ""  # for the .txt log
 
 
 COLOR = Color()

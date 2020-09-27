@@ -1,8 +1,8 @@
 from utils import describe_data
+import utils.constants as const
 import subprocess
 import datetime
 import time
-import glob
 import os
 
 
@@ -12,11 +12,9 @@ def all_preprocessing() -> None:
 
     :return: None
     """
-    all_dataset = [os.path.basename(path)
-                   for path in glob.iglob("../../dataset/*") if os.path.isdir(path)]
     describer = describe_data.create_new_log()
 
-    for dataset in all_dataset:
+    for dataset in const.ALL_DATASET_NAME:
         dataset_time = time.time()
         describer.setdefault(dataset, dict())
         print(f"> {dataset:<8}", end=' ')
@@ -28,7 +26,9 @@ def all_preprocessing() -> None:
             encoding='ascii',
             shell=True)
 
-        with open(f"../../dataset/{dataset}/log_{dataset}_preprocessing.txt", mode='w') as f:
+        save_path = os.path.join(const.DATASET_PATH, dataset)
+        save_path = os.path.join(save_path, f"log_{dataset}_preprocessing.txt")
+        with open(save_path, mode='w') as f:
             f.write(f"{datetime.datetime.now().isoformat(sep=' ')[:-7]}\n\n")
             f.write(proc.stdout)
 
