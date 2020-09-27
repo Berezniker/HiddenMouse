@@ -3,16 +3,19 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.svm import OneClassSVM
 from scipy.interpolate import interp1d
 from scipy.optimize import brentq
+from src.utils import describe_data
 import plotly.graph_objs as go
 import numpy as np
 import pandas as pd
 import glob
+import time
 import os
 
 
 def EER(y_true: np.ndarray, y_score: np.ndarray) -> float:
     """
     Calculate EER metrics
+
     :param y_true: true labels
     :param y_score: target scores
     :return: EER
@@ -25,6 +28,7 @@ def EER(y_true: np.ndarray, y_score: np.ndarray) -> float:
 def AUC(y_true: np.ndarray, y_score: np.ndarray) -> float:
     """
     Calculate AUC metrics
+
     :param y_true: true labels
     :param y_score: target scores
     :return: ROC AUC
@@ -35,6 +39,7 @@ def AUC(y_true: np.ndarray, y_score: np.ndarray) -> float:
 def get_data(file_path: str, preprocessor=None) -> np.ndarray:
     """
     Loading data
+
     :param file_path: file path
     :param preprocessor: preprocessing function
     :return: data
@@ -47,19 +52,21 @@ def get_data(file_path: str, preprocessor=None) -> np.ndarray:
     return data
 
 
-def one_vs_all(all_dataset: list, classifier, parameters: dict) -> dict:
+def one_vs_all(classifier, parameters: dict) -> dict:
     """
     Evaluation of the classifier quality
-    :param all_dataset: list of dataset names
+
     :param classifier: base classifier
     :param parameters: classifier constructor parameters
-    :return: dictionary like: {LEGAL_DATASET: {USER_NAME: {ILLEGAL_DATASET: mean AUC, ...} } }
+    :return: dictionary like: {LEGAL_DATASET: {USER_NAME: {ILLEGAL_DATASET: AUC_list, ...} } }
     """
+    all_dataset = [os.path.basename(path)
+                   for path in glob.iglob("../../dataset/*") if os.path.isdir(path)]
     res = dict()
     for legal_dataset in all_dataset:
         print(f"{legal_dataset}")
         res[legal_dataset] = dict()
-        legal_path = f"../HiddenMouse/dataset/{legal_dataset}/train_features/user*"
+        legal_path = f"../../dataset/{legal_dataset}/train_features/user*"
 
         for path in glob.glob(legal_path):
             legal_user_name = os.path.basename(path)
@@ -68,17 +75,16 @@ def one_vs_all(all_dataset: list, classifier, parameters: dict) -> dict:
             scaler = StandardScaler()
             data_train_path = os.path.join(path, "session_all.csv")
             X_train = scaler.fit_transform(get_data(data_train_path))
-            # ---------------------------------- #
+            # ---------------------------------------- #
             clf = classifier(**parameters).fit(X_train)
-            # ---------------------------------- #
+            # ---------------------------------------- #
             data_valid_path = data_train_path.replace("train", "test")
             X_valid = scaler.transform(get_data(data_valid_path))
 
             for illegal_dataset in all_dataset:
                 print(f"... vs {illegal_dataset}", end=" ")
+                illegal_path = f"../../dataset/{illegal_dataset}/test_features/user*"
                 res[legal_dataset][legal_user_name][illegal_dataset] = list()
-
-                illegal_path = f"../HiddenMouse/dataset/{illegal_dataset}/test_features/user*"
                 score_list = list()
                 for i_path in glob.glob(illegal_path):
                     if legal_dataset == illegal_dataset:
@@ -99,6 +105,7 @@ def one_vs_all(all_dataset: list, classifier, parameters: dict) -> dict:
 def boxplot(res: dict, path: str) -> None:
     """
     Visualization of the classifier quality by BoxPlot
+
     :param res: output dictionary of function one_vs_all
     :param path: global save path
     :return: None
@@ -134,9 +141,43 @@ def boxplot(res: dict, path: str) -> None:
         print(f"\nmean AUC = {np.mean(all_score):.3f}\n")
 
 
-if __name__ == "__main__":
-    all_dataset = ["BALABIT", "DATAIIT", "CHAOSHEN", "TWOS", "DFL"]
-    parameters = {"kernel": 'rbf', "gamma": 'scale', "nu": 0.05}
-    pairwise_data = one_vs_all(all_dataset, OneClassSVM, parameters)
+def save_log(data: dict, classifier_name: str, parameters: dict) -> dict:
+    """
+    Adds information about the classifier and metric to the json log file
 
-    boxplot(pairwise_data, f"/score/OneClassSVM_nu={parameters['nu']}")
+    :param data: output dictionary of function one_vs_all
+    :param classifier_name: base classifier name
+    :param parameters: classifier constructor parameters
+    :return: dictionary describing data in json format
+    """
+    describer = describe_data.load_log()
+
+    for dataset in data:
+        dataset_mean_AUC = list()
+        for user in data[dataset]:
+            mean_AUC = np.mean([auc.mean() for auc in data[dataset][user].values()])
+            dataset_mean_AUC.append(mean_AUC)
+            describer[dataset][user].setdefault('classifier', list())
+            describer[dataset][user]['classifier'].append({
+                classifier_name: {
+                    "parameters": parameters,
+                    "mean AUC": mean_AUC.round(3)
+                }
+            })
+        describer[dataset]['mean_AUC'] = np.mean(dataset_mean_AUC).round(3)
+
+    describe_data.dump_log(describer)
+
+    return describer
+
+
+if __name__ == "__main__":
+    classifier = OneClassSVM
+    parameters = {"kernel": 'rbf', "gamma": 'scale', "nu": 0.01}
+
+    print("Run!")
+    start_time = time.time()
+    pairwise_data = one_vs_all(classifier, parameters)
+    save_log(pairwise_data, classifier.__name__, parameters)
+    # boxplot(pairwise_data, f"/score/{classifier.__name__}_nu={parameters['nu']}")
+    print(f"End of run. Time: {(time.time() - start_time) / 60.0:.1f} min")

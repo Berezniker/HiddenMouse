@@ -1,6 +1,8 @@
 from utils.combine_sessions import combine_sessions
 from feature_extraction.my_feature import *
 from feature_extraction.ars_feature import *
+from collections import defaultdict
+from utils import describe_data
 from datetime import datetime
 from itertools import chain
 import pandas as pd
@@ -9,7 +11,7 @@ import time
 import glob
 import os
 
-TIME_THRESHOLD = 5.0  # sec
+TIME_THRESHOLD = 3.0  # sec
 ACTION_THRESHOLD = 10
 LOG_FILE = None
 
@@ -88,17 +90,15 @@ def extract_features(database: pd.DataFrame) -> pd.DataFrame:
     ])  # len(...) = 63
     ars_extracrion_function = list()  # TODO
 
-    features = {extractor.__name__: list() for extractor in
-                chain(extraction_function, ars_extracrion_function)}
-
+    features = defaultdict(list)
     for segment in split_dataframe(database):
         for extractor in chain(extraction_function, ars_extracrion_function):
             # ----------------------------------------------------#
             features[extractor.__name__].append(extractor(segment))
             # --------------------------------------------------- #
-    # построчная запись в .csv файл не ускоряет процесс
+    # writing to a csv-file line by line does not speed up the process
 
-    return pd.DataFrame(features).round(decimals=6)
+    return pd.DataFrame(data=features).round(decimals=6)
 
 
 def run(data_path: str,
@@ -148,13 +148,18 @@ def run(data_path: str,
 
 if __name__ == '__main__':
     start_time = time.time()
-    all_dataset = ["BALABIT", "DATAIIT", "CHAOSHEN", "TWOS", "DFL"]
+    all_dataset = [dataset for dataset in os.listdir("../../dataset")
+                   if os.path.isdir(dataset)]
+    describer = describe_data.load_log()
+
     for dataset in all_dataset:
         log_file_path = f"../../dataset/{dataset}/log_{dataset}_feature_extraction.txt"
         LOG_FILE = open(log_file_path, mode='w')
         LOG_FILE.write(f"{datetime.now().isoformat(sep=' ')[:-7]}\n\n")
-        dataset_start_time = time.time()
+        describer.setdefault(dataset, dict())
+        dataset_time = time.time()
         printf(f"{dataset}")
+
         for type_file in ['train', 'test']:
             type_start_time = time.time()
             printf(f"{type_file}")
@@ -162,9 +167,13 @@ if __name__ == '__main__':
             run(data_path=f"../../dataset/{dataset}/{type_file}_files")
             # ------------------------------------------------------- #
             printf(f"{type_file}_time: {(time.time() - type_start_time) / 60.0:.1f} min\n\n")
-        printf(f"{dataset}_time: {(time.time() - dataset_start_time) / 60.0:.1f} min\n\n")
+
+        dataset_time = round((time.time() - dataset_time) / 60.0, 1)
+        describer[dataset]["feature_extraction_time_(min)"] = dataset_time
+        printf(f"{dataset}_time: {dataset_time:.1f} min\n\n")
         LOG_FILE.close()
 
+    describe_data.dump_log(describer)
     print(f"main_time: {(time.time() - start_time) / 60.0:.1f} min\n")
 
     combine_sessions(datasets=all_dataset, verbose=3)

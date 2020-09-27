@@ -1,0 +1,2923 @@
+{
+    "TIME_THRESHOLD": 3,
+    "BALABIT": {
+        "preprocessing_time_(min)": 1.3,
+        "feature_extraction_time_(min)": 17.5,
+        "user07": {
+            "total_number_of_features": 10074,
+            "total_number_of_files": 116,
+            "total_number_of_lines": 722278,
+            "ratio_train_test": 0.56,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.687
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.694
+                    }
+                }
+            ]
+        },
+        "user09": {
+            "total_number_of_features": 7128,
+            "total_number_of_files": 86,
+            "total_number_of_lines": 707071,
+            "ratio_train_test": 0.57,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.609
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.61
+                    }
+                }
+            ]
+        },
+        "user12": {
+            "total_number_of_features": 21677,
+            "total_number_of_files": 187,
+            "total_number_of_lines": 458798,
+            "ratio_train_test": 0.51,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.933
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.934
+                    }
+                }
+            ]
+        },
+        "user15": {
+            "total_number_of_features": 15689,
+            "total_number_of_files": 181,
+            "total_number_of_lines": 325405,
+            "ratio_train_test": 0.44,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.928
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.927
+                    }
+                }
+            ]
+        },
+        "user16": {
+            "total_number_of_features": 17596,
+            "total_number_of_files": 156,
+            "total_number_of_lines": 397033,
+            "ratio_train_test": 0.55,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.935
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.934
+                    }
+                }
+            ]
+        },
+        "user20": {
+            "total_number_of_features": 8876,
+            "total_number_of_files": 92,
+            "total_number_of_lines": 445093,
+            "ratio_train_test": 0.57,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.61
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.592
+                    }
+                }
+            ]
+        },
+        "user21": {
+            "total_number_of_features": 10238,
+            "total_number_of_files": 95,
+            "total_number_of_lines": 212825,
+            "ratio_train_test": 0.55,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.71
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.696
+                    }
+                }
+            ]
+        },
+        "user23": {
+            "total_number_of_features": 10310,
+            "total_number_of_files": 106,
+            "total_number_of_lines": 225277,
+            "ratio_train_test": 0.53,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.853
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.853
+                    }
+                }
+            ]
+        },
+        "user29": {
+            "total_number_of_features": 9616,
+            "total_number_of_files": 103,
+            "total_number_of_lines": 222616,
+            "ratio_train_test": 0.55,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.943
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.942
+                    }
+                }
+            ]
+        },
+        "user35": {
+            "total_number_of_features": 9715,
+            "total_number_of_files": 117,
+            "total_number_of_lines": 203351,
+            "ratio_train_test": 0.47,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.939
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.937
+                    }
+                }
+            ]
+        },
+        "number_of_users": 12,
+        "mean_AUC": 0.812
+    },
+    "CHAOSHEN": {
+        "preprocessing_time_(min)": 7.5,
+        "feature_extraction_time_(min)": 19.4,
+        "user01": {
+            "total_number_of_features": 1399,
+            "total_number_of_files": 400,
+            "total_number_of_lines": 170268,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.881
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.886
+                    }
+                }
+            ]
+        },
+        "user03": {
+            "total_number_of_features": 1577,
+            "total_number_of_files": 400,
+            "total_number_of_lines": 211671,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.906
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.906
+                    }
+                }
+            ]
+        },
+        "user04": {
+            "total_number_of_features": 3015,
+            "total_number_of_files": 800,
+            "total_number_of_lines": 436868,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.902
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.899
+                    }
+                }
+            ]
+        },
+        "user05": {
+            "total_number_of_features": 1897,
+            "total_number_of_files": 498,
+            "total_number_of_lines": 293793,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.936
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.936
+                    }
+                }
+            ]
+        },
+        "user06": {
+            "total_number_of_features": 2833,
+            "total_number_of_files": 800,
+            "total_number_of_lines": 387414,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.856
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.861
+                    }
+                }
+            ]
+        },
+        "user07": {
+            "total_number_of_features": 1524,
+            "total_number_of_files": 400,
+            "total_number_of_lines": 206044,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.901
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.901
+                    }
+                }
+            ]
+        },
+        "user08": {
+            "total_number_of_features": 1147,
+            "total_number_of_files": 300,
+            "total_number_of_lines": 151507,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.916
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.915
+                    }
+                }
+            ]
+        },
+        "user09": {
+            "total_number_of_features": 1059,
+            "total_number_of_files": 300,
+            "total_number_of_lines": 135187,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.88
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.881
+                    }
+                }
+            ]
+        },
+        "user10": {
+            "total_number_of_features": 1447,
+            "total_number_of_files": 400,
+            "total_number_of_lines": 184618,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.896
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.896
+                    }
+                }
+            ]
+        },
+        "user13": {
+            "total_number_of_features": 1379,
+            "total_number_of_files": 380,
+            "total_number_of_lines": 195346,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.896
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.895
+                    }
+                }
+            ]
+        },
+        "user14": {
+            "total_number_of_features": 1498,
+            "total_number_of_files": 400,
+            "total_number_of_lines": 162421,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.905
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.904
+                    }
+                }
+            ]
+        },
+        "user15": {
+            "total_number_of_features": 2598,
+            "total_number_of_files": 680,
+            "total_number_of_lines": 365976,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.902
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.901
+                    }
+                }
+            ]
+        },
+        "user16": {
+            "total_number_of_features": 1081,
+            "total_number_of_files": 300,
+            "total_number_of_lines": 150047,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.898
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.898
+                    }
+                }
+            ]
+        },
+        "user17": {
+            "total_number_of_features": 1611,
+            "total_number_of_files": 400,
+            "total_number_of_lines": 226665,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.896
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.896
+                    }
+                }
+            ]
+        },
+        "user18": {
+            "total_number_of_features": 1145,
+            "total_number_of_files": 320,
+            "total_number_of_lines": 150749,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.908
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.908
+                    }
+                }
+            ]
+        },
+        "user19": {
+            "total_number_of_features": 1536,
+            "total_number_of_files": 400,
+            "total_number_of_lines": 189168,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.916
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.914
+                    }
+                }
+            ]
+        },
+        "user20": {
+            "total_number_of_features": 1453,
+            "total_number_of_files": 360,
+            "total_number_of_lines": 237601,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.93
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.93
+                    }
+                }
+            ]
+        },
+        "user21": {
+            "total_number_of_features": 701,
+            "total_number_of_files": 200,
+            "total_number_of_lines": 93480,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.842
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.842
+                    }
+                }
+            ]
+        },
+        "user22": {
+            "total_number_of_features": 1465,
+            "total_number_of_files": 402,
+            "total_number_of_lines": 202172,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.907
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.907
+                    }
+                }
+            ]
+        },
+        "user24": {
+            "total_number_of_features": 2963,
+            "total_number_of_files": 800,
+            "total_number_of_lines": 392133,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.917
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.921
+                    }
+                }
+            ]
+        },
+        "user25": {
+            "total_number_of_features": 1549,
+            "total_number_of_files": 440,
+            "total_number_of_lines": 211051,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.882
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.886
+                    }
+                }
+            ]
+        },
+        "user27": {
+            "total_number_of_features": 1623,
+            "total_number_of_files": 400,
+            "total_number_of_lines": 237150,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.901
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.901
+                    }
+                }
+            ]
+        },
+        "user28": {
+            "total_number_of_features": 1532,
+            "total_number_of_files": 380,
+            "total_number_of_lines": 195387,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.897
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.897
+                    }
+                }
+            ]
+        },
+        "user29": {
+            "total_number_of_features": 1470,
+            "total_number_of_files": 420,
+            "total_number_of_lines": 171476,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.866
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.866
+                    }
+                }
+            ]
+        },
+        "user30": {
+            "total_number_of_features": 577,
+            "total_number_of_files": 160,
+            "total_number_of_lines": 76231,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.893
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.893
+                    }
+                }
+            ]
+        },
+        "user31": {
+            "total_number_of_features": 1683,
+            "total_number_of_files": 460,
+            "total_number_of_lines": 239518,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.907
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.907
+                    }
+                }
+            ]
+        },
+        "user32": {
+            "total_number_of_features": 1784,
+            "total_number_of_files": 460,
+            "total_number_of_lines": 225978,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.915
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.915
+                    }
+                }
+            ]
+        },
+        "user33": {
+            "total_number_of_features": 1893,
+            "total_number_of_files": 480,
+            "total_number_of_lines": 275954,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.922
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.921
+                    }
+                }
+            ]
+        },
+        "user35": {
+            "total_number_of_features": 1549,
+            "total_number_of_files": 440,
+            "total_number_of_lines": 200009,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.87
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.866
+                    }
+                }
+            ]
+        },
+        "user36": {
+            "total_number_of_features": 1479,
+            "total_number_of_files": 420,
+            "total_number_of_lines": 226009,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.915
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.923
+                    }
+                }
+            ]
+        },
+        "user37": {
+            "total_number_of_features": 294,
+            "total_number_of_files": 80,
+            "total_number_of_lines": 39426,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.906
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.906
+                    }
+                }
+            ]
+        },
+        "user38": {
+            "total_number_of_features": 1602,
+            "total_number_of_files": 440,
+            "total_number_of_lines": 224281,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.904
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.902
+                    }
+                }
+            ]
+        },
+        "user39": {
+            "total_number_of_features": 578,
+            "total_number_of_files": 160,
+            "total_number_of_lines": 76762,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.913
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.913
+                    }
+                }
+            ]
+        },
+        "user40": {
+            "total_number_of_features": 1514,
+            "total_number_of_files": 400,
+            "total_number_of_lines": 204684,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.923
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.923
+                    }
+                }
+            ]
+        },
+        "user41": {
+            "total_number_of_features": 2921,
+            "total_number_of_files": 800,
+            "total_number_of_lines": 389905,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.901
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.894
+                    }
+                }
+            ]
+        },
+        "user42": {
+            "total_number_of_features": 1460,
+            "total_number_of_files": 400,
+            "total_number_of_lines": 215035,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.9
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.9
+                    }
+                }
+            ]
+        },
+        "user43": {
+            "total_number_of_features": 1487,
+            "total_number_of_files": 400,
+            "total_number_of_lines": 209585,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.893
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.893
+                    }
+                }
+            ]
+        },
+        "user44": {
+            "total_number_of_features": 2107,
+            "total_number_of_files": 600,
+            "total_number_of_lines": 289821,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.865
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.87
+                    }
+                }
+            ]
+        },
+        "user45": {
+            "total_number_of_features": 1550,
+            "total_number_of_files": 400,
+            "total_number_of_lines": 190880,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.897
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.896
+                    }
+                }
+            ]
+        },
+        "user46": {
+            "total_number_of_features": 1439,
+            "total_number_of_files": 400,
+            "total_number_of_lines": 188510,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.893
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.891
+                    }
+                }
+            ]
+        },
+        "user47": {
+            "total_number_of_features": 2386,
+            "total_number_of_files": 680,
+            "total_number_of_lines": 333283,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.874
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.888
+                    }
+                }
+            ]
+        },
+        "user48": {
+            "total_number_of_features": 1511,
+            "total_number_of_files": 400,
+            "total_number_of_lines": 218407,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.912
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.912
+                    }
+                }
+            ]
+        },
+        "user49": {
+            "total_number_of_features": 310,
+            "total_number_of_files": 80,
+            "total_number_of_lines": 43993,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.922
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.922
+                    }
+                }
+            ]
+        },
+        "user53": {
+            "total_number_of_features": 1631,
+            "total_number_of_files": 440,
+            "total_number_of_lines": 227890,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.925
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.925
+                    }
+                }
+            ]
+        },
+        "user54": {
+            "total_number_of_features": 1584,
+            "total_number_of_files": 400,
+            "total_number_of_lines": 224345,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.907
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.908
+                    }
+                }
+            ]
+        },
+        "user55": {
+            "total_number_of_features": 1476,
+            "total_number_of_files": 400,
+            "total_number_of_lines": 183463,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.911
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.911
+                    }
+                }
+            ]
+        },
+        "user56": {
+            "total_number_of_features": 1571,
+            "total_number_of_files": 400,
+            "total_number_of_lines": 221671,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.92
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.921
+                    }
+                }
+            ]
+        },
+        "user57": {
+            "total_number_of_features": 1629,
+            "total_number_of_files": 400,
+            "total_number_of_lines": 231919,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.898
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.9
+                    }
+                }
+            ]
+        },
+        "number_of_users": 50,
+        "mean_AUC": 0.901
+    },
+    "DATAIIT": {
+        "preprocessing_time_(min)": 2.2,
+        "feature_extraction_time_(min)": 19.4,
+        "user21": {
+            "total_number_of_features": 4165,
+            "total_number_of_files": 20,
+            "total_number_of_lines": 446130,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.763
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.755
+                    }
+                }
+            ]
+        },
+        "user22": {
+            "total_number_of_features": 2600,
+            "total_number_of_files": 16,
+            "total_number_of_lines": 258352,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.754
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.757
+                    }
+                }
+            ]
+        },
+        "user23": {
+            "total_number_of_features": 5201,
+            "total_number_of_files": 20,
+            "total_number_of_lines": 606103,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.788
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.774
+                    }
+                }
+            ]
+        },
+        "user24": {
+            "total_number_of_features": 6256,
+            "total_number_of_files": 20,
+            "total_number_of_lines": 794728,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.741
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.741
+                    }
+                }
+            ]
+        },
+        "user25": {
+            "total_number_of_features": 4582,
+            "total_number_of_files": 14,
+            "total_number_of_lines": 522236,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.778
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.78
+                    }
+                }
+            ]
+        },
+        "user26": {
+            "total_number_of_features": 5934,
+            "total_number_of_files": 20,
+            "total_number_of_lines": 622241,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.755
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.748
+                    }
+                }
+            ]
+        },
+        "user27": {
+            "total_number_of_features": 4260,
+            "total_number_of_files": 16,
+            "total_number_of_lines": 384834,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.647
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.651
+                    }
+                }
+            ]
+        },
+        "user28": {
+            "total_number_of_features": 6064,
+            "total_number_of_files": 20,
+            "total_number_of_lines": 714049,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.797
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.784
+                    }
+                }
+            ]
+        },
+        "user29": {
+            "total_number_of_features": 4913,
+            "total_number_of_files": 20,
+            "total_number_of_lines": 448617,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.765
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.764
+                    }
+                }
+            ]
+        },
+        "user30": {
+            "total_number_of_features": 1662,
+            "total_number_of_files": 8,
+            "total_number_of_lines": 166541,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.609
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.608
+                    }
+                }
+            ]
+        },
+        "user31": {
+            "total_number_of_features": 6192,
+            "total_number_of_files": 16,
+            "total_number_of_lines": 761554,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.822
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.817
+                    }
+                }
+            ]
+        },
+        "user32": {
+            "total_number_of_features": 6173,
+            "total_number_of_files": 16,
+            "total_number_of_lines": 666473,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.827
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.83
+                    }
+                }
+            ]
+        },
+        "user33": {
+            "total_number_of_features": 3867,
+            "total_number_of_files": 16,
+            "total_number_of_lines": 394475,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.782
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.776
+                    }
+                }
+            ]
+        },
+        "user34": {
+            "total_number_of_features": 7587,
+            "total_number_of_files": 18,
+            "total_number_of_lines": 921965,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.861
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.854
+                    }
+                }
+            ]
+        },
+        "user35": {
+            "total_number_of_features": 5116,
+            "total_number_of_files": 16,
+            "total_number_of_lines": 465275,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.781
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.777
+                    }
+                }
+            ]
+        },
+        "user36": {
+            "total_number_of_features": 6732,
+            "total_number_of_files": 22,
+            "total_number_of_lines": 887452,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.809
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.799
+                    }
+                }
+            ]
+        },
+        "user37": {
+            "total_number_of_features": 2546,
+            "total_number_of_files": 8,
+            "total_number_of_lines": 285736,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.851
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.848
+                    }
+                }
+            ]
+        },
+        "user38": {
+            "total_number_of_features": 9132,
+            "total_number_of_files": 20,
+            "total_number_of_lines": 1143744,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.888
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.867
+                    }
+                }
+            ]
+        },
+        "user39": {
+            "total_number_of_features": 3711,
+            "total_number_of_files": 14,
+            "total_number_of_lines": 358237,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.728
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.727
+                    }
+                }
+            ]
+        },
+        "user40": {
+            "total_number_of_features": 5835,
+            "total_number_of_files": 18,
+            "total_number_of_lines": 638076,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.818
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.817
+                    }
+                }
+            ]
+        },
+        "number_of_users": 22,
+        "mean_AUC": 0.774
+    },
+    "DFL": {
+        "preprocessing_time_(min)": 22.6,
+        "feature_extraction_time_(min)": 265.3,
+        "user01": {
+            "total_number_of_features": 20458,
+            "total_number_of_files": 62,
+            "total_number_of_lines": 2681882,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.457
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.482
+                    }
+                }
+            ]
+        },
+        "user02": {
+            "total_number_of_features": 16159,
+            "total_number_of_files": 42,
+            "total_number_of_lines": 1481985,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.496
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.502
+                    }
+                }
+            ]
+        },
+        "user03": {
+            "total_number_of_features": 9494,
+            "total_number_of_files": 26,
+            "total_number_of_lines": 938527,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.633
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.64
+                    }
+                }
+            ]
+        },
+        "user04": {
+            "total_number_of_features": 79063,
+            "total_number_of_files": 6,
+            "total_number_of_lines": 41172930,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.532
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.543
+                    }
+                }
+            ]
+        },
+        "user05": {
+            "total_number_of_features": 49473,
+            "total_number_of_files": 14,
+            "total_number_of_lines": 14379300,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.537
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.538
+                    }
+                }
+            ]
+        },
+        "user06": {
+            "total_number_of_features": 20164,
+            "total_number_of_files": 4,
+            "total_number_of_lines": 3786241,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.619
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.57
+                    }
+                }
+            ]
+        },
+        "user07": {
+            "total_number_of_features": 15975,
+            "total_number_of_files": 6,
+            "total_number_of_lines": 3957697,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.459
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.47
+                    }
+                }
+            ]
+        },
+        "user08": {
+            "total_number_of_features": 7256,
+            "total_number_of_files": 16,
+            "total_number_of_lines": 685215,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.494
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.506
+                    }
+                }
+            ]
+        },
+        "user09": {
+            "total_number_of_features": 5796,
+            "total_number_of_files": 2,
+            "total_number_of_lines": 463446,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.439
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.45
+                    }
+                }
+            ]
+        },
+        "user10": {
+            "total_number_of_features": 3816,
+            "total_number_of_files": 2,
+            "total_number_of_lines": 474314,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.489
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.493
+                    }
+                }
+            ]
+        },
+        "user11": {
+            "total_number_of_features": 40457,
+            "total_number_of_files": 88,
+            "total_number_of_lines": 4668245,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.577
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.571
+                    }
+                }
+            ]
+        },
+        "user12": {
+            "total_number_of_features": 42332,
+            "total_number_of_files": 32,
+            "total_number_of_lines": 5892898,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.587
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.59
+                    }
+                }
+            ]
+        },
+        "user13": {
+            "total_number_of_features": 26056,
+            "total_number_of_files": 36,
+            "total_number_of_lines": 2843702,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.489
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.511
+                    }
+                }
+            ]
+        },
+        "user14": {
+            "total_number_of_features": 23155,
+            "total_number_of_files": 38,
+            "total_number_of_lines": 2579262,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.431
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.463
+                    }
+                }
+            ]
+        },
+        "user15": {
+            "total_number_of_features": 110444,
+            "total_number_of_files": 104,
+            "total_number_of_lines": 12282677,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.522
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.52
+                    }
+                }
+            ]
+        },
+        "user16": {
+            "total_number_of_features": 18412,
+            "total_number_of_files": 12,
+            "total_number_of_lines": 1991245,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.461
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.471
+                    }
+                }
+            ]
+        },
+        "user17": {
+            "total_number_of_features": 14970,
+            "total_number_of_files": 36,
+            "total_number_of_lines": 2478199,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.449
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.466
+                    }
+                }
+            ]
+        },
+        "user18": {
+            "total_number_of_features": 39626,
+            "total_number_of_files": 112,
+            "total_number_of_lines": 25119444,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.461
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.484
+                    }
+                }
+            ]
+        },
+        "user19": {
+            "total_number_of_features": 109253,
+            "total_number_of_files": 12,
+            "total_number_of_lines": 16056614,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.944
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.927
+                    }
+                }
+            ]
+        },
+        "user20": {
+            "total_number_of_features": 24594,
+            "total_number_of_files": 60,
+            "total_number_of_lines": 2786219,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.466
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.469
+                    }
+                }
+            ]
+        },
+        "number_of_users": 22,
+        "mean_AUC": 0.533
+    },
+    "MY": {
+        "preprocessing_time_(min)": 0.0,
+        "feature_extraction_time_(min)": 0.2,
+        "user_alexey": {
+            "total_number_of_features": 1566,
+            "total_number_of_files": 2,
+            "total_number_of_lines": 99998,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": NaN
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": NaN
+                    }
+                }
+            ]
+        },
+        "number_of_users": 3,
+        "mean_AUC": NaN
+    },
+    "TWOS": {
+        "preprocessing_time_(min)": 3.1,
+        "feature_extraction_time_(min)": 2.4,
+        "user01": {
+            "total_number_of_features": 3496,
+            "total_number_of_files": 2,
+            "total_number_of_lines": 376462,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.607
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.61
+                    }
+                }
+            ]
+        },
+        "user10": {
+            "total_number_of_features": 2998,
+            "total_number_of_files": 4,
+            "total_number_of_lines": 412199,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.671
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.667
+                    }
+                }
+            ]
+        },
+        "user11": {
+            "total_number_of_features": 3249,
+            "total_number_of_files": 6,
+            "total_number_of_lines": 198465,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.788
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.783
+                    }
+                }
+            ]
+        },
+        "user12": {
+            "total_number_of_features": 3946,
+            "total_number_of_files": 2,
+            "total_number_of_lines": 324707,
+            "ratio_train_test": 0.7,
+            "classifier": [
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.05
+                        },
+                        "mean AUC": 0.666
+                    }
+                },
+                {
+                    "OneClassSVM": {
+                        "parameters": {
+                            "kernel": "rbf",
+                            "gamma": "scale",
+                            "nu": 0.01
+                        },
+                        "mean AUC": 0.67
+                    }
+                }
+            ]
+        },
+        "number_of_users": 6,
+        "mean_AUC": 0.682
+    }
+}
