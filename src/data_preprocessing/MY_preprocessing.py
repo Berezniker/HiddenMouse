@@ -31,8 +31,8 @@ def balabit_preprocessing(data_dir: str = "../../original_dataset/MY_original",
 
     for user_path in glob.glob(os.path.join(data_dir, 'User*')):
         user_name = os.path.basename(user_path).lower()
-        if verbose >= 2: print(f">> {user_name}")
-        for session_path in glob.glob(os.path.join(user_path, '*logger*')):
+        if verbose >= 2: print(f"\n>> {user_name}")
+        for session_path in glob.glob(os.path.join(user_path, '*.csv')):
             # PREPROCESSING
             db = pd.read_csv(session_path)
             db.rename(rename_fields, axis=1, inplace=True)

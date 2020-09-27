@@ -32,6 +32,7 @@ def dfl_preprocessing(data_dir: str = "../../original_dataset/DFL_original",
 
     for user_path in glob.glob(os.path.join(data_dir, 'User*')):
         user_name = os.path.basename(user_path).lower()
+        user_name = f"{user_name[:4]}{user_name[4:]:>02}"
         if verbose >= 2: print(f"\n>> {user_name}")
         for session_path in glob.glob(os.path.join(user_path, '*.CSV')):
             session_name = os.path.basename(session_path).lower()

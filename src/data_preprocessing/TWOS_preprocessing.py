@@ -33,6 +33,7 @@ def twos_preprocessing(data_dir: str = '../../original_dataset/TWOS_original/mou
 
     for user_path in glob.glob(os.path.join(data_dir, 'User*')):
         user_name = os.path.basename(user_path).split('.')[0].lower()
+        user_name = f"{user_name[:4]}{user_name[4:]:>02}"
         if verbose >= 2: print(f"\n>> {user_name}")
         # PREPROCESSING
         db = pd.read_csv(user_path, sep=';', names=header, parse_dates=[0])

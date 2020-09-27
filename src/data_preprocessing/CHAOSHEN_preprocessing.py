@@ -29,13 +29,13 @@ def chaoshen_preprocessing(data_dir: str = "../../original_dataset/CHAOSHEN_orig
     drop_fields = ['code']
 
     for user_path in glob.glob(os.path.join(data_dir, '*')):
-        user_name = f"user{next(user_num):02}"
-        if verbose >= 2: print(f">> {user_name} ({os.path.basename(user_path)})")
+        user_name = f"user{next(user_num):>02}"
+        if verbose >= 2: print(f"\n>> {user_name} ({os.path.basename(user_path)})")
         for session_path in glob.glob(os.path.join(user_path, "RawData/*.txt")):
             # PREPROCESSING
             db = pd.read_csv(session_path, sep=' ', names=header, index_col=False)
             db.drop(drop_fields, axis=1, inplace=True)
-            db = db[['time', 'x,' 'y']]
+            db = db[['time', 'x', 'y']]
             db.time = (db.time - db.time.iloc[0]) / 1000.0
             db = preprocessing(db, check_size=(verbose >= 3))
             # if check_min_size(db): continue  # all sessions are small
