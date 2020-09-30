@@ -1,5 +1,5 @@
 {
-    "TIME_THRESHOLD": 3,
+    "_time_threshold": 3.0,
     "BALABIT": {
         "preprocessing_time_(min)": 1.3,
         "feature_extraction_time_(min)": 17.5,
@@ -10,24 +10,31 @@
             "ratio_train_test": 0.56,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.687
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.683
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.694
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.687
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.694
                 }
             ]
         },
@@ -38,24 +45,31 @@
             "ratio_train_test": 0.57,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.609
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.645
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.61
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.648
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.652
                 }
             ]
         },
@@ -66,24 +80,31 @@
             "ratio_train_test": 0.51,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.933
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.741
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.934
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.743
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.746
                 }
             ]
         },
@@ -94,24 +115,31 @@
             "ratio_train_test": 0.44,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.928
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.787
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.927
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.789
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.791
                 }
             ]
         },
@@ -122,24 +150,31 @@
             "ratio_train_test": 0.55,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.935
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.817
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.934
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.818
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.82
                 }
             ]
         },
@@ -150,24 +185,31 @@
             "ratio_train_test": 0.57,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.61
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.782
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.592
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.783
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.782
                 }
             ]
         },
@@ -178,24 +220,31 @@
             "ratio_train_test": 0.55,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.71
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.771
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.696
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.773
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.77
                 }
             ]
         },
@@ -206,24 +255,31 @@
             "ratio_train_test": 0.53,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.853
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.78
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.853
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.783
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.78
                 }
             ]
         },
@@ -234,24 +290,31 @@
             "ratio_train_test": 0.55,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.943
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.798
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.942
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.801
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.798
                 }
             ]
         },
@@ -262,29 +325,64 @@
             "ratio_train_test": 0.47,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.939
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.812
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.937
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.815
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.812
                 }
             ]
         },
-        "number_of_users": 12,
-        "mean_AUC": 0.812
+        "number_of_users": 10,
+        "score": [
+            {
+                "classifier": "OneClassSVM",
+                "parameters": {
+                    "kernel": "rbf",
+                    "gamma": "scale",
+                    "nu": 0.1
+                },
+                "mean_AUC": 0.812
+            },
+            {
+                "classifier": "OneClassSVM",
+                "parameters": {
+                    "kernel": "rbf",
+                    "gamma": "scale",
+                    "nu": 0.05
+                },
+                "mean_AUC": 0.815
+            },
+            {
+                "classifier": "OneClassSVM",
+                "parameters": {
+                    "kernel": "rbf",
+                    "gamma": "scale",
+                    "nu": 0.01
+                },
+                "mean_AUC": 0.812
+            }
+        ]
     },
     "CHAOSHEN": {
         "preprocessing_time_(min)": 7.5,
@@ -296,24 +394,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.881
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.872
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.886
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.881
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.886
                 }
             ]
         },
@@ -324,24 +429,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.906
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.888
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.906
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.894
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.896
                 }
             ]
         },
@@ -352,24 +464,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.902
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.893
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.899
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.897
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.897
                 }
             ]
         },
@@ -380,24 +499,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.936
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.903
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.936
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.906
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.907
                 }
             ]
         },
@@ -408,24 +534,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.856
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.894
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.861
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.896
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.897
                 }
             ]
         },
@@ -436,24 +569,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.901
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.896
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.901
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.897
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.898
                 }
             ]
         },
@@ -464,24 +604,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.916
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.898
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.915
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.9
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.9
                 }
             ]
         },
@@ -492,24 +639,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.88
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.895
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.881
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.897
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.898
                 }
             ]
         },
@@ -520,24 +674,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.896
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.895
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.896
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.897
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.898
                 }
             ]
         },
@@ -548,24 +709,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.896
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.896
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.895
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.897
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.897
                 }
             ]
         },
@@ -576,24 +744,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.905
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.897
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.904
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.898
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.898
                 }
             ]
         },
@@ -604,24 +779,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.902
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.898
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.901
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.898
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.898
                 }
             ]
         },
@@ -632,24 +814,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.898
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.898
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.898
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.898
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.898
                 }
             ]
         },
@@ -660,24 +849,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.896
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.897
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.896
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.898
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.898
                 }
             ]
         },
@@ -688,24 +884,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.908
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.898
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.908
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.899
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.899
                 }
             ]
         },
@@ -716,24 +919,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.916
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.899
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.914
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.9
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.9
                 }
             ]
         },
@@ -744,24 +954,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.93
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.901
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.93
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.902
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.901
                 }
             ]
         },
@@ -772,24 +989,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.842
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.897
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.842
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.898
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.898
                 }
             ]
         },
@@ -800,24 +1024,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.907
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.898
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.907
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.899
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.899
                 }
             ]
         },
@@ -828,24 +1059,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.917
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.898
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.921
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.9
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.9
                 }
             ]
         },
@@ -856,24 +1094,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.882
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.897
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.886
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.899
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.899
                 }
             ]
         },
@@ -884,24 +1129,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.901
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.897
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.901
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.899
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.899
                 }
             ]
         },
@@ -912,24 +1164,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.897
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.897
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.897
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.899
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.899
                 }
             ]
         },
@@ -940,24 +1199,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.866
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.896
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.866
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.897
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.898
                 }
             ]
         },
@@ -968,24 +1234,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.893
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.896
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.893
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.897
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.897
                 }
             ]
         },
@@ -996,24 +1269,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.907
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.897
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.907
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.898
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.898
                 }
             ]
         },
@@ -1024,24 +1304,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.915
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.897
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.915
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.898
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.898
                 }
             ]
         },
@@ -1052,24 +1339,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.922
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.898
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.921
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.899
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.899
                 }
             ]
         },
@@ -1080,24 +1374,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.87
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.897
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.866
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.898
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.898
                 }
             ]
         },
@@ -1108,24 +1409,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.915
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.898
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.923
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.899
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.899
                 }
             ]
         },
@@ -1136,24 +1444,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.906
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.898
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.906
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.899
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.899
                 }
             ]
         },
@@ -1164,24 +1479,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.904
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.898
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.902
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.899
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.899
                 }
             ]
         },
@@ -1192,24 +1514,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.913
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.898
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.913
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.9
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.9
                 }
             ]
         },
@@ -1220,24 +1549,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.923
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.899
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.923
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.9
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.9
                 }
             ]
         },
@@ -1248,24 +1584,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.901
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.899
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.894
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.9
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.9
                 }
             ]
         },
@@ -1276,24 +1619,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.9
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.899
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.9
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.9
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.9
                 }
             ]
         },
@@ -1304,24 +1654,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.893
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.899
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.893
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.9
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.9
                 }
             ]
         },
@@ -1332,24 +1689,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.865
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.898
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.87
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.899
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.899
                 }
             ]
         },
@@ -1360,24 +1724,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.897
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.898
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.896
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.899
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.899
                 }
             ]
         },
@@ -1388,24 +1759,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.893
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.898
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.891
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.899
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.899
                 }
             ]
         },
@@ -1416,24 +1794,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.874
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.897
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.888
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.898
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.899
                 }
             ]
         },
@@ -1444,24 +1829,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.912
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.898
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.912
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.899
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.899
                 }
             ]
         },
@@ -1472,24 +1864,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.922
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.898
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.922
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.899
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.9
                 }
             ]
         },
@@ -1500,24 +1899,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.925
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.899
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.925
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.9
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.9
                 }
             ]
         },
@@ -1528,24 +1934,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.907
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.899
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.908
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.9
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.9
                 }
             ]
         },
@@ -1556,24 +1969,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.911
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.899
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.911
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.9
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.901
                 }
             ]
         },
@@ -1584,24 +2004,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.92
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.9
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.921
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.901
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.901
                 }
             ]
         },
@@ -1612,29 +2039,64 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.898
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.9
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.9
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.901
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.901
                 }
             ]
         },
-        "number_of_users": 50,
-        "mean_AUC": 0.901
+        "number_of_users": 48,
+        "score": [
+            {
+                "classifier": "OneClassSVM",
+                "parameters": {
+                    "kernel": "rbf",
+                    "gamma": "scale",
+                    "nu": 0.1
+                },
+                "mean_AUC": 0.9
+            },
+            {
+                "classifier": "OneClassSVM",
+                "parameters": {
+                    "kernel": "rbf",
+                    "gamma": "scale",
+                    "nu": 0.05
+                },
+                "mean_AUC": 0.901
+            },
+            {
+                "classifier": "OneClassSVM",
+                "parameters": {
+                    "kernel": "rbf",
+                    "gamma": "scale",
+                    "nu": 0.01
+                },
+                "mean_AUC": 0.901
+            }
+        ]
     },
     "DATAIIT": {
         "preprocessing_time_(min)": 2.2,
@@ -1646,24 +2108,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.763
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.765
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.755
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.763
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.755
                 }
             ]
         },
@@ -1674,24 +2143,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.754
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.753
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.757
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.759
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.756
                 }
             ]
         },
@@ -1702,24 +2178,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.788
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.765
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.774
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.768
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.762
                 }
             ]
         },
@@ -1730,24 +2213,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.741
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.758
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.741
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.761
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.757
                 }
             ]
         },
@@ -1758,24 +2248,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.778
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.762
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.78
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.765
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.762
                 }
             ]
         },
@@ -1786,24 +2283,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.755
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.76
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.748
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.763
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.759
                 }
             ]
         },
@@ -1814,24 +2318,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.647
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.742
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.651
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.747
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.744
                 }
             ]
         },
@@ -1842,24 +2353,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.797
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.749
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.784
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.753
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.749
                 }
             ]
         },
@@ -1870,24 +2388,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.765
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.749
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.764
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.754
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.751
                 }
             ]
         },
@@ -1898,24 +2423,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.609
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.736
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.608
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.74
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.736
                 }
             ]
         },
@@ -1926,24 +2458,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.822
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.744
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.817
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.747
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.744
                 }
             ]
         },
@@ -1954,24 +2493,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.827
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.751
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.83
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.754
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.751
                 }
             ]
         },
@@ -1982,24 +2528,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.782
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.753
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.776
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.756
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.753
                 }
             ]
         },
@@ -2010,24 +2563,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.861
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.762
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.854
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.764
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.76
                 }
             ]
         },
@@ -2038,24 +2598,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.781
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.763
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.777
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.765
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.761
                 }
             ]
         },
@@ -2066,24 +2633,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.809
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.767
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.799
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.767
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.763
                 }
             ]
         },
@@ -2094,24 +2668,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.851
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.772
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.848
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.772
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.768
                 }
             ]
         },
@@ -2122,24 +2703,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.888
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.778
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.867
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.779
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.774
                 }
             ]
         },
@@ -2150,24 +2738,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.728
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.776
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.727
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.776
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.771
                 }
             ]
         },
@@ -2178,29 +2773,64 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.818
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.777
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.817
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.778
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.774
                 }
             ]
         },
-        "number_of_users": 22,
-        "mean_AUC": 0.774
+        "number_of_users": 20,
+        "score": [
+            {
+                "classifier": "OneClassSVM",
+                "parameters": {
+                    "kernel": "rbf",
+                    "gamma": "scale",
+                    "nu": 0.1
+                },
+                "mean_AUC": 0.777
+            },
+            {
+                "classifier": "OneClassSVM",
+                "parameters": {
+                    "kernel": "rbf",
+                    "gamma": "scale",
+                    "nu": 0.05
+                },
+                "mean_AUC": 0.778
+            },
+            {
+                "classifier": "OneClassSVM",
+                "parameters": {
+                    "kernel": "rbf",
+                    "gamma": "scale",
+                    "nu": 0.01
+                },
+                "mean_AUC": 0.774
+            }
+        ]
     },
     "DFL": {
         "preprocessing_time_(min)": 22.6,
@@ -2212,24 +2842,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.457
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.458
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.482
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.457
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.482
                 }
             ]
         },
@@ -2240,24 +2877,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.496
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.473
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.502
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.477
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.492
                 }
             ]
         },
@@ -2268,24 +2912,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.633
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.525
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.64
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.529
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.542
                 }
             ]
         },
@@ -2296,24 +2947,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.532
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.526
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.543
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.53
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.542
                 }
             ]
         },
@@ -2324,24 +2982,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.537
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.526
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.538
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.531
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.541
                 }
             ]
         },
@@ -2352,24 +3017,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.619
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.54
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.57
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.546
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.546
                 }
             ]
         },
@@ -2380,24 +3052,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.459
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.527
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.47
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.533
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.535
                 }
             ]
         },
@@ -2408,24 +3087,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.494
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.52
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.506
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.529
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.531
                 }
             ]
         },
@@ -2436,24 +3122,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.439
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.511
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.45
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.519
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.522
                 }
             ]
         },
@@ -2464,24 +3157,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.489
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.507
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.493
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.516
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.519
                 }
             ]
         },
@@ -2492,24 +3192,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.577
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.515
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.571
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.521
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.524
                 }
             ]
         },
@@ -2520,24 +3227,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.587
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.52
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.59
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.527
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.53
                 }
             ]
         },
@@ -2548,24 +3262,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.489
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.519
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.511
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.524
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.528
                 }
             ]
         },
@@ -2576,24 +3297,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.431
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.511
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.463
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.517
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.524
                 }
             ]
         },
@@ -2604,24 +3332,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.522
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.512
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.52
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.518
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.523
                 }
             ]
         },
@@ -2632,24 +3367,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.461
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.509
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.471
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.514
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.52
                 }
             ]
         },
@@ -2660,24 +3402,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.449
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.504
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.466
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.51
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.517
                 }
             ]
         },
@@ -2688,24 +3437,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.461
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.501
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.484
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.507
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.515
                 }
             ]
         },
@@ -2716,24 +3472,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.944
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.525
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.927
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.53
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.537
                 }
             ]
         },
@@ -2744,63 +3507,64 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.466
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.521
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.469
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.527
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.533
                 }
             ]
         },
-        "number_of_users": 22,
-        "mean_AUC": 0.533
-    },
-    "MY": {
-        "preprocessing_time_(min)": 0.0,
-        "feature_extraction_time_(min)": 0.2,
-        "user_alexey": {
-            "total_number_of_features": 1566,
-            "total_number_of_files": 2,
-            "total_number_of_lines": 99998,
-            "ratio_train_test": 0.7,
-            "classifier": [
-                {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": NaN
-                    }
+        "number_of_users": 20,
+        "score": [
+            {
+                "classifier": "OneClassSVM",
+                "parameters": {
+                    "kernel": "rbf",
+                    "gamma": "scale",
+                    "nu": 0.1
                 },
-                {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": NaN
-                    }
-                }
-            ]
-        },
-        "number_of_users": 3,
-        "mean_AUC": NaN
+                "mean_AUC": 0.521
+            },
+            {
+                "classifier": "OneClassSVM",
+                "parameters": {
+                    "kernel": "rbf",
+                    "gamma": "scale",
+                    "nu": 0.05
+                },
+                "mean_AUC": 0.527
+            },
+            {
+                "classifier": "OneClassSVM",
+                "parameters": {
+                    "kernel": "rbf",
+                    "gamma": "scale",
+                    "nu": 0.01
+                },
+                "mean_AUC": 0.533
+            }
+        ]
     },
     "TWOS": {
         "preprocessing_time_(min)": 3.1,
@@ -2812,24 +3576,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.607
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.595
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.61
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.607
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.61
                 }
             ]
         },
@@ -2840,24 +3611,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.671
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.626
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.667
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.639
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.638
                 }
             ]
         },
@@ -2868,24 +3646,31 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.788
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.676
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.783
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.688
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.687
                 }
             ]
         },
@@ -2896,28 +3681,63 @@
             "ratio_train_test": 0.7,
             "classifier": [
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.05
-                        },
-                        "mean AUC": 0.666
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.1
+                    },
+                    "mean_AUC": 0.671
                 },
                 {
-                    "OneClassSVM": {
-                        "parameters": {
-                            "kernel": "rbf",
-                            "gamma": "scale",
-                            "nu": 0.01
-                        },
-                        "mean AUC": 0.67
-                    }
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.05
+                    },
+                    "mean_AUC": 0.683
+                },
+                {
+                    "name": "OneClassSVM",
+                    "parameters": {
+                        "kernel": "rbf",
+                        "gamma": "scale",
+                        "nu": 0.01
+                    },
+                    "mean_AUC": 0.682
                 }
             ]
         },
-        "number_of_users": 6,
-        "mean_AUC": 0.682
+        "number_of_users": 4,
+        "score": [
+            {
+                "classifier": "OneClassSVM",
+                "parameters": {
+                    "kernel": "rbf",
+                    "gamma": "scale",
+                    "nu": 0.1
+                },
+                "mean_AUC": 0.671
+            },
+            {
+                "classifier": "OneClassSVM",
+                "parameters": {
+                    "kernel": "rbf",
+                    "gamma": "scale",
+                    "nu": 0.05
+                },
+                "mean_AUC": 0.683
+            },
+            {
+                "classifier": "OneClassSVM",
+                "parameters": {
+                    "kernel": "rbf",
+                    "gamma": "scale",
+                    "nu": 0.01
+                },
+                "mean_AUC": 0.682
+            }
+        ]
     }
 }

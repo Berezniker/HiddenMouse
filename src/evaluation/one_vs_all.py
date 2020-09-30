@@ -1,3 +1,4 @@
+from classification.neural_network import NeuralNetwork
 from sklearn.metrics import roc_curve, roc_auc_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import OneClassSVM
@@ -79,12 +80,13 @@ def one_vs_all(classifier, parameters: dict) -> dict:
             clf = classifier(**parameters).fit(X_train)
             # ---------------------------------------- #
             data_valid_path = data_train_path.replace("train", "test")
-            X_valid = scaler.transform(get_data(data_valid_path))
+            X_valid = get_data(data_valid_path, scaler)
+            valid_decision = clf.decision_function(X_valid)
 
             for illegal_dataset in const.ALL_DATASET_NAME:
                 print(f"... vs {illegal_dataset}", end=" ")
                 illegal_path = os.path.join(const.DATASET_PATH,
-                                            f"{legal_dataset}/test_features/user*")
+                                            f"{illegal_dataset}/test_features/user*")
                 res[legal_dataset][legal_user_name][illegal_dataset] = list()
                 score_list = list()
                 for i_path in glob.glob(illegal_path):
@@ -93,8 +95,7 @@ def one_vs_all(classifier, parameters: dict) -> dict:
                             continue
                     X_test = get_data(os.path.join(i_path, const.COMBINE_SESSION_NAME), scaler)
                     y = np.array([1] * len(X_valid) + [-1] * len(X_test))
-                    y_score = np.hstack((clf.decision_function(X_valid),
-                                         clf.decision_function(X_test)))
+                    y_score = np.hstack((valid_decision, clf.decision_function(X_test)))
                     score_list.append(AUC(y, y_score))
 
                 res[legal_dataset][legal_user_name][illegal_dataset] = np.array(score_list)
@@ -142,13 +143,14 @@ def boxplot(res: dict, path: str) -> None:
         print(f"\nmean AUC = {np.mean(all_score):.3f}\n")
 
 
-def save_log(data: dict, classifier_name: str, parameters: dict) -> dict:
+def save_log(data: dict, classifier_name: str, parameters: dict, comment: str = "") -> dict:
     """
     Adds information about the classifier and metric to the json log file
 
     :param data: output dictionary of function one_vs_all
     :param classifier_name: base classifier name
     :param parameters: classifier constructor parameters
+    :param comment: experiment comment
     :return: dictionary describing data in json format
     """
     describer = describe_data.load_log()
@@ -160,17 +162,16 @@ def save_log(data: dict, classifier_name: str, parameters: dict) -> dict:
             dataset_mean_AUC.append(mean_AUC)
             describer[dataset][user].setdefault('classifier', list())
             describer[dataset][user]['classifier'].append({
-                classifier_name: {
-                    "parameters": parameters,
-                    "mean AUC": mean_AUC.round(3)
-                }
-            })
-        describer[dataset].setdefault('mean_AUC', list())
-        describer[dataset]['mean_AUC'].append({
-            classifier_name: {
+                "name": classifier_name,
                 "parameters": parameters,
-                "mean AUC": np.mean(dataset_mean_AUC).round(3)
-            }
+                "mean_AUC": np.mean(dataset_mean_AUC).round(3)
+            })
+        describer[dataset].setdefault('score', list())
+        describer[dataset]['score'].append({
+            "classifier": classifier_name,
+            "comment": comment,
+            "parameters": parameters,
+            "mean_AUC": np.mean(dataset_mean_AUC).round(3)
         })
 
     describe_data.dump_log(describer)
@@ -179,12 +180,20 @@ def save_log(data: dict, classifier_name: str, parameters: dict) -> dict:
 
 
 if __name__ == "__main__":
-    classifier = OneClassSVM
-    parameters = {"kernel": 'rbf', "gamma": 'scale', "nu": 0.01}
+    # classifier = OneClassSVM
+    # parameters = {"kernel": 'rbf', "gamma": 'scale', "nu": 0.05}
+
+    classifier = NeuralNetwork
+    parameters = {"mode": const.NN.AUTOENCODER, "n_features": const.N_FEATURES,
+                  "optimizer": 'Adam', "loss": 'logcosh'}
+
+    # classifier = NeuralNetwork
+    # parameters = {"mode": const.NN.CNN, "n_features": const.N_FEATURES, "optimizer": 'Adam', "loss": 'logcosh'}
 
     print("Run!")
     start_time = time.time()
     pairwise_data = one_vs_all(classifier, parameters)
-    save_log(pairwise_data, classifier.__name__, parameters)
-    boxplot(pairwise_data, f"/score/{classifier.__name__}_nu={parameters['nu']}")
+    # save_log(pairwise_data, classifier.__name__, parameters)
+    # boxplot(pairwise_data, f"/score/{classifier.__name__}_nu={parameters['nu']}")
+    boxplot(pairwise_data, f"/score/{classifier.__name__}")
     print(f"End of run. Time: {(time.time() - start_time) / 60.0:.1f} min")
