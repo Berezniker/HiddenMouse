@@ -6,6 +6,13 @@ import os
 
 
 def clear_directory(path: str) -> None:
+    """
+    Removes all content in the directory
+    Confirmation required for deletion
+
+    :param path: path to directory
+    :return: None
+    """
     if os.path.exists(path):
         print(f"{COLOR['boldFont']}{COLOR['red']}[Warning]: remove directory: {path}{COLOR['none']}")
         key = input("Do you want to continue? [Y/N]: ")
@@ -17,11 +24,27 @@ def clear_directory(path: str) -> None:
 
 
 def check_min_size(db: pd.DataFrame, min_size: int = 1000) -> bool:
+    """
+    Checker
+
+    :param db: database
+    :param min_size: lower size bound
+    :return: <True> if database size is less than <min_size>,
+             otherwise <False>
+    """
     return db.index.size < min_size
 
 
 # https://en.wikipedia.org/wiki/Quartile#Outliers
 def quartile(db: pd.DataFrame, col: str) -> pd.DataFrame:
+    """
+    Replace the values in <db[col]> outside the IQR
+    with the upper and lower boundaries, respectively.
+
+    :param db: database
+    :param col: column name
+    :return: transformed database
+    """
     _, bins = pd.qcut(x=db[col],
                       q=[0.25, 0.75],  # [0.0, 0.25, 0.5, 0.75, 1.0],
                       retbins=True, duplicates='drop')
@@ -36,6 +59,12 @@ def quartile(db: pd.DataFrame, col: str) -> pd.DataFrame:
 
 
 def fix_duplicate_time(db: pd.DataFrame) -> pd.DataFrame:
+    """
+    Replace duplicated timestamps with average neighbors` values
+
+    :param db: database
+    :return: transformed database
+    """
     db.reset_index(drop=True, inplace=True)
     n_dup = -1
     while (db.time.diff() == 0).any():
@@ -51,6 +80,12 @@ def fix_duplicate_time(db: pd.DataFrame) -> pd.DataFrame:
 
 
 def add_differential_fields(db: pd.DataFrame) -> pd.DataFrame:
+    """
+    Add <dx>, <dy>, <dt>
+
+    :param db: database
+    :return: transformed database
+    """
     db['dx'] = db.x.diff()
     db['dy'] = db.y.diff()
     db['dt'] = db.time.diff()
@@ -79,6 +114,13 @@ class Informant:
 
 def preprocessing(database: pd.DataFrame,
                   check_size: bool = False) -> pd.DataFrame:
+    """
+    Full preprocessing of raw data
+
+    :param database: raw data
+    :param check_size: if <True> print log in stdout ~ (verbose == 3)
+    :return: transformed database
+    """
     info = Informant(check_size, database.index.size)
     database['time'] = database['time'].round(3)
 

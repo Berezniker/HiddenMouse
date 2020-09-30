@@ -1,3 +1,4 @@
+from enum import Enum
 import os
 
 # path to the project
@@ -17,6 +18,9 @@ COMBINE_SESSION_NAME = "session_all.csv"
 # src.feature_extraction.feature_extractor.split_dataframe()
 TIME_THRESHOLD = 3.0
 
+# number of features
+N_FEATURES = 17
+
 # path to original datasets
 # src.data_preprocessing
 ORIGINAL_DATASET_PATH = os.path.join(ROOT_PATH, "original_dataset")
@@ -25,12 +29,16 @@ ORIGINAL_DATASET_PATH = os.path.join(ROOT_PATH, "original_dataset")
 DATASET_PATH = os.path.join(ROOT_PATH, "dataset")
 
 # path to the log file
-LOG_JSON_FILE_PATH = os.path.join(ROOT_PATH, LOG_JSON_FILE_NAME)
+LOG_JSON_FILE_PATH = os.path.join(DATASET_PATH, LOG_JSON_FILE_NAME)
 
 # list of names of all datasets
-ALL_DATASET_NAME = ["BALABIT", "CHAOSHEN", "DATAIIT", "DFL", "MY", "TWOS"]
+ALL_DATASET_NAME = ["BALABIT", "CHAOSHEN", "DATAIIT", "DFL", "TWOS"]
 
 # list of paths to all datasets
 ALL_DATASET_PATH = [os.path.join(DATASET_PATH, dataset_name)
                     for dataset_name in ALL_DATASET_NAME]
 
+# neural network type
+class NN(Enum):
+    AUTOENCODER = 1
+    CNN = 2

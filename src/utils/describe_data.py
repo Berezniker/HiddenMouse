@@ -85,6 +85,7 @@ def describe_data() -> None:
     describer = load_log()
     describer["_time_threshold"] = const.TIME_THRESHOLD
 
+    total_n_users = 0
     for dataset_path in glob.iglob(os.path.join(const.DATASET_PATH, '*')):
         if not os.path.isdir(dataset_path):
             continue
@@ -117,7 +118,8 @@ def describe_data() -> None:
             describer[dataset_name][user_name]['ratio_train_test'] = ratio
 
         describer[dataset_name]['number_of_users'] = n_users
-
+        total_n_users += n_users
+    describer['total_number_of_users'] = total_n_users
     dump_log(describer)
 
 

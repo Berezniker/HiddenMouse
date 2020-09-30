@@ -1,12 +1,23 @@
+import utils.constants as const
 from pynput import mouse
 import datetime
 import time
 import csv
 import os
 
+
 def run(username: str = 'Unknown') -> None:
+    """
+    Collects data from the user's computer mouse
+        "timestamp" -- time in seconds from start of recording
+        "button"    -- button type: ['NoButton', 'Left', 'Scroll', 'Right']
+        "state"     -- state type: ['Move', 'Pressed', 'Released', 'Drag', 'Down', 'Up']
+        "x"         -- x-coordinate
+        "y"         -- y-coordinate
+    """
     header = ["timestamp", "button", "state", "x", "y"]
-    dir_name = f"../../original_dataset/MY_original/User_{username}"
+    dir_name = os.path.join(const.ORIGINAL_DATASET_PATH,
+                            f"MY_original/User_{username}")
     os.makedirs(dir_name, exist_ok=True)
     date = datetime.datetime.now().isoformat(sep='_')[:-7].replace(':', '-')
     log_name = f"mouse_logger_{username}_{date}.csv"
@@ -16,6 +27,7 @@ def run(username: str = 'Unknown') -> None:
         logger.writerow(header)
         start_time = time.time()
         n_row, max_row = 0, 100_000
+        state = "Released"
 
         def improve_xy(x: int, y: int):
             x = x if x > 0 else 0
@@ -29,16 +41,18 @@ def run(username: str = 'Unknown') -> None:
 
         def on_move(x, y):
             x, y = improve_xy(x, y)
+            move_state = 'Drag' if state == 'Pressed' else 'Move'
             logger.writerow([
                 f"{time.time() - start_time}",
                 f"NoButton",
-                f"Move",
+                f"{move_state}",
                 f"{x}",
                 f"{y}"
             ])
             return check_end()
 
         def on_click(x, y, button, pressed):
+            nonlocal state
             x, y = improve_xy(x, y)
             state = "Pressed" if pressed else "Released"
             logger.writerow([
@@ -52,11 +66,11 @@ def run(username: str = 'Unknown') -> None:
 
         def on_scroll(x, y, dx, dy):
             x, y = improve_xy(x, y)
-            state = "Down" if dy < 0 else "Up"
+            scroll_state = "Down" if dy < 0 else "Up"
             logger.writerow([
                 f"{time.time() - start_time}",
                 f"Scroll",
-                f"{state}",
+                f"{scroll_state}",
                 f"{x}",
                 f"{y}"
             ])
