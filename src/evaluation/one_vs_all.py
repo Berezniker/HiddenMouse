@@ -122,7 +122,7 @@ def boxplot(res: dict, path: str) -> None:
             color = [f'hsl({str(h)}%, 50%, 50%)' for h in np.linspace(0, 360, len(data))]
 
             fig = go.Figure(
-                data=[go.Box(y=y, marker_color=color[i], name=illegal_dataset)
+                data=[go.Box(y=y, marker_color=color[i], name=illegal_dataset, boxpoint='all')
                       for i, (illegal_dataset, y) in enumerate(data.items())]
             )
 

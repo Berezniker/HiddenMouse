@@ -5,18 +5,24 @@ from collections import defaultdict
 from utils import describe_data
 from datetime import datetime
 from itertools import chain
+import utils.constants as const
 import pandas as pd
 import shutil
 import time
 import glob
 import os
 
-TIME_THRESHOLD = 3.0  # sec
-ACTION_THRESHOLD = 10
+
 LOG_FILE = None
 
 
 def printf(*args) -> None:
+    """
+    Printing to log file and on stdout
+
+    :param args: arguments to output
+    :return: None
+    """
     if LOG_FILE is not None:
         LOG_FILE.write(*args)
         LOG_FILE.write('\n')
@@ -27,14 +33,30 @@ def printf(*args) -> None:
 def OneHotEncoder(x: np.array,
                   n_classes: int,
                   prefix: str = 'bin') -> pd.DataFrame:
+    """
+    Encode categorical features as a one-hot numeric array.
+
+    :param x: 1-D categorical data
+    :param n_classes: number of classes
+    :param prefix: prefix to the new column name
+    :return: transformed OHE-matrix
+    """
     data = np.eye(n_classes)[x]
     columns = [f"{prefix}_{i}" for i in range(n_classes)]
     return pd.DataFrame(data=data, columns=columns, dtype='uint8')
 
 
 def split_dataframe(db: pd.DataFrame,
-                    time_threshold: float = TIME_THRESHOLD,
-                    min_n_actions: int = ACTION_THRESHOLD) -> pd.DataFrame:
+                    time_threshold: float = const.TIME_THRESHOLD,
+                    min_n_actions: int = 10) -> pd.DataFrame:
+    """
+    Split the database into sequential segments of <time_threshold> seconds duration
+
+    :param db: database
+    :param time_threshold: maximum duration of actions
+    :param min_n_actions: minimum number of actions
+    :return: sequential data slices
+    """
     ctime, max_time = 0, db.time.max()
     db.reset_index(drop=True)
     while ctime + time_threshold < max_time:
@@ -66,6 +88,12 @@ def sliding_window(db: pd.DataFrame,
 
 
 def extract_features(database: pd.DataFrame) -> pd.DataFrame:
+    """
+    Select features from the <database>
+
+    :param database: preprocessed data
+    :return: feature database
+    """
     extraction_function = list([
         direction_bin, actual_distance, actual_distance_bin,
         curve_length, curve_length_bin, length_ratio, actual_speed, curve_speed,
@@ -102,15 +130,19 @@ def extract_features(database: pd.DataFrame) -> pd.DataFrame:
 
 
 def run(data_path: str,
-        save_path: str = None,
-        save_features: bool = True) -> None:
-    if save_features:
-        if save_path is None:
-            save_path = data_path.replace('files', 'features')
-        if os.path.exists(save_path):
-            shutil.rmtree(save_path)
-    else:
-        printf("[Warning] Data will not be saved (save_features=False)")
+        save_path: str = None) -> None:
+    """
+    Select features for all users in <data_path>
+
+    :param data_path: path to data directory
+    :param save_path: path to save data
+    :return: None
+    """
+    if save_path is None:
+        save_path = data_path.replace('files', 'features')
+    if os.path.exists(save_path):
+        shutil.rmtree(save_path)
+
     printf(f'\n{data_path} --> {save_path}\n')
 
     for user in glob.glob(os.path.join(data_path, 'user*')):
@@ -134,10 +166,9 @@ def run(data_path: str,
             features = features.join(OneHotEncoder(features.pop('curve_length_bin').values,
                                                    n_classes=20, prefix='cl_bin'))
             """
-            if save_features:
-                session_dir = os.path.join(save_path, user_name)
-                os.makedirs(session_dir, exist_ok=True)
-                features.to_csv(os.path.join(session_dir, session_name), index=False)
+            session_dir = os.path.join(save_path, user_name)
+            os.makedirs(session_dir, exist_ok=True)
+            features.to_csv(os.path.join(session_dir, session_name), index=False)
             printf(f'>> [{i:03}/{n_session}] {session_name} '
                    f' data.size = {db.index.size:7} '
                    f' features.size = {features.index.size:4} '
@@ -148,12 +179,11 @@ def run(data_path: str,
 
 if __name__ == '__main__':
     start_time = time.time()
-    all_dataset = [dataset for dataset in os.listdir("../../dataset")
-                   if os.path.isdir(dataset)]
     describer = describe_data.load_log()
 
-    for dataset in all_dataset:
-        log_file_path = f"../../dataset/{dataset}/log_{dataset}_feature_extraction.txt"
+    for dataset in const.ALL_DATASET_NAME:
+        dataset_path = os.path.join(const.DATASET_PATH, dataset)
+        log_file_path = os.path.join(dataset_path, f"log_{dataset}_feature_extraction.txt")
         LOG_FILE = open(log_file_path, mode='w')
         LOG_FILE.write(f"{datetime.now().isoformat(sep=' ')[:-7]}\n\n")
         describer.setdefault(dataset, dict())
@@ -164,7 +194,7 @@ if __name__ == '__main__':
             type_start_time = time.time()
             printf(f"{type_file}")
             # ------------------------------------------------------- #
-            run(data_path=f"../../dataset/{dataset}/{type_file}_files")
+            run(data_path=os.path.join(dataset_path, f"{type_file}_files"))
             # ------------------------------------------------------- #
             printf(f"{type_file}_time: {(time.time() - type_start_time) / 60.0:.1f} min\n\n")
 
@@ -176,4 +206,4 @@ if __name__ == '__main__':
     describe_data.dump_log(describer)
     print(f"main_time: {(time.time() - start_time) / 60.0:.1f} min\n")
 
-    combine_sessions(datasets=all_dataset, verbose=3)
+    combine_sessions(datasets=const.ALL_DATASET_NAME, verbose=3)
