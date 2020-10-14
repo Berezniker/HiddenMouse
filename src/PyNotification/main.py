@@ -5,6 +5,10 @@ import time
 import os
 
 
+# Windows block:
+# import ctypes
+# ctypes.windll.user32.LockWorkStation()
+
 # compile:
 # pyinstaller --onefile --clean --noconsole --icon=alarm.ico main.py
 
@@ -16,6 +20,11 @@ class OSType(enum.Enum):
 
 
 def get_os_type() -> OSType:
+    """
+    returns the operating system type: OneOf[Windows, Linux, Mac]
+
+    :return: OSType
+    """
     os_name = platform.system()
     if os_name == "Windows":
         return OSType.Windows
@@ -34,6 +43,14 @@ class Notification:
     def send(self, title: str,
              message: str,
              duration: float = 5.0) -> None:
+        """
+        Displays notifications in the taskbar
+
+        :param title: the headline of the message
+        :param message: message text
+        :param duration: duration of notification
+        :return: None
+        """
         if self._os_type == OSType.Windows:
             win10toast.ToastNotifier().show_toast(
                 title=title,
@@ -41,7 +58,7 @@ class Notification:
                 icon_path="alarm.ico",
                 duration=duration
             )
-            pass
+
         elif self._os_type == OSType.Mac:
             command = f'''osascript -e 'display notification "{message}" with title "{title}"'''
             os.system(command)
